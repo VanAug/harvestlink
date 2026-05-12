@@ -10,8 +10,8 @@ app = FastAPI(title=settings.APP_NAME, version="1.0.0", description="Backend for
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.cors_origins,
-    allow_credentials=True,
+    allow_origins=["*"],  # Lock this down to specific origins once working
+    allow_credentials=False,  # Must be False when allow_origins=["*"]
     allow_methods=["*"],
     allow_headers=["*"],
 )
