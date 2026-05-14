@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import PageShell from "../components/layout/PageShell";
 import { products as fallbackProducts, rfqs as fallbackRFQs } from "../data/mockData";
 import { apiGet, mapProduct, mapRFQ } from "../lib/api";
@@ -6,6 +7,7 @@ import { BadgeDollarSign, Handshake, LockKeyhole, PackageCheck } from "lucide-re
 
 export default function Dashboard({ role = "buyer" }) {
   const isBuyer = role === "buyer";
+  const isExporter = role === "exporter" || role === "supplier";
   const [products, setProducts] = useState(fallbackProducts);
   const [rfqs, setRfqs] = useState(fallbackRFQs);
   const [overview, setOverview] = useState(null);
@@ -49,8 +51,14 @@ export default function Dashboard({ role = "buyer" }) {
       <main className="mx-auto max-w-7xl px-4 py-10 lg:px-6">
         <div className="rounded-[2rem] bg-harvest-green p-8 text-white shadow-soft">
           <div className="inline-flex rounded-full bg-white/10 px-4 py-2 text-sm font-bold">Trade Execution Dashboard</div>
-          <h1 className="mt-4 text-4xl font-black">{isBuyer ? "Buyer Dashboard" : role === "supplier" ? "Supplier Dashboard" : "Admin Dashboard"}</h1>
+          <h1 className="mt-4 text-4xl font-black">{isBuyer ? "Buyer Dashboard" : isExporter ? "Exporter Dashboard" : "Admin Dashboard"}</h1>
           <p className="mt-2 max-w-3xl text-white/80">Manage marketplace activity, RFQs, deal rooms, escrow payments, and working capital eligibility.</p>
+          {isExporter && (
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Link to="/exporter/products/new" className="rounded-2xl bg-harvest-orange px-5 py-3 text-sm font-black text-white hover:bg-orange-600">Add Product</Link>
+              <Link to="/products" className="rounded-2xl bg-white/10 px-5 py-3 text-sm font-black text-white hover:bg-white/20">View Marketplace</Link>
+            </div>
+          )}
         </div>
 
         <div className="mt-8 grid gap-5 md:grid-cols-4">

@@ -3,7 +3,7 @@ from sqlalchemy import select, func, or_
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.db.session import get_db
 from app.models.models import Company, Product, RFQ, Offer, Deal, Message, EscrowTransaction, FinancingRequest, User
-from app.schemas.schemas import CompanyOut, ProductOut, RFQOut, OfferOut, DealOut, MessageOut, MessageCreate, EscrowOut, FinancingOut, FinancingCreate, DashboardOut, StatsOut
+from app.schemas.schemas import CompanyOut, ProductOut, ProductCreate, RFQOut, OfferOut, DealOut, MessageOut, MessageCreate, EscrowOut, FinancingOut, FinancingCreate, DashboardOut, StatsOut
 
 router = APIRouter(tags=["harvestlink"])
 
@@ -32,6 +32,19 @@ async def products(q: str | None = None, country: str | None = None, category: s
     if category:
         stmt = stmt.where(Product.category == category)
     return list(await db.scalars(stmt))
+
+@router.post("/products", response_model=ProductOut)
+async def create_product(payload: ProductCreate, db: AsyncSession = Depends(get_db)):
+    company = await db.get(Company, payload.company_id)
+    if not company:
+        raise HTTPException(status_code=404, detail="Exporter company not found")
+    if company.type != "exporter":
+        raise HTTPException(status_code=400, detail="Products can only be created for exporter companies")
+    item = Product(**payload.model_dump())
+    db.add(item)
+    await db.commit()
+    await db.refresh(item)
+    return item
 
 @router.get("/rfqs", response_model=list[RFQOut])
 async def rfqs(status: str | None = None, db: AsyncSession = Depends(get_db)):

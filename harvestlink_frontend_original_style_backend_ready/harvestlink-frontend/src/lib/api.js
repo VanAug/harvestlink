@@ -21,7 +21,21 @@ export async function login(email, password) {
   localStorage.setItem('harvestlink_token', data.access_token);
   localStorage.setItem('harvestlink_role', data.role);
   localStorage.setItem('harvestlink_user_id', data.user_id);
+  localStorage.setItem('harvestlink_email', data.email);
+  localStorage.setItem('harvestlink_full_name', data.full_name);
+  window.dispatchEvent(new Event('harvestlink-auth-changed'));
   return data;
+}
+
+export function logout() {
+  [
+    'harvestlink_token',
+    'harvestlink_role',
+    'harvestlink_user_id',
+    'harvestlink_email',
+    'harvestlink_full_name',
+  ].forEach((key) => localStorage.removeItem(key));
+  window.dispatchEvent(new Event('harvestlink-auth-changed'));
 }
 
 export function imageForProduct(product) {

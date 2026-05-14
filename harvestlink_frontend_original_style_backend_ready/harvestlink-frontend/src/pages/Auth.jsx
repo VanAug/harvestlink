@@ -18,8 +18,11 @@ export default function Auth({ mode = "login" }) {
       return;
     }
     try {
-      await login(email, password);
-      navigate('/supplier-dashboard');
+      const data = await login(email, password);
+      if (data.role === 'buyer') navigate('/buyer-dashboard');
+      else if (data.role === 'admin') navigate('/admin-dashboard');
+      else if (data.role === 'finance_partner') navigate('/financing');
+      else navigate('/exporter-dashboard');
     } catch (error) {
       setMessage(`Login failed. Check backend is running. ${error.message}`);
     }

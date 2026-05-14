@@ -65,6 +65,23 @@ class ProductOut(BaseModel):
     image_key: Optional[str] = None
     status: str
 
+class ProductCreate(BaseModel):
+    company_id: int
+    supplier_name: str
+    name: str
+    category: str
+    variety: Optional[str] = None
+    grade: Optional[str] = None
+    country_of_origin: str
+    available_quantity: float
+    unit: str
+    price_min: Optional[float] = None
+    price_max: Optional[float] = None
+    minimum_order_quantity: Optional[float] = None
+    description: Optional[str] = None
+    image_key: Optional[str] = None
+    status: str = "active"
+
 class RFQOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     id: int
