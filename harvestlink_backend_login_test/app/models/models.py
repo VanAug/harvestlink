@@ -131,3 +131,15 @@ class FinancingRequest(Base):
     linked_deal_id: Mapped[int | None] = mapped_column(ForeignKey("deals.id"), nullable=True)
     score: Mapped[float] = mapped_column(Float, default=0)
     status: Mapped[str] = mapped_column(String(50), default="submitted")
+
+class TradeDocument(Base):
+    __tablename__ = "trade_documents"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    owner_type: Mapped[str] = mapped_column(String(50), index=True)
+    owner_id: Mapped[int] = mapped_column(index=True)
+    document_type: Mapped[str] = mapped_column(String(100), index=True)
+    title: Mapped[str] = mapped_column(String(255))
+    file_url: Mapped[str | None] = mapped_column(String(500), nullable=True)
+    notes: Mapped[str | None] = mapped_column(Text, nullable=True)
+    status: Mapped[str] = mapped_column(String(50), default="submitted")
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)

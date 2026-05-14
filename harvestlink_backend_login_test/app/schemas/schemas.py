@@ -46,6 +46,31 @@ class CompanyOut(BaseModel):
     buying_interests: Optional[str] = None
     preferred_destinations: Optional[str] = None
 
+class CompanyCreate(BaseModel):
+    owner_id: int
+    name: str
+    type: str = "exporter"
+    country: str
+    address: Optional[str] = None
+    description: Optional[str] = None
+    website: Optional[str] = None
+    products_offered: Optional[str] = None
+    certifications: Optional[str] = None
+    export_capacity: Optional[str] = None
+    export_markets: Optional[str] = None
+
+class CompanyUpdate(BaseModel):
+    name: Optional[str] = None
+    country: Optional[str] = None
+    address: Optional[str] = None
+    description: Optional[str] = None
+    website: Optional[str] = None
+    verification_status: Optional[str] = None
+    products_offered: Optional[str] = None
+    certifications: Optional[str] = None
+    export_capacity: Optional[str] = None
+    export_markets: Optional[str] = None
+
 class ProductOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     id: int
@@ -82,6 +107,21 @@ class ProductCreate(BaseModel):
     image_key: Optional[str] = None
     status: str = "active"
 
+class ProductUpdate(BaseModel):
+    name: Optional[str] = None
+    category: Optional[str] = None
+    variety: Optional[str] = None
+    grade: Optional[str] = None
+    country_of_origin: Optional[str] = None
+    available_quantity: Optional[float] = None
+    unit: Optional[str] = None
+    price_min: Optional[float] = None
+    price_max: Optional[float] = None
+    minimum_order_quantity: Optional[float] = None
+    description: Optional[str] = None
+    image_key: Optional[str] = None
+    status: Optional[str] = None
+
 class RFQOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     id: int
@@ -110,6 +150,15 @@ class OfferOut(BaseModel):
     notes: Optional[str] = None
     status: str
 
+class OfferCreate(BaseModel):
+    exporter_company_id: int
+    exporter_name: str
+    price: float
+    quantity: float
+    delivery_terms: str
+    estimated_delivery_date: str
+    notes: Optional[str] = None
+
 class DealOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     id: int
@@ -128,6 +177,9 @@ class DealOut(BaseModel):
     delivery_terms: str
     status: str
     escrow_status: str
+
+class DealStatusUpdate(BaseModel):
+    status: str
 
 class MessageCreate(BaseModel):
     sender_company_id: int
@@ -173,6 +225,25 @@ class FinancingOut(BaseModel):
     purpose: str
     linked_deal_id: Optional[int] = None
     score: float
+    status: str
+
+class TradeDocumentCreate(BaseModel):
+    owner_type: str
+    owner_id: int
+    document_type: str
+    title: str
+    file_url: Optional[str] = None
+    notes: Optional[str] = None
+
+class TradeDocumentOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    id: int
+    owner_type: str
+    owner_id: int
+    document_type: str
+    title: str
+    file_url: Optional[str] = None
+    notes: Optional[str] = None
     status: str
 
 class DashboardOut(BaseModel):

@@ -1,11 +1,45 @@
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy import select, func, or_
+from sqlalchemy import func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
+
 from app.db.session import get_db
-from app.models.models import Company, Product, RFQ, Offer, Deal, Message, EscrowTransaction, FinancingRequest, User
-from app.schemas.schemas import CompanyOut, ProductOut, ProductCreate, RFQOut, OfferOut, DealOut, MessageOut, MessageCreate, EscrowOut, FinancingOut, FinancingCreate, DashboardOut, StatsOut
+from app.models.models import (
+    Company,
+    Deal,
+    EscrowTransaction,
+    FinancingRequest,
+    Message,
+    Offer,
+    Product,
+    RFQ,
+    TradeDocument,
+    User,
+)
+from app.schemas.schemas import (
+    CompanyCreate,
+    CompanyOut,
+    CompanyUpdate,
+    DashboardOut,
+    DealOut,
+    DealStatusUpdate,
+    EscrowOut,
+    FinancingCreate,
+    FinancingOut,
+    MessageCreate,
+    MessageOut,
+    OfferCreate,
+    OfferOut,
+    ProductCreate,
+    ProductOut,
+    ProductUpdate,
+    RFQOut,
+    StatsOut,
+    TradeDocumentCreate,
+    TradeDocumentOut,
+)
 
 router = APIRouter(tags=["harvestlink"])
+
 
 @router.get("/companies", response_model=list[CompanyOut])
 async def companies(type: str | None = None, db: AsyncSession = Depends(get_db)):
@@ -14,16 +48,51 @@ async def companies(type: str | None = None, db: AsyncSession = Depends(get_db))
         stmt = stmt.where(Company.type == type)
     return list(await db.scalars(stmt))
 
+
+@router.get("/companies/owner/{owner_id}", response_model=list[CompanyOut])
+async def companies_by_owner(owner_id: int, db: AsyncSession = Depends(get_db)):
+    return list(await db.scalars(select(Company).where(Company.owner_id == owner_id).order_by(Company.id)))
+
+
+@router.post("/companies", response_model=CompanyOut)
+async def create_company(payload: CompanyCreate, db: AsyncSession = Depends(get_db)):
+    company = Company(**payload.model_dump(), verification_status="pending")
+    db.add(company)
+    await db.commit()
+    await db.refresh(company)
+    return company
+
+
+@router.patch("/companies/{company_id}", response_model=CompanyOut)
+async def update_company(company_id: int, payload: CompanyUpdate, db: AsyncSession = Depends(get_db)):
+    company = await db.get(Company, company_id)
+    if not company:
+        raise HTTPException(status_code=404, detail="Company not found")
+    for key, value in payload.model_dump(exclude_unset=True).items():
+        setattr(company, key, value)
+    await db.commit()
+    await db.refresh(company)
+    return company
+
+
 @router.get("/exporters", response_model=list[CompanyOut])
 async def exporters(db: AsyncSession = Depends(get_db)):
     return list(await db.scalars(select(Company).where(Company.type == "exporter").order_by(Company.id)))
+
 
 @router.get("/buyers", response_model=list[CompanyOut])
 async def buyers(db: AsyncSession = Depends(get_db)):
     return list(await db.scalars(select(Company).where(Company.type == "buyer").order_by(Company.id)))
 
+
 @router.get("/products", response_model=list[ProductOut])
-async def products(q: str | None = None, country: str | None = None, category: str | None = None, db: AsyncSession = Depends(get_db)):
+async def products(
+    q: str | None = None,
+    country: str | None = None,
+    category: str | None = None,
+    company_id: int | None = None,
+    db: AsyncSession = Depends(get_db),
+):
     stmt = select(Product).order_by(Product.id)
     if q:
         stmt = stmt.where(or_(Product.name.ilike(f"%{q}%"), Product.category.ilike(f"%{q}%"), Product.supplier_name.ilike(f"%{q}%")))
@@ -31,7 +100,18 @@ async def products(q: str | None = None, country: str | None = None, category: s
         stmt = stmt.where(Product.country_of_origin == country)
     if category:
         stmt = stmt.where(Product.category == category)
+    if company_id:
+        stmt = stmt.where(Product.company_id == company_id)
     return list(await db.scalars(stmt))
+
+
+@router.get("/products/{product_id}", response_model=ProductOut)
+async def product(product_id: int, db: AsyncSession = Depends(get_db)):
+    item = await db.get(Product, product_id)
+    if not item:
+        raise HTTPException(status_code=404, detail="Product not found")
+    return item
+
 
 @router.post("/products", response_model=ProductOut)
 async def create_product(payload: ProductCreate, db: AsyncSession = Depends(get_db)):
@@ -46,6 +126,30 @@ async def create_product(payload: ProductCreate, db: AsyncSession = Depends(get_
     await db.refresh(item)
     return item
 
+
+@router.patch("/products/{product_id}", response_model=ProductOut)
+async def update_product(product_id: int, payload: ProductUpdate, db: AsyncSession = Depends(get_db)):
+    item = await db.get(Product, product_id)
+    if not item:
+        raise HTTPException(status_code=404, detail="Product not found")
+    for key, value in payload.model_dump(exclude_unset=True).items():
+        setattr(item, key, value)
+    await db.commit()
+    await db.refresh(item)
+    return item
+
+
+@router.patch("/products/{product_id}/archive", response_model=ProductOut)
+async def archive_product(product_id: int, db: AsyncSession = Depends(get_db)):
+    item = await db.get(Product, product_id)
+    if not item:
+        raise HTTPException(status_code=404, detail="Product not found")
+    item.status = "archived"
+    await db.commit()
+    await db.refresh(item)
+    return item
+
+
 @router.get("/rfqs", response_model=list[RFQOut])
 async def rfqs(status: str | None = None, db: AsyncSession = Depends(get_db)):
     stmt = select(RFQ).order_by(RFQ.id)
@@ -53,9 +157,34 @@ async def rfqs(status: str | None = None, db: AsyncSession = Depends(get_db)):
         stmt = stmt.where(RFQ.status == status)
     return list(await db.scalars(stmt))
 
+
+@router.get("/rfqs/{rfq_id}", response_model=RFQOut)
+async def rfq(rfq_id: int, db: AsyncSession = Depends(get_db)):
+    item = await db.get(RFQ, rfq_id)
+    if not item:
+        raise HTTPException(status_code=404, detail="RFQ not found")
+    return item
+
+
 @router.get("/rfqs/{rfq_id}/offers", response_model=list[OfferOut])
 async def rfq_offers(rfq_id: int, db: AsyncSession = Depends(get_db)):
     return list(await db.scalars(select(Offer).where(Offer.rfq_id == rfq_id).order_by(Offer.id)))
+
+
+@router.post("/rfqs/{rfq_id}/offers", response_model=OfferOut)
+async def create_offer(rfq_id: int, payload: OfferCreate, db: AsyncSession = Depends(get_db)):
+    rfq = await db.get(RFQ, rfq_id)
+    exporter = await db.get(Company, payload.exporter_company_id)
+    if not rfq:
+        raise HTTPException(status_code=404, detail="RFQ not found")
+    if not exporter or exporter.type != "exporter":
+        raise HTTPException(status_code=400, detail="Exporter company not found")
+    offer = Offer(rfq_id=rfq_id, status="submitted", **payload.model_dump())
+    db.add(offer)
+    await db.commit()
+    await db.refresh(offer)
+    return offer
+
 
 @router.post("/rfqs/{rfq_id}/offers/{offer_id}/accept")
 async def accept_offer(rfq_id: int, offer_id: int, db: AsyncSession = Depends(get_db)):
@@ -89,9 +218,14 @@ async def accept_offer(rfq_id: int, offer_id: int, db: AsyncSession = Depends(ge
     await db.refresh(deal)
     return {"message": "Offer accepted", "deal_id": deal.id}
 
+
 @router.get("/deals", response_model=list[DealOut])
-async def deals(db: AsyncSession = Depends(get_db)):
-    return list(await db.scalars(select(Deal).order_by(Deal.id)))
+async def deals(exporter_company_id: int | None = None, db: AsyncSession = Depends(get_db)):
+    stmt = select(Deal).order_by(Deal.id)
+    if exporter_company_id:
+        stmt = stmt.where(Deal.exporter_company_id == exporter_company_id)
+    return list(await db.scalars(stmt))
+
 
 @router.get("/deals/{deal_id}", response_model=DealOut)
 async def deal(deal_id: int, db: AsyncSession = Depends(get_db)):
@@ -100,9 +234,22 @@ async def deal(deal_id: int, db: AsyncSession = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Deal not found")
     return item
 
+
+@router.patch("/deals/{deal_id}/status", response_model=DealOut)
+async def update_deal_status(deal_id: int, payload: DealStatusUpdate, db: AsyncSession = Depends(get_db)):
+    item = await db.get(Deal, deal_id)
+    if not item:
+        raise HTTPException(status_code=404, detail="Deal not found")
+    item.status = payload.status
+    await db.commit()
+    await db.refresh(item)
+    return item
+
+
 @router.get("/deals/{deal_id}/messages", response_model=list[MessageOut])
 async def messages(deal_id: int, db: AsyncSession = Depends(get_db)):
     return list(await db.scalars(select(Message).where(Message.deal_id == deal_id).order_by(Message.id)))
+
 
 @router.post("/deals/{deal_id}/messages", response_model=MessageOut)
 async def create_message(deal_id: int, payload: MessageCreate, db: AsyncSession = Depends(get_db)):
@@ -112,9 +259,11 @@ async def create_message(deal_id: int, payload: MessageCreate, db: AsyncSession 
     await db.refresh(msg)
     return msg
 
+
 @router.get("/escrow", response_model=list[EscrowOut])
 async def escrow(db: AsyncSession = Depends(get_db)):
     return list(await db.scalars(select(EscrowTransaction).order_by(EscrowTransaction.id)))
+
 
 @router.post("/deals/{deal_id}/escrow", response_model=EscrowOut)
 async def create_escrow(deal_id: int, db: AsyncSession = Depends(get_db)):
@@ -139,6 +288,7 @@ async def create_escrow(deal_id: int, db: AsyncSession = Depends(get_db)):
     await db.refresh(escrow)
     return escrow
 
+
 @router.patch("/escrow/{escrow_id}/status", response_model=EscrowOut)
 async def update_escrow(escrow_id: int, status: str, db: AsyncSession = Depends(get_db)):
     item = await db.get(EscrowTransaction, escrow_id)
@@ -150,11 +300,14 @@ async def update_escrow(escrow_id: int, status: str, db: AsyncSession = Depends(
         deal.escrow_status = status
         if status == "funded":
             deal.status = "funds_in_escrow"
+        if status == "release_requested":
+            deal.status = "release_requested"
         if status == "released":
             deal.status = "completed"
     await db.commit()
     await db.refresh(item)
     return item
+
 
 async def eligibility(company_id: int, db: AsyncSession):
     total_value = await db.scalar(select(func.coalesce(func.sum(Deal.total_amount), 0)).where(Deal.exporter_company_id == company_id))
@@ -163,19 +316,34 @@ async def eligibility(company_id: int, db: AsyncSession):
     completed = await db.scalar(select(func.count(Deal.id)).where(Deal.exporter_company_id == company_id, Deal.status == "completed"))
     score = min(100, (total_deals or 0) * 15 + float(total_value or 0) / 1000)
     eligible = round(float(total_value or 0) * 0.25, 2)
-    return DashboardOut(company_id=company_id, total_deals=total_deals or 0, completed_deals=completed or 0, total_trade_value=float(total_value or 0), total_volume=float(total_volume or 0), financing_eligible_amount=eligible, trade_score=round(score, 2))
+    return DashboardOut(
+        company_id=company_id,
+        total_deals=total_deals or 0,
+        completed_deals=completed or 0,
+        total_trade_value=float(total_value or 0),
+        total_volume=float(total_volume or 0),
+        financing_eligible_amount=eligible,
+        trade_score=round(score, 2),
+    )
+
 
 @router.get("/dashboard/{company_id}", response_model=DashboardOut)
 async def dashboard(company_id: int, db: AsyncSession = Depends(get_db)):
     return await eligibility(company_id, db)
 
+
 @router.get("/financing/eligibility/{company_id}", response_model=DashboardOut)
 async def finance_eligibility(company_id: int, db: AsyncSession = Depends(get_db)):
     return await eligibility(company_id, db)
 
+
 @router.get("/financing", response_model=list[FinancingOut])
-async def financing(db: AsyncSession = Depends(get_db)):
-    return list(await db.scalars(select(FinancingRequest).order_by(FinancingRequest.id)))
+async def financing(exporter_company_id: int | None = None, db: AsyncSession = Depends(get_db)):
+    stmt = select(FinancingRequest).order_by(FinancingRequest.id)
+    if exporter_company_id:
+        stmt = stmt.where(FinancingRequest.exporter_company_id == exporter_company_id)
+    return list(await db.scalars(stmt))
+
 
 @router.post("/financing", response_model=FinancingOut)
 async def create_financing(payload: FinancingCreate, db: AsyncSession = Depends(get_db)):
@@ -196,10 +364,31 @@ async def create_financing(payload: FinancingCreate, db: AsyncSession = Depends(
     await db.refresh(item)
     return item
 
+
+@router.get("/documents", response_model=list[TradeDocumentOut])
+async def documents(owner_type: str | None = None, owner_id: int | None = None, db: AsyncSession = Depends(get_db)):
+    stmt = select(TradeDocument).order_by(TradeDocument.id)
+    if owner_type:
+        stmt = stmt.where(TradeDocument.owner_type == owner_type)
+    if owner_id:
+        stmt = stmt.where(TradeDocument.owner_id == owner_id)
+    return list(await db.scalars(stmt))
+
+
+@router.post("/documents", response_model=TradeDocumentOut)
+async def create_document(payload: TradeDocumentCreate, db: AsyncSession = Depends(get_db)):
+    item = TradeDocument(**payload.model_dump(), status="submitted")
+    db.add(item)
+    await db.commit()
+    await db.refresh(item)
+    return item
+
+
 @router.get("/admin/overview", response_model=StatsOut)
 async def overview(db: AsyncSession = Depends(get_db)):
     async def c(model):
         return len(list(await db.scalars(select(model))))
+
     exporters_count = len(list(await db.scalars(select(Company).where(Company.type == "exporter"))))
     buyers_count = len(list(await db.scalars(select(Company).where(Company.type == "buyer"))))
     return StatsOut(

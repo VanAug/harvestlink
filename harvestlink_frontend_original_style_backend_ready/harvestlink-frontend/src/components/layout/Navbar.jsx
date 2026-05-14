@@ -75,9 +75,9 @@ export default function Navbar() {
           {isLoggedIn ? (
             <>
               {session.role === "exporter" && (
-                <Link to="/exporter/products/new" className="inline-flex items-center gap-2 rounded-xl bg-harvest-orange px-4 py-2 text-sm font-semibold text-white shadow-soft hover:bg-orange-600">
+                <Link to="/exporter/products" className="inline-flex items-center gap-2 rounded-xl bg-harvest-orange px-4 py-2 text-sm font-semibold text-white shadow-soft hover:bg-orange-600">
                   <PackagePlus size={16} />
-                  Add Product
+                  Products
                 </Link>
               )}
               <Link to={dashboardPath} className="rounded-xl border border-harvest-green px-4 py-2 text-sm font-semibold text-harvest-green hover:bg-harvest-soft">

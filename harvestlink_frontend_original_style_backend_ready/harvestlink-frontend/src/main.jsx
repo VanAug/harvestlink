@@ -12,6 +12,8 @@ import RFQs from "./pages/RFQs";
 import RFQDetail from "./pages/RFQDetail";
 import CreateRFQ from "./pages/CreateRFQ";
 import AddProduct from "./pages/AddProduct";
+import ExporterProducts from "./pages/ExporterProducts";
+import ExporterProfile from "./pages/ExporterProfile";
 import Verification from "./pages/Verification";
 import Dashboard from "./pages/Dashboard";
 import Pricing from "./pages/Pricing";
@@ -33,6 +35,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/rfqs/:id" element={<RFQDetail />} />
         <Route path="/create-rfq" element={<CreateRFQ />} />
         <Route path="/exporter/products/new" element={<AddProduct />} />
+        <Route path="/exporter/products/:id/edit" element={<AddProduct />} />
+        <Route path="/exporter/products" element={<ExporterProducts />} />
+        <Route path="/exporter/profile" element={<ExporterProfile />} />
         <Route path="/buyer-verification" element={<Verification type="buyer" />} />
         <Route path="/supplier-verification" element={<Verification type="supplier" />} />
         <Route path="/buyer-dashboard" element={<Dashboard role="buyer" />} />

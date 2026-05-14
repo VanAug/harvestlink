@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, PackagePlus, Sprout } from "lucide-react";
 import PageShell from "../components/layout/PageShell";
 import { Input } from "../components/forms/Input";
-import { apiGet, apiPost } from "../lib/api";
+import { apiGet, apiPatch, apiPost } from "../lib/api";
 import { categories } from "../data/mockData";
 
 const initialForm = {
@@ -24,6 +24,8 @@ const initialForm = {
 
 export default function AddProduct() {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const isEditing = Boolean(id);
   const [form, setForm] = useState(initialForm);
   const [companies, setCompanies] = useState([]);
   const [companyId, setCompanyId] = useState("");
@@ -37,13 +39,26 @@ export default function AddProduct() {
         setCompanies(data);
         const userId = Number(localStorage.getItem("harvestlink_user_id"));
         const ownedCompany = data.find((company) => company.owner_id === userId);
-        setCompanyId(String((ownedCompany || data[0])?.id || ""));
+        const selected = ownedCompany || data[0];
+        setCompanyId(String(selected?.id || ""));
+        if (isEditing) {
+          const product = await apiGet(`/products/${id}`);
+          setForm({
+            ...initialForm,
+            ...product,
+            available_quantity: String(product.available_quantity ?? ""),
+            price_min: product.price_min == null ? "" : String(product.price_min),
+            price_max: product.price_max == null ? "" : String(product.price_max),
+            minimum_order_quantity: product.minimum_order_quantity == null ? "" : String(product.minimum_order_quantity),
+          });
+          setCompanyId(String(product.company_id));
+        }
       } catch (error) {
         setMessage(`Exporter company lookup failed. ${error.message}`);
       }
     }
     loadCompanies();
-  }, []);
+  }, [id, isEditing]);
 
   const selectedCompany = useMemo(
     () => companies.find((company) => String(company.id) === String(companyId)),
@@ -68,7 +83,7 @@ export default function AddProduct() {
         throw new Error("Select an exporter company before publishing.");
       }
 
-      await apiPost("/products", {
+      const payload = {
         ...form,
         company_id: selectedCompany.id,
         supplier_name: selectedCompany.name,
@@ -76,8 +91,10 @@ export default function AddProduct() {
         price_min: toNumber(form.price_min),
         price_max: toNumber(form.price_max),
         minimum_order_quantity: toNumber(form.minimum_order_quantity),
-      });
-      navigate("/products");
+      };
+      if (isEditing) await apiPatch(`/products/${id}`, payload);
+      else await apiPost("/products", payload);
+      navigate("/exporter/products");
     } catch (error) {
       setMessage(`Product could not be saved. ${error.message}`);
     } finally {
@@ -96,7 +113,7 @@ export default function AddProduct() {
         <div className="mt-6 grid gap-8 lg:grid-cols-[0.9fr_1.4fr]">
           <section className="rounded-3xl bg-harvest-green p-8 text-white shadow-soft">
             <div className="inline-flex rounded-full bg-white/10 px-4 py-2 text-sm font-bold">Exporter Product Setup</div>
-            <h1 className="mt-4 text-4xl font-black">Add Product</h1>
+          <h1 className="mt-4 text-4xl font-black">{isEditing ? "Edit Product" : "Add Product"}</h1>
             <p className="mt-3 text-white/80">Publish an export-ready listing with quantity, pricing, and order terms buyers can act on.</p>
 
             <div className="mt-8 rounded-3xl bg-white/10 p-5">
@@ -150,7 +167,7 @@ export default function AddProduct() {
             </div>
 
             <button disabled={submitting} className="mt-6 w-full rounded-2xl bg-harvest-green px-5 py-3 font-black text-white hover:bg-green-900 disabled:cursor-not-allowed disabled:bg-gray-400">
-              {submitting ? "Publishing..." : "Publish Product"}
+              {submitting ? "Saving..." : isEditing ? "Save Product" : "Publish Product"}
             </button>
           </form>
         </div>

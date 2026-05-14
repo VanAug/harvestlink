@@ -16,8 +16,34 @@ export async function apiPost(path, body) {
   return res.json();
 }
 
+export async function apiPatch(path, body) {
+  const res = await fetch(`${API_BASE_URL}${path}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) throw new Error(`API error ${res.status} on ${path}`);
+  return res.json();
+}
+
 export async function login(email, password) {
   const data = await apiPost('/auth/login', { email, password });
+  localStorage.setItem('harvestlink_token', data.access_token);
+  localStorage.setItem('harvestlink_role', data.role);
+  localStorage.setItem('harvestlink_user_id', data.user_id);
+  localStorage.setItem('harvestlink_email', data.email);
+  localStorage.setItem('harvestlink_full_name', data.full_name);
+  window.dispatchEvent(new Event('harvestlink-auth-changed'));
+  return data;
+}
+
+export async function register(fullName, email, password, role) {
+  const data = await apiPost('/auth/register', {
+    full_name: fullName,
+    email,
+    password,
+    role,
+  });
   localStorage.setItem('harvestlink_token', data.access_token);
   localStorage.setItem('harvestlink_role', data.role);
   localStorage.setItem('harvestlink_user_id', data.user_id);

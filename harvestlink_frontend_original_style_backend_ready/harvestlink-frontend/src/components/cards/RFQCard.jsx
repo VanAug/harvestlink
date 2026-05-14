@@ -23,7 +23,7 @@ export default function RFQCard({ rfq }) {
       </div>
       <div className="mt-5 flex gap-3">
         <Link to={`/rfqs/${rfq.id}`} className="flex-1 rounded-xl border border-harvest-green px-4 py-2 text-center text-sm font-bold text-harvest-green">View Details</Link>
-        <Link to="/register" className="flex-1 rounded-xl bg-harvest-orange px-4 py-2 text-center text-sm font-bold text-white">Submit Quote</Link>
+        <Link to={`/rfqs/${rfq.id}`} className="flex-1 rounded-xl bg-harvest-orange px-4 py-2 text-center text-sm font-bold text-white">Submit Quote</Link>
       </div>
     </div>
   );

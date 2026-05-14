@@ -55,7 +55,10 @@ export default function Dashboard({ role = "buyer" }) {
           <p className="mt-2 max-w-3xl text-white/80">Manage marketplace activity, RFQs, deal rooms, escrow payments, and working capital eligibility.</p>
           {isExporter && (
             <div className="mt-6 flex flex-wrap gap-3">
-              <Link to="/exporter/products/new" className="rounded-2xl bg-harvest-orange px-5 py-3 text-sm font-black text-white hover:bg-orange-600">Add Product</Link>
+              <Link to="/exporter/profile" className="rounded-2xl bg-white/10 px-5 py-3 text-sm font-black text-white hover:bg-white/20">Company Profile</Link>
+              <Link to="/exporter/products" className="rounded-2xl bg-harvest-orange px-5 py-3 text-sm font-black text-white hover:bg-orange-600">Manage Products</Link>
+              <Link to="/rfqs" className="rounded-2xl bg-white/10 px-5 py-3 text-sm font-black text-white hover:bg-white/20">RFQ Matches</Link>
+              <Link to="/deals" className="rounded-2xl bg-white/10 px-5 py-3 text-sm font-black text-white hover:bg-white/20">Deal Rooms</Link>
               <Link to="/products" className="rounded-2xl bg-white/10 px-5 py-3 text-sm font-black text-white hover:bg-white/20">View Marketplace</Link>
             </div>
           )}
