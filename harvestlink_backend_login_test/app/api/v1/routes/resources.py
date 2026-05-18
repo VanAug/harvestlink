@@ -502,17 +502,19 @@ async def create_review(deal_id: int, payload: ReviewCreate, db: AsyncSession = 
     deal = await db.get(Deal, deal_id)
     if not deal:
         raise HTTPException(status_code=404, detail="Deal not found")
+    # Determine the reviewer: if reviewer_company_id provided body, use it; otherwise default to the buyer on the deal
+    reviewer_company_id = getattr(payload, 'reviewer_company_id', None) or deal.buyer_company_id
     existing = await db.scalar(
-        select(Review).where(Review.deal_id == deal_id, Review.reviewer_company_id == payload.reviewer_company_id)
+        select(Review).where(Review.deal_id == deal_id, Review.reviewer_company_id == reviewer_company_id)
     )
     if existing:
         raise HTTPException(status_code=400, detail="Review already exists from this reviewer")
-    reviewer = await db.get(Company, payload.reviewer_company_id)
+    reviewer = await db.get(Company, reviewer_company_id)
     review = Review(
         deal_id=deal_id,
-        reviewer_company_id=payload.reviewer_company_id,
-        reviewer_name=reviewer.name if reviewer else "Unknown",
-        **payload.model_dump(exclude={"reviewer_company_id"}),
+        reviewer_company_id=reviewer_company_id,
+        reviewer_name=reviewer.name if reviewer else deal.buyer_name,
+        **payload.model_dump(),
         status="submitted",
     )
     db.add(review)
