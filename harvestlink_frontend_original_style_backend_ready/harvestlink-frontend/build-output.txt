@@ -5,6 +5,6 @@ rendering chunks...
 computing gzip size...
 dist/index.html                   0.43 kB Γöé gzip:   0.29 kB
 dist/assets/index-CvRSChLm.css   24.68 kB Γöé gzip:   5.27 kB
-dist/assets/index-BTohpn3q.js   384.86 kB Γöé gzip: 104.57 kB
+dist/assets/index-MkFFAOQG.js   384.88 kB Γöé gzip: 104.59 kB
 
-[32mΓ£ô built in 1.12s[39m
+[32mΓ£ô built in 1.14s[39m

@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { 
   Leaf, LogOut, Menu, PackagePlus, FileText, 
@@ -19,6 +19,7 @@ const navItems = [
 ];
 
 export default function Navbar() {
+  const navigate = useNavigate();
   const [session, setSession] = useState(() => ({
     role: localStorage.getItem("harvestlink_role"),
     name: localStorage.getItem("harvestlink_full_name"),
@@ -89,6 +90,13 @@ export default function Navbar() {
 
   const menuItems = isBuyer ? buyerMenuItems : isExporter ? exporterMenuItems : [];
 
+  function handleLogout() {
+    logout();
+    setDropdownOpen(false);
+    setMobileOpen(false);
+    navigate("/");
+  }
+
   return (
     <header className="sticky top-0 z-50 border-b border-green-900/10 bg-white/90 backdrop-blur">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 lg:px-6">
@@ -139,7 +147,7 @@ export default function Navbar() {
                 <span className="max-w-[120px] truncate">{session.name || session.email}</span>
                 <ChevronDown size={14} className={`transition-transform ${dropdownOpen ? "rotate-180" : ""}`} />
               </button>
-              <button onClick={logout} className="rounded-xl border border-gray-200 p-2 text-gray-600 hover:bg-harvest-soft" aria-label="Logout">
+              <button onClick={handleLogout} className="rounded-xl border border-gray-200 p-2 text-gray-600 hover:bg-harvest-soft" aria-label="Logout">
                 <LogOut size={18} />
               </button>
 
@@ -176,7 +184,7 @@ export default function Navbar() {
                       Go to Dashboard
                     </Link>
                     <button
-                      onClick={() => { logout(); setDropdownOpen(false); }}
+                      onClick={handleLogout}
                       className="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50"
                     >
                       <LogOut size={16} />
@@ -248,7 +256,7 @@ export default function Navbar() {
               <hr className="my-2" />
             )}
             {isLoggedIn ? (
-              <button onClick={() => { logout(); setMobileOpen(false); }} className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold text-red-600 hover:bg-red-50">
+              <button onClick={handleLogout} className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold text-red-600 hover:bg-red-50">
                 <LogOut size={16} />
                 Logout
               </button>
