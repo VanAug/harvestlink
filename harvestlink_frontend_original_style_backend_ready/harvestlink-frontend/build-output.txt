@@ -4,7 +4,7 @@ transforming...Γ£ô 1769 modules transformed.
 rendering chunks...
 computing gzip size...
 dist/index.html                   0.43 kB Γöé gzip:   0.29 kB
-dist/assets/index-CvRSChLm.css   24.68 kB Γöé gzip:   5.27 kB
-dist/assets/index-MkFFAOQG.js   384.88 kB Γöé gzip: 104.59 kB
+dist/assets/index-B8uenZzX.css   25.31 kB Γöé gzip:   5.38 kB
+dist/assets/index-yR3k5Uu6.js   397.01 kB Γöé gzip: 106.35 kB
 
-[32mΓ£ô built in 1.14s[39m
+[32mΓ£ô built in 1.80s[39m

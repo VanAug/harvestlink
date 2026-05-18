@@ -516,3 +516,235 @@
       at EnvironmentPluginContainer.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:30193:51)
       at async loadAndTransform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24511:26)
       at async viteTransformMiddleware (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24305:20)
+[2m9:53:56 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] Error:[0m Unterminated string
+     [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Dashboard.jsx:561:32 [38;5;246m][0m
+     [38;5;246m│[0m
+ [38;5;246m561 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249ms[0m[38;5;249me[0m[38;5;249mc[0m[38;5;249mt[0m[38;5;249mi[0m[38;5;249mo[0m[38;5;249mn[0m[38;5;249m [0m[38;5;249mc[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249ms[0m[38;5;249ms[0m[38;5;249mN[0m[38;5;249ma[0m[38;5;249mm[0m[38;5;249me[0m[38;5;249m=[0m"mt-
+ [38;5;240m    │[0m                                ───┬──  
+ [38;5;240m    │[0m                                   ╰──── 
+[38;5;246m─────╯[0m
+
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Dashboard.jsx[39m
+[2m9:53:56 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] Error:[0m Unterminated string
+     [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Dashboard.jsx:561:32 [38;5;246m][0m
+     [38;5;246m│[0m
+ [38;5;246m561 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249ms[0m[38;5;249me[0m[38;5;249mc[0m[38;5;249mt[0m[38;5;249mi[0m[38;5;249mo[0m[38;5;249mn[0m[38;5;249m [0m[38;5;249mc[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249ms[0m[38;5;249ms[0m[38;5;249mN[0m[38;5;249ma[0m[38;5;249mm[0m[38;5;249me[0m[38;5;249m=[0m"mt-
+ [38;5;240m    │[0m                                ───┬──  
+ [38;5;240m    │[0m                                   ╰──── 
+[38;5;246m─────╯[0m
+[39m
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Dashboard.jsx[39m
+      at transformWithOxc (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3340:19)
+      at TransformPluginContext.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3408:26)
+      at EnvironmentPluginContainer.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:30193:51)
+      at async loadAndTransform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24511:26)
+      at async viteTransformMiddleware (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24305:20)
+[2m9:53:57 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] Error:[0m Unexpected token
+     [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Dashboard.jsx:577:63 [38;5;246m][0m
+     [38;5;246m│[0m
+ [38;5;246m577 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249mt[0m[38;5;249mh[0m[38;5;249m [0m[38;5;249mc[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249ms[0m[38;5;249ms[0m[38;5;249mN[0m[38;5;249ma[0m[38;5;249mm[0m[38;5;249me[0m[38;5;249m=[0m[38;5;249m"[0m[38;5;249mp[0m[38;5;249mb[0m[38;5;249m-[0m[38;5;249m3[0m[38;5;249m [0m[38;5;249mp[0m[38;5;249mr[0m[38;5;249m-[0m[38;5;249m4[0m[38;5;249m [0m[38;5;249mf[0m[38;5;249mo[0m[38;5;249mn[0m[38;5;249mt[0m[38;5;249m-[0m[38;5;249ms[0m[38;5;249me[0m[38;5;249mm[0m[38;5;249mi[0m[38;5;249mb[0m[38;5;249mo[0m[38;5;249ml[0m[38;5;249md[0m[38;5;249m"[0m[38;5;249m>[0mEsc
+ [38;5;240m    │[0m                                                               ──┬──  
+ [38;5;240m    │[0m                                                                 ╰──── 
+[38;5;246m─────╯[0m
+
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Dashboard.jsx[39m
+[2m9:53:57 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] Error:[0m Unexpected token
+     [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Dashboard.jsx:577:63 [38;5;246m][0m
+     [38;5;246m│[0m
+ [38;5;246m577 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249mt[0m[38;5;249mh[0m[38;5;249m [0m[38;5;249mc[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249ms[0m[38;5;249ms[0m[38;5;249mN[0m[38;5;249ma[0m[38;5;249mm[0m[38;5;249me[0m[38;5;249m=[0m[38;5;249m"[0m[38;5;249mp[0m[38;5;249mb[0m[38;5;249m-[0m[38;5;249m3[0m[38;5;249m [0m[38;5;249mp[0m[38;5;249mr[0m[38;5;249m-[0m[38;5;249m4[0m[38;5;249m [0m[38;5;249mf[0m[38;5;249mo[0m[38;5;249mn[0m[38;5;249mt[0m[38;5;249m-[0m[38;5;249ms[0m[38;5;249me[0m[38;5;249mm[0m[38;5;249mi[0m[38;5;249mb[0m[38;5;249mo[0m[38;5;249ml[0m[38;5;249md[0m[38;5;249m"[0m[38;5;249m>[0mEsc
+ [38;5;240m    │[0m                                                               ──┬──  
+ [38;5;240m    │[0m                                                                 ╰──── 
+[38;5;246m─────╯[0m
+[39m
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Dashboard.jsx[39m
+      at transformWithOxc (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3340:19)
+      at TransformPluginContext.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3408:26)
+      at EnvironmentPluginContainer.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:30193:51)
+      at async loadAndTransform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24511:26)
+      at async viteTransformMiddleware (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24305:20)
+[2m9:53:58 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] Error:[0m Unterminated string
+     [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Dashboard.jsx:583:63 [38;5;246m][0m
+     [38;5;246m│[0m
+ [38;5;246m583 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m[[0m[38;5;249m"[0m[38;5;249mF[0m[38;5;249mr[0m[38;5;249me[0m[38;5;249ms[0m[38;5;249mh[0m[38;5;249m [0m[38;5;249mC[0m[38;5;249mu[0m[38;5;249mt[0m[38;5;249m [0m[38;5;249mF[0m[38;5;249ml[0m[38;5;249mo[0m[38;5;249mw[0m[38;5;249me[0m[38;5;249mr[0m[38;5;249ms[0m[38;5;249m"[0m[38;5;249m,[0m[38;5;249m [0m[38;5;249m"[0m[38;5;249mD[0m[38;5;249mu[0m[38;5;249mt[0m[38;5;249mc[0m[38;5;249mh[0m[38;5;249m [0m[38;5;249mF[0m[38;5;249mr[0m[38;5;249me[0m[38;5;249ms[0m[38;5;249mh[0m[38;5;249m [0m[38;5;249mB[0m[38;5;249mV[0m[38;5;249m"[0m[38;5;249m,[0m[38;5;249m [0m"R
+ [38;5;240m    │[0m                                                               ─┬─  
+ [38;5;240m    │[0m                                                                ╰─── 
+[38;5;246m─────╯[0m
+
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Dashboard.jsx[39m
+[2m9:53:58 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] Error:[0m Unterminated string
+     [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Dashboard.jsx:583:63 [38;5;246m][0m
+     [38;5;246m│[0m
+ [38;5;246m583 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m[[0m[38;5;249m"[0m[38;5;249mF[0m[38;5;249mr[0m[38;5;249me[0m[38;5;249ms[0m[38;5;249mh[0m[38;5;249m [0m[38;5;249mC[0m[38;5;249mu[0m[38;5;249mt[0m[38;5;249m [0m[38;5;249mF[0m[38;5;249ml[0m[38;5;249mo[0m[38;5;249mw[0m[38;5;249me[0m[38;5;249mr[0m[38;5;249ms[0m[38;5;249m"[0m[38;5;249m,[0m[38;5;249m [0m[38;5;249m"[0m[38;5;249mD[0m[38;5;249mu[0m[38;5;249mt[0m[38;5;249mc[0m[38;5;249mh[0m[38;5;249m [0m[38;5;249mF[0m[38;5;249mr[0m[38;5;249me[0m[38;5;249ms[0m[38;5;249mh[0m[38;5;249m [0m[38;5;249mB[0m[38;5;249mV[0m[38;5;249m"[0m[38;5;249m,[0m[38;5;249m [0m"R
+ [38;5;240m    │[0m                                                               ─┬─  
+ [38;5;240m    │[0m                                                                ╰─── 
+[38;5;246m─────╯[0m
+[39m
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Dashboard.jsx[39m
+      at transformWithOxc (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3340:19)
+      at TransformPluginContext.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3408:26)
+      at EnvironmentPluginContainer.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:30193:51)
+      at async loadAndTransform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24511:26)
+      at async viteTransformMiddleware (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24305:20)
+[2m9:54:00 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] Error:[0m Unterminated string
+     [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Dashboard.jsx:590:39 [38;5;246m][0m
+     [38;5;246m│[0m
+ [38;5;246m590 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249mt[0m[38;5;249md[0m[38;5;249m [0m[38;5;249mc[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249ms[0m[38;5;249ms[0m[38;5;249mN[0m[38;5;249ma[0m[38;5;249mm[0m[38;5;249me[0m[38;5;249m=[0m"py-3 pr-
+ [38;5;240m    │[0m                                       ─────┬─────  
+ [38;5;240m    │[0m                                            ╰─────── 
+[38;5;246m─────╯[0m
+
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Dashboard.jsx[39m
+[2m9:54:00 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] Error:[0m Unterminated string
+     [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Dashboard.jsx:590:39 [38;5;246m][0m
+     [38;5;246m│[0m
+ [38;5;246m590 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249mt[0m[38;5;249md[0m[38;5;249m [0m[38;5;249mc[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249ms[0m[38;5;249ms[0m[38;5;249mN[0m[38;5;249ma[0m[38;5;249mm[0m[38;5;249me[0m[38;5;249m=[0m"py-3 pr-
+ [38;5;240m    │[0m                                       ─────┬─────  
+ [38;5;240m    │[0m                                            ╰─────── 
+[38;5;246m─────╯[0m
+[39m
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Dashboard.jsx[39m
+      at transformWithOxc (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3340:19)
+      at TransformPluginContext.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3408:26)
+      at EnvironmentPluginContainer.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:30193:51)
+      at async loadAndTransform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24511:26)
+      at async viteTransformMiddleware (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24305:20)
+[2m9:54:01 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] Error:[0m Unterminated string
+     [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Dashboard.jsx:607:32 [38;5;246m][0m
+     [38;5;246m│[0m
+ [38;5;246m607 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249ms[0m[38;5;249me[0m[38;5;249mc[0m[38;5;249mt[0m[38;5;249mi[0m[38;5;249mo[0m[38;5;249mn[0m[38;5;249m [0m[38;5;249mc[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249ms[0m[38;5;249ms[0m[38;5;249mN[0m[38;5;249ma[0m[38;5;249mm[0m[38;5;249me[0m[38;5;249m=[0m"mt-8 rounded-3
+ [38;5;240m    │[0m                                ────────┬────────  
+ [38;5;240m    │[0m                                        ╰────────── 
+[38;5;246m─────╯[0m
+
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Dashboard.jsx[39m
+[2m9:54:01 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] Error:[0m Unterminated string
+     [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Dashboard.jsx:607:32 [38;5;246m][0m
+     [38;5;246m│[0m
+ [38;5;246m607 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249ms[0m[38;5;249me[0m[38;5;249mc[0m[38;5;249mt[0m[38;5;249mi[0m[38;5;249mo[0m[38;5;249mn[0m[38;5;249m [0m[38;5;249mc[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249ms[0m[38;5;249ms[0m[38;5;249mN[0m[38;5;249ma[0m[38;5;249mm[0m[38;5;249me[0m[38;5;249m=[0m"mt-8 rounded-3
+ [38;5;240m    │[0m                                ────────┬────────  
+ [38;5;240m    │[0m                                        ╰────────── 
+[38;5;246m─────╯[0m
+[39m
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Dashboard.jsx[39m
+      at transformWithOxc (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3340:19)
+      at TransformPluginContext.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3408:26)
+      at EnvironmentPluginContainer.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:30193:51)
+      at async loadAndTransform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24511:26)
+      at async viteTransformMiddleware (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24305:20)
+[2m9:54:02 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] Error:[0m Unterminated string
+     [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Dashboard.jsx:613:116 [38;5;246m][0m
+     [38;5;246m│[0m
+ [38;5;246m613 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m{[0m[38;5;249m [0m[38;5;249mi[0m[38;5;249mc[0m[38;5;249mo[0m[38;5;249mn[0m[38;5;249m:[0m[38;5;249m [0m[38;5;249mF[0m[38;5;249mi[0m[38;5;249ml[0m[38;5;249me[0m[38;5;249mT[0m[38;5;249me[0m[38;5;249mx[0m[38;5;249mt[0m[38;5;249m,[0m[38;5;249m [0m[38;5;249mt[0m[38;5;249me[0m[38;5;249mx[0m[38;5;249mt[0m[38;5;249m:[0m[38;5;249m [0m[38;5;249m"[0m[38;5;249mR[0m[38;5;249mF[0m[38;5;249mQ[0m[38;5;249m [0m[38;5;249mc[0m[38;5;249mr[0m[38;5;249me[0m[38;5;249ma[0m[38;5;249mt[0m[38;5;249me[0m[38;5;249md[0m[38;5;249m [0m[38;5;249m—[0m[38;5;249m [0m[38;5;249m2[0m[38;5;249m0[0m[38;5;249m [0m[38;5;249mt[0m[38;5;249mo[0m[38;5;249mn[0m[38;5;249ms[0m[38;5;249m [0m[38;5;249mH[0m[38;5;249ma[0m[38;5;249ms[0m[38;5;249ms[0m[38;5;249m [0m[38;5;249mA[0m[38;5;249mv[0m[38;5;249mo[0m[38;5;249mc[0m[38;5;249ma[0m[38;5;249md[0m[38;5;249mo[0m[38;5;249ms[0m[38;5;249m [0m[38;5;249mt[0m[38;5;249mo[0m[38;5;249m [0m[38;5;249mU[0m[38;5;249mA[0m[38;5;249mE[0m[38;5;249m"[0m[38;5;249m,[0m[38;5;249m [0m[38;5;249mt[0m[38;5;249mi[0m[38;5;249mm[0m[38;5;249me[0m[38;5;249m:[0m[38;5;249m [0m[38;5;249m"[0m[38;5;249m3[0m[38;5;249m [0m[38;5;249md[0m[38;5;249ma[0m[38;5;249my[0m[38;5;249ms[0m[38;5;249m [0m[38;5;249ma[0m[38;5;249mg[0m[38;5;249mo[0m[38;5;249m"[0m[38;5;249m,[0m[38;5;249m [0m[38;5;249mc[0m[38;5;249mo[0m[38;5;249ml[0m[38;5;249mo[0m[38;5;249mr[0m[38;5;249m:[0m[38;5;249m [0m"
+ [38;5;240m    │[0m                                                                                                                    ─┬  
+ [38;5;240m    │[0m                                                                                                                     ╰── 
+[38;5;246m─────╯[0m
+
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Dashboard.jsx[39m
+[2m9:54:02 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] Error:[0m Unterminated string
+     [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Dashboard.jsx:613:116 [38;5;246m][0m
+     [38;5;246m│[0m
+ [38;5;246m613 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m{[0m[38;5;249m [0m[38;5;249mi[0m[38;5;249mc[0m[38;5;249mo[0m[38;5;249mn[0m[38;5;249m:[0m[38;5;249m [0m[38;5;249mF[0m[38;5;249mi[0m[38;5;249ml[0m[38;5;249me[0m[38;5;249mT[0m[38;5;249me[0m[38;5;249mx[0m[38;5;249mt[0m[38;5;249m,[0m[38;5;249m [0m[38;5;249mt[0m[38;5;249me[0m[38;5;249mx[0m[38;5;249mt[0m[38;5;249m:[0m[38;5;249m [0m[38;5;249m"[0m[38;5;249mR[0m[38;5;249mF[0m[38;5;249mQ[0m[38;5;249m [0m[38;5;249mc[0m[38;5;249mr[0m[38;5;249me[0m[38;5;249ma[0m[38;5;249mt[0m[38;5;249me[0m[38;5;249md[0m[38;5;249m [0m[38;5;249m—[0m[38;5;249m [0m[38;5;249m2[0m[38;5;249m0[0m[38;5;249m [0m[38;5;249mt[0m[38;5;249mo[0m[38;5;249mn[0m[38;5;249ms[0m[38;5;249m [0m[38;5;249mH[0m[38;5;249ma[0m[38;5;249ms[0m[38;5;249ms[0m[38;5;249m [0m[38;5;249mA[0m[38;5;249mv[0m[38;5;249mo[0m[38;5;249mc[0m[38;5;249ma[0m[38;5;249md[0m[38;5;249mo[0m[38;5;249ms[0m[38;5;249m [0m[38;5;249mt[0m[38;5;249mo[0m[38;5;249m [0m[38;5;249mU[0m[38;5;249mA[0m[38;5;249mE[0m[38;5;249m"[0m[38;5;249m,[0m[38;5;249m [0m[38;5;249mt[0m[38;5;249mi[0m[38;5;249mm[0m[38;5;249me[0m[38;5;249m:[0m[38;5;249m [0m[38;5;249m"[0m[38;5;249m3[0m[38;5;249m [0m[38;5;249md[0m[38;5;249ma[0m[38;5;249my[0m[38;5;249ms[0m[38;5;249m [0m[38;5;249ma[0m[38;5;249mg[0m[38;5;249mo[0m[38;5;249m"[0m[38;5;249m,[0m[38;5;249m [0m[38;5;249mc[0m[38;5;249mo[0m[38;5;249ml[0m[38;5;249mo[0m[38;5;249mr[0m[38;5;249m:[0m[38;5;249m [0m"
+ [38;5;240m    │[0m                                                                                                                    ─┬  
+ [38;5;240m    │[0m                                                                                                                     ╰── 
+[38;5;246m─────╯[0m
+[39m
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Dashboard.jsx[39m
+      at transformWithOxc (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3340:19)
+      at TransformPluginContext.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3408:26)
+      at EnvironmentPluginContainer.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:30193:51)
+      at async loadAndTransform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24511:26)
+      at async viteTransformMiddleware (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24305:20)
+[2m9:54:03 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] Error:[0m Expected `}` but found `EOF`
+     [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Dashboard.jsx:617:22 [38;5;246m][0m
+     [38;5;246m│[0m
+ [38;5;246m617 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m{[0m
+ [38;5;240m    │[0m                      │ 
+ [38;5;240m    │[0m                      ╰─ `}` expected
+[38;5;246m─────╯[0m
+
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Dashboard.jsx[39m
+[2m9:54:03 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] Error:[0m Expected `}` but found `EOF`
+     [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Dashboard.jsx:617:22 [38;5;246m][0m
+     [38;5;246m│[0m
+ [38;5;246m617 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m{[0m
+ [38;5;240m    │[0m                      │ 
+ [38;5;240m    │[0m                      ╰─ `}` expected
+[38;5;246m─────╯[0m
+[39m
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Dashboard.jsx[39m
+      at transformWithOxc (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3340:19)
+      at TransformPluginContext.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3408:26)
+      at EnvironmentPluginContainer.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:30193:51)
+      at async loadAndTransform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24511:26)
+      at async viteTransformMiddleware (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24305:20)
+[2m9:54:04 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] Error:[0m Unterminated string
+     [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Dashboard.jsx:626:38 [38;5;246m][0m
+     [38;5;246m│[0m
+ [38;5;246m626 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249mp[0m[38;5;249m [0m[38;5;249mc[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249ms[0m[38;5;249ms[0m[38;5;249mN[0m[38;5;249ma[0m[38;5;249mm[0m[38;5;249me[0m[38;5;249m=[0m"font-sem
+ [38;5;240m    │[0m                                      ─────┬─────  
+ [38;5;240m    │[0m                                           ╰─────── 
+[38;5;246m─────╯[0m
+
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Dashboard.jsx[39m
+[2m9:54:05 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] Error:[0m Unterminated string
+     [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Dashboard.jsx:626:38 [38;5;246m][0m
+     [38;5;246m│[0m
+ [38;5;246m626 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249mp[0m[38;5;249m [0m[38;5;249mc[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249ms[0m[38;5;249ms[0m[38;5;249mN[0m[38;5;249ma[0m[38;5;249mm[0m[38;5;249me[0m[38;5;249m=[0m"font-sem
+ [38;5;240m    │[0m                                      ─────┬─────  
+ [38;5;240m    │[0m                                           ╰─────── 
+[38;5;246m─────╯[0m
+[39m
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Dashboard.jsx[39m
+      at transformWithOxc (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3340:19)
+      at TransformPluginContext.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3408:26)
+      at EnvironmentPluginContainer.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:30193:51)
+      at async loadAndTransform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24511:26)
+      at async viteTransformMiddleware (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24305:20)

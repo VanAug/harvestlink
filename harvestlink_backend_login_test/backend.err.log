@@ -1,6 +1,6 @@
 INFO:     Will watch for changes in these directories: ['C:\\Users\\ADMIN\\OneDrive\\Desktop\\harvestlink\\harvestlink_backend_login_test']
 INFO:     Uvicorn running on http://0.0.0.0:8001 (Press CTRL+C to quit)
-INFO:     Started reloader process [8096] using WatchFiles
-INFO:     Started server process [20968]
+INFO:     Started reloader process [20588] using WatchFiles
+INFO:     Started server process [19408]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
