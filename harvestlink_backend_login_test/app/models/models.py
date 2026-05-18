@@ -143,3 +143,48 @@ class TradeDocument(Base):
     notes: Mapped[str | None] = mapped_column(Text, nullable=True)
     status: Mapped[str] = mapped_column(String(50), default="submitted")
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+class ShippingTracking(Base):
+    __tablename__ = "shipping_tracking"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    deal_id: Mapped[int] = mapped_column(ForeignKey("deals.id"), index=True)
+    status: Mapped[str] = mapped_column(String(50), default="pending")
+    tracking_number: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    carrier: Mapped[str | None] = mapped_column(String(100), nullable=True)
+    estimated_delivery: Mapped[str | None] = mapped_column(String(100), nullable=True)
+    actual_delivery: Mapped[str | None] = mapped_column(String(100), nullable=True)
+    location: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    notes: Mapped[str | None] = mapped_column(Text, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+class Review(Base):
+    __tablename__ = "reviews"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    deal_id: Mapped[int] = mapped_column(ForeignKey("deals.id"), index=True)
+    reviewer_company_id: Mapped[int] = mapped_column(ForeignKey("companies.id"), index=True)
+    reviewer_name: Mapped[str] = mapped_column(String(255))
+    reviewed_company_id: Mapped[int] = mapped_column(ForeignKey("companies.id"), index=True)
+    rating: Mapped[float] = mapped_column(Float)
+    comment: Mapped[str | None] = mapped_column(Text, nullable=True)
+    review_type: Mapped[str] = mapped_column(String(50), default="quality")
+    status: Mapped[str] = mapped_column(String(50), default="submitted")
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+class PasswordReset(Base):
+    __tablename__ = "password_resets"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), index=True)
+    token: Mapped[str] = mapped_column(String(255), unique=True, index=True)
+    expires_at: Mapped[datetime] = mapped_column(DateTime, index=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+class EmailVerification(Base):
+    __tablename__ = "email_verifications"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), index=True, unique=True)
+    token: Mapped[str] = mapped_column(String(255), unique=True, index=True)
+    is_verified: Mapped[bool] = mapped_column(default=False)
+    expires_at: Mapped[datetime] = mapped_column(DateTime, index=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+

@@ -1,0 +1,10 @@
+﻿[36mvite v8.0.12 [32mbuilding client environment for production...[36m[39m
+[2K
+transforming...Γ£ô 1769 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.43 kB Γöé gzip:   0.29 kB
+dist/assets/index-CvRSChLm.css   24.68 kB Γöé gzip:   5.27 kB
+dist/assets/index-BTohpn3q.js   384.86 kB Γöé gzip: 104.57 kB
+
+[32mΓ£ô built in 1.12s[39m

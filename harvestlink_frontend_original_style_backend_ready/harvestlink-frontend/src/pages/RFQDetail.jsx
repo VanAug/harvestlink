@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { Check, X } from "lucide-react";
 import PageShell from "../components/layout/PageShell";
 import { Input } from "../components/forms/Input";
 import { apiGet, apiPost, mapRFQ } from "../lib/api";
@@ -10,6 +11,8 @@ export default function RFQDetail() {
   const [offers, setOffers] = useState([]);
   const [company, setCompany] = useState(null);
   const [message, setMessage] = useState("");
+  const [viewMode, setViewMode] = useState("list");
+  const [selectedOffers, setSelectedOffers] = useState([]);
   const [form, setForm] = useState({
     price: "",
     quantity: "",
@@ -74,6 +77,37 @@ export default function RFQDetail() {
     }
   }
 
+  async function acceptOffer(offerId) {
+    try {
+      await apiPost(`/rfqs/${id}/offers/${offerId}/accept`, {});
+      setMessage("Offer accepted! Creating deal...");
+      setTimeout(() => {
+        window.location.href = "/deals";
+      }, 1500);
+    } catch (error) {
+      setMessage(`Offer could not be accepted. ${error.message}`);
+    }
+  }
+
+  async function rejectOffer(offerId) {
+    try {
+      await apiPost(`/rfqs/${id}/offers/${offerId}/reject`, {});
+      setMessage("Offer rejected.");
+      await load();
+    } catch (error) {
+      setMessage(`Offer could not be rejected. ${error.message}`);
+    }
+  }
+
+  function toggleOfferSelection(offerId) {
+    setSelectedOffers((current) =>
+      current.includes(offerId) ? current.filter((id) => id !== offerId) : [...current, offerId]
+    );
+  }
+
+  const selectedOffersData = offers.filter((o) => selectedOffers.includes(o.id));
+  const isBuyer = !company || company.type === "buyer";
+
   return (
     <PageShell>
       <main className="mx-auto max-w-7xl px-4 py-12 lg:px-6">
@@ -93,22 +127,142 @@ export default function RFQDetail() {
                 ))}
               </div>
             </div>
+
             <div className="rounded-3xl bg-white p-7 shadow-sm">
-              <h2 className="text-2xl font-black text-harvest-green">Submitted Offers</h2>
-              <div className="mt-5 space-y-3">
-                {offers.map((offer) => (
-                  <div key={offer.id} className="rounded-2xl bg-harvest-soft p-4">
-                    <div className="flex items-center justify-between gap-3">
-                      <b>{offer.exporter_name}</b>
-                      <span className="rounded-full bg-white px-3 py-1 text-xs font-bold text-harvest-green">{offer.status}</span>
-                    </div>
-                    <div className="mt-2 text-sm text-gray-600">USD {offer.price} - {offer.quantity} units - {offer.delivery_terms}</div>
-                  </div>
-                ))}
-                {!offers.length && <div className="rounded-2xl bg-harvest-soft p-4 text-sm text-gray-600">No offers submitted yet.</div>}
+              <div className="mb-5 flex items-center justify-between">
+                <h2 className="text-2xl font-black text-harvest-green">Submitted Offers</h2>
+                {isBuyer && selectedOffers.length > 0 && (
+                  <button
+                    onClick={() => setViewMode(viewMode === "list" ? "compare" : "list")}
+                    className="rounded-xl bg-harvest-green px-4 py-2 text-sm font-bold text-white"
+                  >
+                    {viewMode === "list" ? "Compare Selected" : "Back to List"}
+                  </button>
+                )}
               </div>
+
+              {viewMode === "compare" && selectedOffersData.length > 0 ? (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b border-gray-200">
+                        <th className="px-4 py-3 text-left font-bold">Exporter</th>
+                        {selectedOffersData.map((o) => (
+                          <th key={o.id} className="px-4 py-3 text-left font-bold">
+                            {o.exporter_name}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr className="border-b border-gray-200">
+                        <td className="px-4 py-3 font-bold">Unit Price (USD)</td>
+                        {selectedOffersData.map((o) => (
+                          <td key={o.id} className="px-4 py-3">
+                            ${o.price}
+                          </td>
+                        ))}
+                      </tr>
+                      <tr className="border-b border-gray-200">
+                        <td className="px-4 py-3 font-bold">Quantity</td>
+                        {selectedOffersData.map((o) => (
+                          <td key={o.id} className="px-4 py-3">
+                            {o.quantity}
+                          </td>
+                        ))}
+                      </tr>
+                      <tr className="border-b border-gray-200">
+                        <td className="px-4 py-3 font-bold">Delivery Terms</td>
+                        {selectedOffersData.map((o) => (
+                          <td key={o.id} className="px-4 py-3">
+                            {o.delivery_terms}
+                          </td>
+                        ))}
+                      </tr>
+                      <tr className="border-b border-gray-200">
+                        <td className="px-4 py-3 font-bold">Est. Delivery</td>
+                        {selectedOffersData.map((o) => (
+                          <td key={o.id} className="px-4 py-3">
+                            {o.estimated_delivery_date}
+                          </td>
+                        ))}
+                      </tr>
+                      <tr>
+                        <td className="px-4 py-3 font-bold">Action</td>
+                        {selectedOffersData.map((o) => (
+                          <td key={o.id} className="px-4 py-3">
+                            {isBuyer && o.status === "submitted" && (
+                              <div className="flex gap-2">
+                                <button
+                                  onClick={() => acceptOffer(o.id)}
+                                  className="rounded-lg bg-green-500 px-3 py-2 text-xs font-bold text-white hover:bg-green-600"
+                                >
+                                  <Check size={14} />
+                                </button>
+                                <button
+                                  onClick={() => rejectOffer(o.id)}
+                                  className="rounded-lg bg-red-500 px-3 py-2 text-xs font-bold text-white hover:bg-red-600"
+                                >
+                                  <X size={14} />
+                                </button>
+                              </div>
+                            )}
+                          </td>
+                        ))}
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {offers.map((offer) => (
+                    <div key={offer.id} className="rounded-2xl bg-harvest-soft p-4">
+                      <div className="flex items-center justify-between gap-3">
+                        <div className="flex items-center gap-3">
+                          {isBuyer && (
+                            <input
+                              type="checkbox"
+                              checked={selectedOffers.includes(offer.id)}
+                              onChange={() => toggleOfferSelection(offer.id)}
+                              className="h-5 w-5 cursor-pointer"
+                            />
+                          )}
+                          <div>
+                            <b>{offer.exporter_name}</b>
+                            <div className="text-sm text-gray-600">USD {offer.price} - {offer.quantity} units - {offer.delivery_terms}</div>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="rounded-full bg-white px-3 py-1 text-xs font-bold text-harvest-green">{offer.status}</span>
+                          {isBuyer && offer.status === "submitted" && (
+                            <div className="flex gap-1">
+                              <button
+                                onClick={() => acceptOffer(offer.id)}
+                                className="rounded-lg bg-green-500 px-3 py-2 text-xs font-bold text-white hover:bg-green-600"
+                                title="Accept offer"
+                              >
+                                <Check size={14} />
+                              </button>
+                              <button
+                                onClick={() => rejectOffer(offer.id)}
+                                className="rounded-lg bg-red-500 px-3 py-2 text-xs font-bold text-white hover:bg-red-600"
+                                title="Reject offer"
+                              >
+                                <X size={14} />
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      {offer.notes && <div className="mt-2 text-sm text-gray-600 italic">"{offer.notes}"</div>}
+                    </div>
+                  ))}
+                  {!offers.length && <div className="rounded-2xl bg-harvest-soft p-4 text-sm text-gray-600">No offers submitted yet.</div>}
+                </div>
+              )}
             </div>
           </section>
+
           <aside className="rounded-3xl bg-white p-7 shadow-soft">
             <h3 className="text-xl font-black text-harvest-green">Submit Offer</h3>
             {!company && <Link to="/exporter/profile" className="mt-3 block rounded-2xl bg-harvest-soft p-3 text-sm font-bold text-harvest-green">Create exporter profile first</Link>}

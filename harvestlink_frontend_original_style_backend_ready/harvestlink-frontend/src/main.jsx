@@ -14,6 +14,7 @@ import CreateRFQ from "./pages/CreateRFQ";
 import AddProduct from "./pages/AddProduct";
 import ExporterProducts from "./pages/ExporterProducts";
 import ExporterProfile from "./pages/ExporterProfile";
+import BuyerProfile from "./pages/BuyerProfile";
 import Verification from "./pages/Verification";
 import Dashboard from "./pages/Dashboard";
 import Pricing from "./pages/Pricing";
@@ -21,6 +22,10 @@ import Auth from "./pages/Auth";
 import Deals from "./pages/Deals";
 import Escrow from "./pages/Escrow";
 import Financing from "./pages/Financing";
+import ShippingTracking from "./pages/ShippingTracking";
+import DeliveryReview from "./pages/DeliveryReview";
+import PasswordReset from "./pages/PasswordReset";
+import EmailVerification from "./pages/EmailVerification";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -38,6 +43,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/exporter/products/:id/edit" element={<AddProduct />} />
         <Route path="/exporter/products" element={<ExporterProducts />} />
         <Route path="/exporter/profile" element={<ExporterProfile />} />
+        <Route path="/buyer/profile" element={<BuyerProfile />} />
+        <Route path="/deals/:dealId/tracking" element={<ShippingTracking />} />
+        <Route path="/deals/:dealId/review" element={<DeliveryReview />} />
         <Route path="/buyer-verification" element={<Verification type="buyer" />} />
         <Route path="/supplier-verification" element={<Verification type="supplier" />} />
         <Route path="/buyer-dashboard" element={<Dashboard role="buyer" />} />
@@ -50,6 +58,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/login" element={<Auth mode="login" />} />
         <Route path="/register" element={<Auth mode="register" />} />
+        <Route path="/password-reset" element={<PasswordReset />} />
+        <Route path="/verify-email" element={<EmailVerification />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

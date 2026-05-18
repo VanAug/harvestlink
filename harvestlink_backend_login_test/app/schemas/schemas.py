@@ -1,5 +1,6 @@
 from pydantic import BaseModel, EmailStr, ConfigDict
 from typing import Optional
+from datetime import datetime
 
 class LoginRequest(BaseModel):
     email: EmailStr
@@ -121,6 +122,18 @@ class ProductUpdate(BaseModel):
     description: Optional[str] = None
     image_key: Optional[str] = None
     status: Optional[str] = None
+
+class RFQCreate(BaseModel):
+    buyer_company_id: int
+    buyer_name: str
+    product_category: str
+    product_name: str
+    quantity: float
+    unit: str
+    destination_country: str
+    delivery_timeline: str
+    target_price: Optional[float] = None
+    additional_notes: Optional[str] = None
 
 class RFQOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
@@ -245,6 +258,65 @@ class TradeDocumentOut(BaseModel):
     file_url: Optional[str] = None
     notes: Optional[str] = None
     status: str
+
+class ShippingTrackingCreate(BaseModel):
+    deal_id: int
+    tracking_number: Optional[str] = None
+    carrier: Optional[str] = None
+    estimated_delivery: Optional[str] = None
+
+class ShippingTrackingUpdate(BaseModel):
+    status: Optional[str] = None
+    tracking_number: Optional[str] = None
+    carrier: Optional[str] = None
+    location: Optional[str] = None
+    estimated_delivery: Optional[str] = None
+    actual_delivery: Optional[str] = None
+    notes: Optional[str] = None
+
+class ShippingTrackingOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    id: int
+    deal_id: int
+    status: str
+    tracking_number: Optional[str] = None
+    carrier: Optional[str] = None
+    estimated_delivery: Optional[str] = None
+    actual_delivery: Optional[str] = None
+    location: Optional[str] = None
+    notes: Optional[str] = None
+    created_at: datetime
+    updated_at: datetime
+
+class ReviewCreate(BaseModel):
+    deal_id: int
+    reviewed_company_id: int
+    rating: float
+    comment: Optional[str] = None
+    review_type: str = "quality"
+
+class ReviewOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    id: int
+    deal_id: int
+    reviewer_company_id: int
+    reviewer_name: str
+    reviewed_company_id: int
+    rating: float
+    comment: Optional[str] = None
+    review_type: str
+    status: str
+    created_at: datetime
+
+class PasswordResetRequest(BaseModel):
+    email: EmailStr
+
+class PasswordResetConfirm(BaseModel):
+    token: str
+    new_password: str
+
+class EmailVerificationRequest(BaseModel):
+    token: str
 
 class DashboardOut(BaseModel):
     company_id: int

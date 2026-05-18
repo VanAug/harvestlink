@@ -1,3 +1,4 @@
+from datetime import datetime
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -6,12 +7,16 @@ from app.db.session import get_db
 from app.models.models import (
     Company,
     Deal,
+    EmailVerification,
     EscrowTransaction,
     FinancingRequest,
     Message,
     Offer,
+    PasswordReset,
     Product,
     RFQ,
+    Review,
+    ShippingTracking,
     TradeDocument,
     User,
 )
@@ -22,6 +27,7 @@ from app.schemas.schemas import (
     DashboardOut,
     DealOut,
     DealStatusUpdate,
+    EmailVerificationRequest,
     EscrowOut,
     FinancingCreate,
     FinancingOut,
@@ -29,10 +35,18 @@ from app.schemas.schemas import (
     MessageOut,
     OfferCreate,
     OfferOut,
+    PasswordResetConfirm,
+    PasswordResetRequest,
     ProductCreate,
     ProductOut,
     ProductUpdate,
+    ReviewCreate,
+    ReviewOut,
+    RFQCreate,
     RFQOut,
+    ShippingTrackingCreate,
+    ShippingTrackingOut,
+    ShippingTrackingUpdate,
     StatsOut,
     TradeDocumentCreate,
     TradeDocumentOut,
@@ -158,6 +172,20 @@ async def rfqs(status: str | None = None, db: AsyncSession = Depends(get_db)):
     return list(await db.scalars(stmt))
 
 
+@router.post("/rfqs", response_model=RFQOut)
+async def create_rfq(payload: RFQCreate, db: AsyncSession = Depends(get_db)):
+    buyer = await db.get(Company, payload.buyer_company_id)
+    if not buyer:
+        raise HTTPException(status_code=404, detail="Buyer company not found")
+    if buyer.type != "buyer":
+        raise HTTPException(status_code=400, detail="RFQs can only be created by buyer companies")
+    rfq = RFQ(**payload.model_dump(), status="open")
+    db.add(rfq)
+    await db.commit()
+    await db.refresh(rfq)
+    return rfq
+
+
 @router.get("/rfqs/{rfq_id}", response_model=RFQOut)
 async def rfq(rfq_id: int, db: AsyncSession = Depends(get_db)):
     item = await db.get(RFQ, rfq_id)
@@ -217,6 +245,18 @@ async def accept_offer(rfq_id: int, offer_id: int, db: AsyncSession = Depends(ge
     await db.commit()
     await db.refresh(deal)
     return {"message": "Offer accepted", "deal_id": deal.id}
+
+
+@router.post("/rfqs/{rfq_id}/offers/{offer_id}/reject")
+async def reject_offer(rfq_id: int, offer_id: int, db: AsyncSession = Depends(get_db)):
+    rfq = await db.get(RFQ, rfq_id)
+    offer = await db.get(Offer, offer_id)
+    if not rfq or not offer:
+        raise HTTPException(status_code=404, detail="RFQ or offer not found")
+    offer.status = "rejected"
+    await db.commit()
+    await db.refresh(offer)
+    return {"message": "Offer rejected"}
 
 
 @router.get("/deals", response_model=list[DealOut])
@@ -402,3 +442,167 @@ async def overview(db: AsyncSession = Depends(get_db)):
         escrow_transactions=await c(EscrowTransaction),
         financing_requests=await c(FinancingRequest),
     )
+
+
+@router.get("/tracking", response_model=list[ShippingTrackingOut])
+async def tracking_list(deal_id: int | None = None, db: AsyncSession = Depends(get_db)):
+    stmt = select(ShippingTracking).order_by(ShippingTracking.id)
+    if deal_id:
+        stmt = stmt.where(ShippingTracking.deal_id == deal_id)
+    return list(await db.scalars(stmt))
+
+
+@router.get("/tracking/{tracking_id}", response_model=ShippingTrackingOut)
+async def tracking_detail(tracking_id: int, db: AsyncSession = Depends(get_db)):
+    item = await db.get(ShippingTracking, tracking_id)
+    if not item:
+        raise HTTPException(status_code=404, detail="Tracking not found")
+    return item
+
+
+@router.post("/deals/{deal_id}/tracking", response_model=ShippingTrackingOut)
+async def create_tracking(deal_id: int, payload: ShippingTrackingCreate, db: AsyncSession = Depends(get_db)):
+    deal = await db.get(Deal, deal_id)
+    if not deal:
+        raise HTTPException(status_code=404, detail="Deal not found")
+    existing = await db.scalar(select(ShippingTracking).where(ShippingTracking.deal_id == deal_id))
+    if existing:
+        raise HTTPException(status_code=400, detail="Tracking already exists for this deal")
+    tracking = ShippingTracking(deal_id=deal_id, **payload.model_dump(), status="pending")
+    db.add(tracking)
+    await db.commit()
+    await db.refresh(tracking)
+    return tracking
+
+
+@router.patch("/tracking/{tracking_id}", response_model=ShippingTrackingOut)
+async def update_tracking(tracking_id: int, payload: ShippingTrackingUpdate, db: AsyncSession = Depends(get_db)):
+    item = await db.get(ShippingTracking, tracking_id)
+    if not item:
+        raise HTTPException(status_code=404, detail="Tracking not found")
+    for key, value in payload.model_dump(exclude_unset=True).items():
+        setattr(item, key, value)
+    await db.commit()
+    await db.refresh(item)
+    return item
+
+
+@router.get("/reviews", response_model=list[ReviewOut])
+async def reviews_list(deal_id: int | None = None, reviewed_company_id: int | None = None, db: AsyncSession = Depends(get_db)):
+    stmt = select(Review).order_by(Review.id.desc())
+    if deal_id:
+        stmt = stmt.where(Review.deal_id == deal_id)
+    if reviewed_company_id:
+        stmt = stmt.where(Review.reviewed_company_id == reviewed_company_id)
+    return list(await db.scalars(stmt))
+
+
+@router.post("/deals/{deal_id}/reviews", response_model=ReviewOut)
+async def create_review(deal_id: int, payload: ReviewCreate, db: AsyncSession = Depends(get_db)):
+    deal = await db.get(Deal, deal_id)
+    if not deal:
+        raise HTTPException(status_code=404, detail="Deal not found")
+    existing = await db.scalar(
+        select(Review).where(Review.deal_id == deal_id, Review.reviewer_company_id == payload.reviewer_company_id)
+    )
+    if existing:
+        raise HTTPException(status_code=400, detail="Review already exists from this reviewer")
+    reviewer = await db.get(Company, payload.reviewer_company_id)
+    review = Review(
+        deal_id=deal_id,
+        reviewer_company_id=payload.reviewer_company_id,
+        reviewer_name=reviewer.name if reviewer else "Unknown",
+        **payload.model_dump(exclude={"reviewer_company_id"}),
+        status="submitted",
+    )
+    db.add(review)
+    await db.commit()
+    await db.refresh(review)
+    return review
+
+
+@router.post("/auth/email/verify-request")
+async def request_email_verification(user_id: int, db: AsyncSession = Depends(get_db)):
+    from datetime import timedelta
+    import secrets
+
+    user = await db.get(User, user_id)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    existing = await db.scalar(select(EmailVerification).where(EmailVerification.user_id == user_id))
+    if existing:
+        await db.delete(existing)
+
+    token = secrets.token_urlsafe(32)
+    verification = EmailVerification(
+        user_id=user_id,
+        token=token,
+        expires_at=datetime.utcnow() + timedelta(hours=24),
+    )
+    db.add(verification)
+    await db.commit()
+    return {"message": "Verification email sent", "token": token, "email": user.email}
+
+
+@router.post("/auth/email/verify")
+async def verify_email(payload: EmailVerificationRequest, db: AsyncSession = Depends(get_db)):
+    verification = await db.scalar(select(EmailVerification).where(EmailVerification.token == payload.token))
+    if not verification:
+        raise HTTPException(status_code=400, detail="Invalid token")
+    if datetime.utcnow() > verification.expires_at:
+        raise HTTPException(status_code=400, detail="Token expired")
+
+    user = await db.get(User, verification.user_id)
+    if user:
+        user.status = "verified"
+
+    verification.is_verified = True
+    await db.commit()
+    return {"message": "Email verified successfully"}
+
+
+@router.post("/auth/password-reset/request")
+async def request_password_reset(payload: PasswordResetRequest, db: AsyncSession = Depends(get_db)):
+    from datetime import timedelta
+    import secrets
+
+    user = await db.scalar(select(User).where(User.email == payload.email))
+    if not user:
+        return {"message": "If account exists, reset link will be sent"}
+
+    existing = await db.scalar(select(PasswordReset).where(PasswordReset.user_id == user.id))
+    if existing:
+        await db.delete(existing)
+
+    token = secrets.token_urlsafe(32)
+    reset = PasswordReset(
+        user_id=user.id,
+        token=token,
+        expires_at=datetime.utcnow() + timedelta(hours=2),
+    )
+    db.add(reset)
+    await db.commit()
+    return {"message": "If account exists, reset link will be sent", "token": token}
+
+
+@router.post("/auth/password-reset/confirm")
+async def confirm_password_reset(payload: PasswordResetConfirm, db: AsyncSession = Depends(get_db)):
+    from passlib.context import CryptContext
+
+    reset = await db.scalar(select(PasswordReset).where(PasswordReset.token == payload.token))
+    if not reset:
+        raise HTTPException(status_code=400, detail="Invalid token")
+    if datetime.utcnow() > reset.expires_at:
+        raise HTTPException(status_code=400, detail="Token expired")
+
+    user = await db.get(User, reset.user_id)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+    user.password_hash = pwd_context.hash(payload.new_password)
+    await db.delete(reset)
+    await db.commit()
+    return {"message": "Password reset successfully"}
+

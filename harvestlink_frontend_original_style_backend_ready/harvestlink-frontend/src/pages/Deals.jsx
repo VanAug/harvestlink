@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import PageShell from "../components/layout/PageShell";
 import { Input } from "../components/forms/Input";
 import { apiGet, apiPatch, apiPost } from "../lib/api";
-import { LockKeyhole, MessageSquare, PackageCheck, Truck } from "lucide-react";
+import { LockKeyhole, MessageSquare, PackageCheck, Truck, Star, MapPin } from "lucide-react";
 
 const fallbackDeals = [
   { id: 1, product_name: "Hass Avocados", quantity: 20, unit: "tons", total_amount: 25000, currency: "USD", destination_country: "UAE", delivery_terms: "FOB Mombasa", status: "funds_in_escrow", escrow_status: "funded" },
@@ -149,6 +150,14 @@ export default function Deals() {
               <button onClick={() => updateStatus("in_fulfillment")} className="rounded-2xl bg-harvest-green px-4 py-2 text-sm font-black text-white">Mark In Fulfillment</button>
               <button onClick={() => updateStatus("shipped")} className="rounded-2xl bg-harvest-orange px-4 py-2 text-sm font-black text-white">Mark Shipped</button>
               <button onClick={requestRelease} className="rounded-2xl border border-harvest-green px-4 py-2 text-sm font-black text-harvest-green">Request Escrow Release</button>
+              <Link to={`/deals/${activeDeal?.id}/tracking`} className="rounded-2xl bg-blue-500 px-4 py-2 text-sm font-black text-white hover:bg-blue-600 inline-flex items-center gap-2">
+                <MapPin size={16} />
+                Track Shipment
+              </Link>
+              <Link to={`/deals/${activeDeal?.id}/review`} className="rounded-2xl bg-yellow-500 px-4 py-2 text-sm font-black text-white hover:bg-yellow-600 inline-flex items-center gap-2">
+                <Star size={16} />
+                Rate & Review
+              </Link>
             </div>
 
             <div className="mt-6 grid gap-6 lg:grid-cols-2">
