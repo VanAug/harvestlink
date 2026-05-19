@@ -7,15 +7,18 @@ import {
 } from "lucide-react";
 import { logout } from "../../lib/api";
 
-const navItems = [
+const publicNavItems = [
   ["Products", "/products"],
   ["RFQ Market", "/rfqs"],
+  ["Pricing", "/pricing"],
+  ["Buyer Verification", "/buyer-verification"],
+];
+
+const loggedInNavItems = [
   ["Suppliers", "/suppliers"],
   ["Deals", "/deals"],
   ["Escrow", "/escrow"],
   ["Financing", "/financing"],
-  ["Pricing", "/pricing"],
-  ["Buyer Verification", "/buyer-verification"],
 ];
 
 export default function Navbar() {
@@ -111,9 +114,16 @@ export default function Navbar() {
           </div>
         </Link>
 
-        {/* Desktop Navigation - Original structure preserved */}
+        {/* Desktop Navigation */}
         <nav className="hidden items-center gap-7 text-sm font-medium lg:flex">
-          {navItems.map(([label, path]) => (
+          {/* Public - always visible */}
+          {publicNavItems.map(([label, path]) => (
+            <NavLink key={path} to={path} className={({isActive}) => isActive ? "text-harvest-leaf" : "text-gray-700 hover:text-harvest-leaf"}>
+              {label}
+            </NavLink>
+          ))}
+          {/* Logged-in only */}
+          {isLoggedIn && loggedInNavItems.map(([label, path]) => (
             <NavLink key={path} to={path} className={({isActive}) => isActive ? "text-harvest-leaf" : "text-gray-700 hover:text-harvest-leaf"}>
               {label}
             </NavLink>
@@ -242,7 +252,9 @@ export default function Navbar() {
                 <hr className="my-2" />
               </>
             )}
-            {navItems.map(([label, path]) => (
+            {/* Public mobile links */}
+            <div className="px-2 py-1 text-xs font-bold uppercase tracking-wider text-gray-400">Marketplace</div>
+            {publicNavItems.map(([label, path]) => (
               <NavLink
                 key={path}
                 to={path}
@@ -252,6 +264,22 @@ export default function Navbar() {
                 {label}
               </NavLink>
             ))}
+            {/* Logged-in only mobile links */}
+            {isLoggedIn && (
+              <>
+                <div className="mt-2 px-2 py-1 text-xs font-bold uppercase tracking-wider text-gray-400">Trade Tools</div>
+                {loggedInNavItems.map(([label, path]) => (
+                  <NavLink
+                    key={path}
+                    to={path}
+                    onClick={() => setMobileOpen(false)}
+                    className={({isActive}) => `block rounded-xl px-4 py-3 text-sm ${isActive ? "bg-harvest-soft text-harvest-green font-bold" : "text-gray-600 hover:bg-gray-50"}`}
+                  >
+                    {label}
+                  </NavLink>
+                ))}
+              </>
+            )}
             {isLoggedIn && (
               <hr className="my-2" />
             )}
