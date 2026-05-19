@@ -1,8 +1,20 @@
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8001/api/v1';
 
+async function apiErrorMessage(res, path) {
+  try {
+    const data = await res.json();
+    const detail = Array.isArray(data.detail)
+      ? data.detail.map((item) => item.msg || item.message || JSON.stringify(item)).join(', ')
+      : data.detail || data.message;
+    return detail ? `${detail} (${res.status} on ${path})` : `API error ${res.status} on ${path}`;
+  } catch {
+    return `API error ${res.status} on ${path}`;
+  }
+}
+
 export async function apiGet(path) {
   const res = await fetch(`${API_BASE_URL}${path}`);
-  if (!res.ok) throw new Error(`API error ${res.status} on ${path}`);
+  if (!res.ok) throw new Error(await apiErrorMessage(res, path));
   return res.json();
 }
 
@@ -12,7 +24,7 @@ export async function apiPost(path, body) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   });
-  if (!res.ok) throw new Error(`API error ${res.status} on ${path}`);
+  if (!res.ok) throw new Error(await apiErrorMessage(res, path));
   return res.json();
 }
 
@@ -22,7 +34,7 @@ export async function apiPatch(path, body) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   });
-  if (!res.ok) throw new Error(`API error ${res.status} on ${path}`);
+  if (!res.ok) throw new Error(await apiErrorMessage(res, path));
   return res.json();
 }
 

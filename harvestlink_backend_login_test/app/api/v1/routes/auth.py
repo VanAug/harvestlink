@@ -10,7 +10,7 @@ router = APIRouter(prefix="/auth", tags=["auth"])
 
 @router.post("/login", response_model=Token)
 async def login(payload: LoginRequest, db: AsyncSession = Depends(get_db)):
-    user = await db.scalar(select(User).where(User.email == payload.email))
+    user = await db.scalar(select(User).where(User.email == payload.email.lower()))
     if not user or not verify_password(payload.password, user.password_hash):
         raise HTTPException(status_code=401, detail="Invalid email or password")
     token = create_access_token(user.id, user.role, user.email)
@@ -18,10 +18,14 @@ async def login(payload: LoginRequest, db: AsyncSession = Depends(get_db)):
 
 @router.post("/register", response_model=Token)
 async def register(payload: RegisterRequest, db: AsyncSession = Depends(get_db)):
-    existing = await db.scalar(select(User).where(User.email == payload.email))
+    allowed_roles = {"buyer", "exporter", "finance_partner"}
+    if payload.role not in allowed_roles:
+        raise HTTPException(status_code=400, detail="Choose buyer, exporter, or finance_partner")
+    email = payload.email.lower()
+    existing = await db.scalar(select(User).where(User.email == email))
     if existing:
         raise HTTPException(status_code=400, detail="Email already exists")
-    user = User(email=payload.email, full_name=payload.full_name, password_hash=hash_password(payload.password), role=payload.role, status="active")
+    user = User(email=email, full_name=payload.full_name.strip(), password_hash=hash_password(payload.password), role=payload.role, status="active")
     db.add(user)
     await db.commit()
     await db.refresh(user)

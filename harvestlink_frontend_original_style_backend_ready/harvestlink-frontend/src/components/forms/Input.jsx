@@ -11,11 +11,11 @@ export function Input({ label, textarea, ...props }) {
   );
 }
 
-export function Select({ label, children }) {
+export function Select({ label, children, ...props }) {
   return (
     <label className="block">
       <span className="mb-2 block text-sm font-bold text-gray-800">{label}</span>
-      <select className="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 outline-none focus:border-harvest-leaf">{children}</select>
+      <select {...props} className="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 outline-none focus:border-harvest-leaf">{children}</select>
     </label>
   );
 }

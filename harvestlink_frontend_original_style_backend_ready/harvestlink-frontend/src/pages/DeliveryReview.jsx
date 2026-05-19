@@ -55,7 +55,7 @@ export default function DeliveryReview() {
 
     try {
       await apiPost(`/deals/${dealId}/reviews`, {
-        deal_id: Number(dealId),
+        reviewer_company_id: company.id,
         reviewed_company_id: deal.exporter_company_id,
         rating: Number(form.rating),
         comment: form.comment,

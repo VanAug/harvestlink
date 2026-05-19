@@ -53,7 +53,6 @@ export default function ShippingTracking() {
     e.preventDefault();
     try {
       const created = await apiPost(`/deals/${dealId}/tracking`, {
-        deal_id: Number(dealId),
         tracking_number: form.tracking_number || undefined,
         carrier: form.carrier || undefined,
         estimated_delivery: form.estimated_delivery || undefined,

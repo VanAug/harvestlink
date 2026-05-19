@@ -59,6 +59,9 @@ class CompanyCreate(BaseModel):
     certifications: Optional[str] = None
     export_capacity: Optional[str] = None
     export_markets: Optional[str] = None
+    sourcing_markets: Optional[str] = None
+    buying_interests: Optional[str] = None
+    preferred_destinations: Optional[str] = None
 
 class CompanyUpdate(BaseModel):
     name: Optional[str] = None
@@ -71,6 +74,9 @@ class CompanyUpdate(BaseModel):
     certifications: Optional[str] = None
     export_capacity: Optional[str] = None
     export_markets: Optional[str] = None
+    sourcing_markets: Optional[str] = None
+    buying_interests: Optional[str] = None
+    preferred_destinations: Optional[str] = None
 
 class ProductOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
@@ -260,7 +266,6 @@ class TradeDocumentOut(BaseModel):
     status: str
 
 class ShippingTrackingCreate(BaseModel):
-    deal_id: int
     tracking_number: Optional[str] = None
     carrier: Optional[str] = None
     estimated_delivery: Optional[str] = None
@@ -289,7 +294,7 @@ class ShippingTrackingOut(BaseModel):
     updated_at: datetime
 
 class ReviewCreate(BaseModel):
-    deal_id: int
+    reviewer_company_id: Optional[int] = None
     reviewed_company_id: int
     rating: float
     comment: Optional[str] = None

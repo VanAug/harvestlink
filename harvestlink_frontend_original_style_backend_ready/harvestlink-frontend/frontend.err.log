@@ -767,3 +767,5 @@
 Consider adding an error boundary to your tree to customize error handling behavior.
 Visit https://react.dev/link/error-boundaries to learn more about error boundaries.
 
+[2m9:46:47 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to load url /src/pages/Dashboard.jsx (resolved id: C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Dashboard.jsx) in C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/main.jsx. Does the file exist?
+[2m9:56:02 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to load url /src/pages/Auth.jsx (resolved id: C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Auth.jsx) in C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/main.jsx. Does the file exist?
