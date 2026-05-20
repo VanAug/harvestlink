@@ -1043,3 +1043,666 @@ Visit https://react.dev/link/error-boundaries to learn more about error boundari
       at EnvironmentPluginContainer.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:30193:51)
       at async loadAndTransform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24511:26)
       at async viteTransformMiddleware (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24305:20)
+[2m9:54:27 AM[22m [33m[1m[vite][22m[39m [33m[2m(client)[22m[39m [2m[console.warn] [22mUsing fallback product because API is unavailable: Input should be a valid integer, unable to parse string as an integer (422 on /products/sunflower-oil)
+[2m9:54:27 AM[22m [33m[1m[vite][22m[39m [33m[2m(client)[22m[39m [2m[console.warn] [22mUsing fallback product because API is unavailable: Input should be a valid integer, unable to parse string as an integer (422 on /products/sunflower-oil)
+[2m10:00:35 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] Error:[0m Unexpected token. Did you mean `{'>'}` or `&gt;`?
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:31:38 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m31 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m][0m[38;5;249m.[0m[38;5;249mm[0m[38;5;249ma[0m[38;5;249mp[0m[38;5;249m([0m[38;5;249m([0m[38;5;249m[[0m[38;5;249mI[0m[38;5;249mc[0m[38;5;249mo[0m[38;5;249mn[0m[38;5;249m,[0m[38;5;249m [0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249mb[0m[38;5;249me[0m[38;5;249ml[0m[38;5;249m][0m[38;5;249m)[0m[38;5;249m [0m[38;5;249m=[0m[38;5;249m>[0m[38;5;249m [0m[38;5;249m([0m
+ [38;5;240m   │[0m                                      │ 
+ [38;5;240m   │[0m                                      ╰─ 
+[38;5;246m────╯[0m
+
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Home.jsx[39m
+[2m10:00:35 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] Error:[0m Unexpected token. Did you mean `{'>'}` or `&gt;`?
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:31:38 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m31 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m][0m[38;5;249m.[0m[38;5;249mm[0m[38;5;249ma[0m[38;5;249mp[0m[38;5;249m([0m[38;5;249m([0m[38;5;249m[[0m[38;5;249mI[0m[38;5;249mc[0m[38;5;249mo[0m[38;5;249mn[0m[38;5;249m,[0m[38;5;249m [0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249mb[0m[38;5;249me[0m[38;5;249ml[0m[38;5;249m][0m[38;5;249m)[0m[38;5;249m [0m[38;5;249m=[0m[38;5;249m>[0m[38;5;249m [0m[38;5;249m([0m
+ [38;5;240m   │[0m                                      │ 
+ [38;5;240m   │[0m                                      ╰─ 
+[38;5;246m────╯[0m
+[39m
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Home.jsx[39m
+      at transformWithOxc (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3340:19)
+      at TransformPluginContext.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3408:26)
+      at EnvironmentPluginContainer.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:30193:51)
+      at async loadAndTransform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24511:26)
+      at async viteTransformMiddleware (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24305:20)
+[2m10:00:36 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] Error:[0m Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:33:17 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m33 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m)[0m[38;5;249m)[0m[38;5;249m}[0m
+ [38;5;240m   │[0m                 │ 
+ [38;5;240m   │[0m                 ╰─ 
+[38;5;246m────╯[0m
+
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Home.jsx[39m
+[2m10:00:36 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] Error:[0m Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:33:17 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m33 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m)[0m[38;5;249m)[0m[38;5;249m}[0m
+ [38;5;240m   │[0m                 │ 
+ [38;5;240m   │[0m                 ╰─ 
+[38;5;246m────╯[0m
+[39m
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Home.jsx[39m
+      at transformWithOxc (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3340:19)
+      at TransformPluginContext.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3408:26)
+      at EnvironmentPluginContainer.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:30193:51)
+      at async loadAndTransform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24511:26)
+      at async viteTransformMiddleware (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24305:20)
+[2m10:00:41 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 3 errors:
+
+[31m[PARSE_ERROR] Error:[0m Expected corresponding JSX closing tag for 'section'.
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:44:11 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m30 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0msection[38;5;249m [0m[38;5;249mc[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249ms[0m[38;5;249ms[0m[38;5;249mN[0m[38;5;249ma[0m[38;5;249mm[0m[38;5;249me[0m[38;5;249m=[0m[38;5;249m"[0m[38;5;249mb[0m[38;5;249mg[0m[38;5;249m-[0m[38;5;249mg[0m[38;5;249mr[0m[38;5;249mi[0m[38;5;249md[0m[38;5;249m [0m[38;5;249mr[0m[38;5;249me[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249mt[0m[38;5;249mi[0m[38;5;249mv[0m[38;5;249me[0m[38;5;249m [0m[38;5;249mo[0m[38;5;249mv[0m[38;5;249me[0m[38;5;249mr[0m[38;5;249mf[0m[38;5;249ml[0m[38;5;249mo[0m[38;5;249mw[0m[38;5;249m-[0m[38;5;249mh[0m[38;5;249mi[0m[38;5;249md[0m[38;5;249md[0m[38;5;249me[0m[38;5;249mn[0m[38;5;249m [0m[38;5;249mb[0m[38;5;249mg[0m[38;5;249m-[0m[38;5;249mh[0m[38;5;249ma[0m[38;5;249mr[0m[38;5;249mv[0m[38;5;249me[0m[38;5;249ms[0m[38;5;249mt[0m[38;5;249m-[0m[38;5;249mc[0m[38;5;249mr[0m[38;5;249me[0m[38;5;249ma[0m[38;5;249mm[0m[38;5;249m"[0m[38;5;249m>[0m
+ [38;5;240m   │[0m        ───┬───  
+ [38;5;240m   │[0m           ╰───── Opened here
+ [38;5;240m   │[0m 
+ [38;5;246m44 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249m/[0mdiv[38;5;249m>[0m
+ [38;5;240m   │[0m           ─┬─  
+ [38;5;240m   │[0m            ╰─── Expected `</section>`
+[38;5;246m────╯[0m
+
+[31m[PARSE_ERROR] Error:[0m Expected corresponding JSX closing tag for 'PageShell'.
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:45:9 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m29 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0mPageShell[38;5;249m>[0m
+ [38;5;240m   │[0m      ────┬────  
+ [38;5;240m   │[0m          ╰────── Opened here
+ [38;5;240m   │[0m 
+ [38;5;246m45 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249m/[0msection[38;5;249m>[0m
+ [38;5;240m   │[0m         ───┬───  
+ [38;5;240m   │[0m            ╰───── Expected `</PageShell>`
+[38;5;246m────╯[0m
+
+[31m[PARSE_ERROR] Error:[0m Expected `,` or `)` but found `Identifier`
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:47:16 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m28 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249mr[0m[38;5;249me[0m[38;5;249mt[0m[38;5;249mu[0m[38;5;249mr[0m[38;5;249mn[0m[38;5;249m [0m(
+ [38;5;240m   │[0m          ┬  
+ [38;5;240m   │[0m          ╰── Opened here
+ [38;5;240m   │[0m 
+ [38;5;246m47 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249ms[0m[38;5;249me[0m[38;5;249mc[0m[38;5;249mt[0m[38;5;249mi[0m[38;5;249mo[0m[38;5;249mn[0m[38;5;249m [0mclassName[38;5;249m=[0m[38;5;249m"[0m[38;5;249mm[0m[38;5;249mx[0m[38;5;249m-[0m[38;5;249ma[0m[38;5;249mu[0m[38;5;249mt[0m[38;5;249mo[0m[38;5;249m [0m[38;5;249mm[0m[38;5;249ma[0m[38;5;249mx[0m[38;5;249m-[0m[38;5;249mw[0m[38;5;249m-[0m[38;5;249m7[0m[38;5;249mx[0m[38;5;249ml[0m[38;5;249m [0m[38;5;249mp[0m[38;5;249mx[0m[38;5;249m-[0m[38;5;249m4[0m[38;5;249m [0m[38;5;249mp[0m[38;5;249my[0m[38;5;249m-[0m[38;5;249m1[0m[38;5;249m6[0m[38;5;249m [0m[38;5;249ml[0m[38;5;249mg[0m[38;5;249m:[0m[38;5;249mp[0m[38;5;249mx[0m[38;5;249m-[0m[38;5;249m6[0m[38;5;249m"[0m[38;5;249m>[0m
+ [38;5;240m   │[0m                ────┬────  
+ [38;5;240m   │[0m                    ╰────── `,` or `)` expected
+[38;5;246m────╯[0m
+
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Home.jsx[39m
+[2m10:00:41 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 3 errors:
+
+[31m[PARSE_ERROR] Error:[0m Expected corresponding JSX closing tag for 'section'.
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:44:11 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m30 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0msection[38;5;249m [0m[38;5;249mc[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249ms[0m[38;5;249ms[0m[38;5;249mN[0m[38;5;249ma[0m[38;5;249mm[0m[38;5;249me[0m[38;5;249m=[0m[38;5;249m"[0m[38;5;249mb[0m[38;5;249mg[0m[38;5;249m-[0m[38;5;249mg[0m[38;5;249mr[0m[38;5;249mi[0m[38;5;249md[0m[38;5;249m [0m[38;5;249mr[0m[38;5;249me[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249mt[0m[38;5;249mi[0m[38;5;249mv[0m[38;5;249me[0m[38;5;249m [0m[38;5;249mo[0m[38;5;249mv[0m[38;5;249me[0m[38;5;249mr[0m[38;5;249mf[0m[38;5;249ml[0m[38;5;249mo[0m[38;5;249mw[0m[38;5;249m-[0m[38;5;249mh[0m[38;5;249mi[0m[38;5;249md[0m[38;5;249md[0m[38;5;249me[0m[38;5;249mn[0m[38;5;249m [0m[38;5;249mb[0m[38;5;249mg[0m[38;5;249m-[0m[38;5;249mh[0m[38;5;249ma[0m[38;5;249mr[0m[38;5;249mv[0m[38;5;249me[0m[38;5;249ms[0m[38;5;249mt[0m[38;5;249m-[0m[38;5;249mc[0m[38;5;249mr[0m[38;5;249me[0m[38;5;249ma[0m[38;5;249mm[0m[38;5;249m"[0m[38;5;249m>[0m
+ [38;5;240m   │[0m        ───┬───  
+ [38;5;240m   │[0m           ╰───── Opened here
+ [38;5;240m   │[0m 
+ [38;5;246m44 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249m/[0mdiv[38;5;249m>[0m
+ [38;5;240m   │[0m           ─┬─  
+ [38;5;240m   │[0m            ╰─── Expected `</section>`
+[38;5;246m────╯[0m
+
+[31m[PARSE_ERROR] Error:[0m Expected corresponding JSX closing tag for 'PageShell'.
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:45:9 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m29 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0mPageShell[38;5;249m>[0m
+ [38;5;240m   │[0m      ────┬────  
+ [38;5;240m   │[0m          ╰────── Opened here
+ [38;5;240m   │[0m 
+ [38;5;246m45 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249m/[0msection[38;5;249m>[0m
+ [38;5;240m   │[0m         ───┬───  
+ [38;5;240m   │[0m            ╰───── Expected `</PageShell>`
+[38;5;246m────╯[0m
+
+[31m[PARSE_ERROR] Error:[0m Expected `,` or `)` but found `Identifier`
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:47:16 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m28 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249mr[0m[38;5;249me[0m[38;5;249mt[0m[38;5;249mu[0m[38;5;249mr[0m[38;5;249mn[0m[38;5;249m [0m(
+ [38;5;240m   │[0m          ┬  
+ [38;5;240m   │[0m          ╰── Opened here
+ [38;5;240m   │[0m 
+ [38;5;246m47 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249ms[0m[38;5;249me[0m[38;5;249mc[0m[38;5;249mt[0m[38;5;249mi[0m[38;5;249mo[0m[38;5;249mn[0m[38;5;249m [0mclassName[38;5;249m=[0m[38;5;249m"[0m[38;5;249mm[0m[38;5;249mx[0m[38;5;249m-[0m[38;5;249ma[0m[38;5;249mu[0m[38;5;249mt[0m[38;5;249mo[0m[38;5;249m [0m[38;5;249mm[0m[38;5;249ma[0m[38;5;249mx[0m[38;5;249m-[0m[38;5;249mw[0m[38;5;249m-[0m[38;5;249m7[0m[38;5;249mx[0m[38;5;249ml[0m[38;5;249m [0m[38;5;249mp[0m[38;5;249mx[0m[38;5;249m-[0m[38;5;249m4[0m[38;5;249m [0m[38;5;249mp[0m[38;5;249my[0m[38;5;249m-[0m[38;5;249m1[0m[38;5;249m6[0m[38;5;249m [0m[38;5;249ml[0m[38;5;249mg[0m[38;5;249m:[0m[38;5;249mp[0m[38;5;249mx[0m[38;5;249m-[0m[38;5;249m6[0m[38;5;249m"[0m[38;5;249m>[0m
+ [38;5;240m   │[0m                ────┬────  
+ [38;5;240m   │[0m                    ╰────── `,` or `)` expected
+[38;5;246m────╯[0m
+[39m
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Home.jsx[39m
+      at transformWithOxc (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3340:19)
+      at TransformPluginContext.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3408:26)
+      at EnvironmentPluginContainer.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:30193:51)
+      at async loadAndTransform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24511:26)
+      at async viteTransformMiddleware (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24305:20)
+[2m10:00:44 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 3 errors:
+
+[31m[PARSE_ERROR] Error:[0m Expected corresponding JSX closing tag for 'div'.
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:45:9 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m31 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0mdiv[38;5;249m [0m[38;5;249mc[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249ms[0m[38;5;249ms[0m[38;5;249mN[0m[38;5;249ma[0m[38;5;249mm[0m[38;5;249me[0m[38;5;249m=[0m[38;5;249m"[0m[38;5;249mm[0m[38;5;249mx[0m[38;5;249m-[0m[38;5;249ma[0m[38;5;249mu[0m[38;5;249mt[0m[38;5;249mo[0m[38;5;249m [0m[38;5;249mg[0m[38;5;249mr[0m[38;5;249mi[0m[38;5;249md[0m[38;5;249m [0m[38;5;249mm[0m[38;5;249ma[0m[38;5;249mx[0m[38;5;249m-[0m[38;5;249mw[0m[38;5;249m-[0m[38;5;249m7[0m[38;5;249mx[0m[38;5;249ml[0m[38;5;249m [0m[38;5;249mi[0m[38;5;249mt[0m[38;5;249me[0m[38;5;249mm[0m[38;5;249ms[0m[38;5;249m-[0m[38;5;249mc[0m[38;5;249me[0m[38;5;249mn[0m[38;5;249mt[0m[38;5;249me[0m[38;5;249mr[0m[38;5;249m [0m[38;5;249mg[0m[38;5;249ma[0m[38;5;249mp[0m[38;5;249m-[0m[38;5;249m1[0m[38;5;249m0[0m[38;5;249m [0m[38;5;249mp[0m[38;5;249mx[0m[38;5;249m-[0m[38;5;249m4[0m[38;5;249m [0m[38;5;249mp[0m[38;5;249my[0m[38;5;249m-[0m[38;5;249m2[0m[38;5;249m0[0m[38;5;249m [0m[38;5;249ml[0m[38;5;249mg[0m[38;5;249m:[0m[38;5;249mg[0m[38;5;249mr[0m[38;5;249mi[0m[38;5;249md[0m[38;5;249m-[0m[38;5;249mc[0m[38;5;249mo[0m[38;5;249ml[0m[38;5;249ms[0m[38;5;249m-[0m[38;5;249m2[0m[38;5;249m [0m[38;5;249ml[0m[38;5;249mg[0m[38;5;249m:[0m[38;5;249mp[0m[38;5;249mx[0m[38;5;249m-[0m[38;5;249m6[0m[38;5;249m"[0m[38;5;249m>[0m
+ [38;5;240m   │[0m          ─┬─  
+ [38;5;240m   │[0m           ╰─── Opened here
+ [38;5;240m   │[0m 
+ [38;5;246m45 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249m/[0msection[38;5;249m>[0m
+ [38;5;240m   │[0m         ───┬───  
+ [38;5;240m   │[0m            ╰───── Expected `</div>`
+[38;5;246m────╯[0m
+
+[31m[PARSE_ERROR] Error:[0m Expected corresponding JSX closing tag for 'section'.
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:88:7 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m30 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0msection[38;5;249m [0m[38;5;249mc[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249ms[0m[38;5;249ms[0m[38;5;249mN[0m[38;5;249ma[0m[38;5;249mm[0m[38;5;249me[0m[38;5;249m=[0m[38;5;249m"[0m[38;5;249mb[0m[38;5;249mg[0m[38;5;249m-[0m[38;5;249mg[0m[38;5;249mr[0m[38;5;249mi[0m[38;5;249md[0m[38;5;249m [0m[38;5;249mr[0m[38;5;249me[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249mt[0m[38;5;249mi[0m[38;5;249mv[0m[38;5;249me[0m[38;5;249m [0m[38;5;249mo[0m[38;5;249mv[0m[38;5;249me[0m[38;5;249mr[0m[38;5;249mf[0m[38;5;249ml[0m[38;5;249mo[0m[38;5;249mw[0m[38;5;249m-[0m[38;5;249mh[0m[38;5;249mi[0m[38;5;249md[0m[38;5;249md[0m[38;5;249me[0m[38;5;249mn[0m[38;5;249m [0m[38;5;249mb[0m[38;5;249mg[0m[38;5;249m-[0m[38;5;249mh[0m[38;5;249ma[0m[38;5;249mr[0m[38;5;249mv[0m[38;5;249me[0m[38;5;249ms[0m[38;5;249mt[0m[38;5;249m-[0m[38;5;249mc[0m[38;5;249mr[0m[38;5;249me[0m[38;5;249ma[0m[38;5;249mm[0m[38;5;249m"[0m[38;5;249m>[0m
+ [38;5;240m   │[0m        ───┬───  
+ [38;5;240m   │[0m           ╰───── Opened here
+ [38;5;240m   │[0m 
+ [38;5;246m88 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249m/[0mPageShell[38;5;249m>[0m
+ [38;5;240m   │[0m       ────┬────  
+ [38;5;240m   │[0m           ╰────── Expected `</section>`
+[38;5;246m────╯[0m
+
+[31m[PARSE_ERROR] Error:[0m Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:90:1 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m90 │[0m [38;5;249m}[0m
+ [38;5;240m   │[0m │ 
+ [38;5;240m   │[0m ╰─ 
+[38;5;246m────╯[0m
+
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Home.jsx[39m
+[2m10:00:44 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 3 errors:
+
+[31m[PARSE_ERROR] Error:[0m Expected corresponding JSX closing tag for 'div'.
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:45:9 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m31 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0mdiv[38;5;249m [0m[38;5;249mc[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249ms[0m[38;5;249ms[0m[38;5;249mN[0m[38;5;249ma[0m[38;5;249mm[0m[38;5;249me[0m[38;5;249m=[0m[38;5;249m"[0m[38;5;249mm[0m[38;5;249mx[0m[38;5;249m-[0m[38;5;249ma[0m[38;5;249mu[0m[38;5;249mt[0m[38;5;249mo[0m[38;5;249m [0m[38;5;249mg[0m[38;5;249mr[0m[38;5;249mi[0m[38;5;249md[0m[38;5;249m [0m[38;5;249mm[0m[38;5;249ma[0m[38;5;249mx[0m[38;5;249m-[0m[38;5;249mw[0m[38;5;249m-[0m[38;5;249m7[0m[38;5;249mx[0m[38;5;249ml[0m[38;5;249m [0m[38;5;249mi[0m[38;5;249mt[0m[38;5;249me[0m[38;5;249mm[0m[38;5;249ms[0m[38;5;249m-[0m[38;5;249mc[0m[38;5;249me[0m[38;5;249mn[0m[38;5;249mt[0m[38;5;249me[0m[38;5;249mr[0m[38;5;249m [0m[38;5;249mg[0m[38;5;249ma[0m[38;5;249mp[0m[38;5;249m-[0m[38;5;249m1[0m[38;5;249m0[0m[38;5;249m [0m[38;5;249mp[0m[38;5;249mx[0m[38;5;249m-[0m[38;5;249m4[0m[38;5;249m [0m[38;5;249mp[0m[38;5;249my[0m[38;5;249m-[0m[38;5;249m2[0m[38;5;249m0[0m[38;5;249m [0m[38;5;249ml[0m[38;5;249mg[0m[38;5;249m:[0m[38;5;249mg[0m[38;5;249mr[0m[38;5;249mi[0m[38;5;249md[0m[38;5;249m-[0m[38;5;249mc[0m[38;5;249mo[0m[38;5;249ml[0m[38;5;249ms[0m[38;5;249m-[0m[38;5;249m2[0m[38;5;249m [0m[38;5;249ml[0m[38;5;249mg[0m[38;5;249m:[0m[38;5;249mp[0m[38;5;249mx[0m[38;5;249m-[0m[38;5;249m6[0m[38;5;249m"[0m[38;5;249m>[0m
+ [38;5;240m   │[0m          ─┬─  
+ [38;5;240m   │[0m           ╰─── Opened here
+ [38;5;240m   │[0m 
+ [38;5;246m45 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249m/[0msection[38;5;249m>[0m
+ [38;5;240m   │[0m         ───┬───  
+ [38;5;240m   │[0m            ╰───── Expected `</div>`
+[38;5;246m────╯[0m
+
+[31m[PARSE_ERROR] Error:[0m Expected corresponding JSX closing tag for 'section'.
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:88:7 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m30 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0msection[38;5;249m [0m[38;5;249mc[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249ms[0m[38;5;249ms[0m[38;5;249mN[0m[38;5;249ma[0m[38;5;249mm[0m[38;5;249me[0m[38;5;249m=[0m[38;5;249m"[0m[38;5;249mb[0m[38;5;249mg[0m[38;5;249m-[0m[38;5;249mg[0m[38;5;249mr[0m[38;5;249mi[0m[38;5;249md[0m[38;5;249m [0m[38;5;249mr[0m[38;5;249me[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249mt[0m[38;5;249mi[0m[38;5;249mv[0m[38;5;249me[0m[38;5;249m [0m[38;5;249mo[0m[38;5;249mv[0m[38;5;249me[0m[38;5;249mr[0m[38;5;249mf[0m[38;5;249ml[0m[38;5;249mo[0m[38;5;249mw[0m[38;5;249m-[0m[38;5;249mh[0m[38;5;249mi[0m[38;5;249md[0m[38;5;249md[0m[38;5;249me[0m[38;5;249mn[0m[38;5;249m [0m[38;5;249mb[0m[38;5;249mg[0m[38;5;249m-[0m[38;5;249mh[0m[38;5;249ma[0m[38;5;249mr[0m[38;5;249mv[0m[38;5;249me[0m[38;5;249ms[0m[38;5;249mt[0m[38;5;249m-[0m[38;5;249mc[0m[38;5;249mr[0m[38;5;249me[0m[38;5;249ma[0m[38;5;249mm[0m[38;5;249m"[0m[38;5;249m>[0m
+ [38;5;240m   │[0m        ───┬───  
+ [38;5;240m   │[0m           ╰───── Opened here
+ [38;5;240m   │[0m 
+ [38;5;246m88 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249m/[0mPageShell[38;5;249m>[0m
+ [38;5;240m   │[0m       ────┬────  
+ [38;5;240m   │[0m           ╰────── Expected `</section>`
+[38;5;246m────╯[0m
+
+[31m[PARSE_ERROR] Error:[0m Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:90:1 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m90 │[0m [38;5;249m}[0m
+ [38;5;240m   │[0m │ 
+ [38;5;240m   │[0m ╰─ 
+[38;5;246m────╯[0m
+[39m
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Home.jsx[39m
+      at transformWithOxc (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3340:19)
+      at TransformPluginContext.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3408:26)
+      at EnvironmentPluginContainer.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:30193:51)
+      at async loadAndTransform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24511:26)
+      at async viteTransformMiddleware (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24305:20)
+[2m10:00:48 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] Error:[0m Unterminated regular expression
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:61:8 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m61 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m/section>
+ [38;5;240m   │[0m        ─────┬────  
+ [38;5;240m   │[0m             ╰────── 
+[38;5;246m────╯[0m
+
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Home.jsx[39m
+[2m10:00:48 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] Error:[0m Unterminated regular expression
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:61:8 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m61 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m/section>
+ [38;5;240m   │[0m        ─────┬────  
+ [38;5;240m   │[0m             ╰────── 
+[38;5;246m────╯[0m
+[39m
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Home.jsx[39m
+      at transformWithOxc (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3340:19)
+      at TransformPluginContext.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3408:26)
+      at EnvironmentPluginContainer.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:30193:51)
+      at async loadAndTransform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24511:26)
+      at async viteTransformMiddleware (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24305:20)
+[2m10:00:49 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 2 errors:
+
+[31m[PARSE_ERROR] Error:[0m Expected corresponding JSX closing tag for 'div'.
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:58:15 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m56 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0mdiv[38;5;249m [0m[38;5;249mc[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249ms[0m[38;5;249ms[0m[38;5;249mN[0m[38;5;249ma[0m[38;5;249mm[0m[38;5;249me[0m[38;5;249m=[0m[38;5;249m"[0m[38;5;249mr[0m[38;5;249me[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249mt[0m[38;5;249mi[0m[38;5;249mv[0m[38;5;249me[0m[38;5;249m"[0m[38;5;249m>[0m
+ [38;5;240m   │[0m            ─┬─  
+ [38;5;240m   │[0m             ╰─── Opened here
+ [38;5;240m   │[0m 
+ [38;5;246m58 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249m/[0mLink[38;5;249m>[0m
+ [38;5;240m   │[0m               ──┬─  
+ [38;5;240m   │[0m                 ╰─── Expected `</div>`
+[38;5;246m────╯[0m
+
+[31m[PARSE_ERROR] Error:[0m Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:59:13 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m59 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m)[0m[38;5;249m)[0m[38;5;249m}[0m
+ [38;5;240m   │[0m             │ 
+ [38;5;240m   │[0m             ╰─ 
+[38;5;246m────╯[0m
+
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Home.jsx[39m
+[2m10:00:49 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 2 errors:
+
+[31m[PARSE_ERROR] Error:[0m Expected corresponding JSX closing tag for 'div'.
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:58:15 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m56 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0mdiv[38;5;249m [0m[38;5;249mc[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249ms[0m[38;5;249ms[0m[38;5;249mN[0m[38;5;249ma[0m[38;5;249mm[0m[38;5;249me[0m[38;5;249m=[0m[38;5;249m"[0m[38;5;249mr[0m[38;5;249me[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249mt[0m[38;5;249mi[0m[38;5;249mv[0m[38;5;249me[0m[38;5;249m"[0m[38;5;249m>[0m
+ [38;5;240m   │[0m            ─┬─  
+ [38;5;240m   │[0m             ╰─── Opened here
+ [38;5;240m   │[0m 
+ [38;5;246m58 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249m/[0mLink[38;5;249m>[0m
+ [38;5;240m   │[0m               ──┬─  
+ [38;5;240m   │[0m                 ╰─── Expected `</div>`
+[38;5;246m────╯[0m
+
+[31m[PARSE_ERROR] Error:[0m Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:59:13 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m59 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m)[0m[38;5;249m)[0m[38;5;249m}[0m
+ [38;5;240m   │[0m             │ 
+ [38;5;240m   │[0m             ╰─ 
+[38;5;246m────╯[0m
+[39m
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Home.jsx[39m
+      at transformWithOxc (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3340:19)
+      at TransformPluginContext.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3408:26)
+      at EnvironmentPluginContainer.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:30193:51)
+      at async loadAndTransform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24511:26)
+      at async viteTransformMiddleware (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24305:20)
+[2m10:00:53 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 3 errors:
+
+[31m[PARSE_ERROR] Error:[0m Expected corresponding JSX closing tag for 'div'.
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:61:9 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m58 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0mdiv[38;5;249m [0m[38;5;249mc[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249ms[0m[38;5;249ms[0m[38;5;249mN[0m[38;5;249ma[0m[38;5;249mm[0m[38;5;249me[0m[38;5;249m=[0m[38;5;249m"[0m[38;5;249ma[0m[38;5;249mb[0m[38;5;249ms[0m[38;5;249mo[0m[38;5;249ml[0m[38;5;249mu[0m[38;5;249mt[0m[38;5;249me[0m[38;5;249m [0m[38;5;249m-[0m[38;5;249mb[0m[38;5;249mo[0m[38;5;249mt[0m[38;5;249mt[0m[38;5;249mo[0m[38;5;249mm[0m[38;5;249m-[0m[38;5;249m6[0m[38;5;249m [0m[38;5;249ml[0m[38;5;249me[0m[38;5;249mf[0m[38;5;249mt[0m[38;5;249m-[0m[38;5;249m6[0m[38;5;249m [0m[38;5;249mr[0m[38;5;249mi[0m[38;5;249mg[0m[38;5;249mh[0m[38;5;249mt[0m[38;5;249m-[0m[38;5;249m6[0m[38;5;249m [0m[38;5;249mr[0m[38;5;249mo[0m[38;5;249mu[0m[38;5;249mn[0m[38;5;249md[0m[38;5;249me[0m[38;5;249md[0m[38;5;249m-[0m[38;5;249m3[0m[38;5;249mx[0m[38;5;249ml[0m[38;5;249m [0m[38;5;249mb[0m[38;5;249mg[0m[38;5;249m-[0m[38;5;249mw[0m[38;5;249mh[0m[38;5;249mi[0m[38;5;249mt[0m[38;5;249me[0m[38;5;249m [0m[38;5;249mp[0m[38;5;249m-[0m[38;5;249m5[0m[38;5;249m [0m[38;5;249ms[0m[38;5;249mh[0m[38;5;249ma[0m[38;5;249md[0m[38;5;249mo[0m[38;5;249mw[0m[38;5;249m-[0m[38;5;249ms[0m[38;5;249mo[0m[38;5;249mf[0m[38;5;249mt[0m[38;5;249m"[0m[38;5;249m>[0m
+ [38;5;240m   │[0m              ─┬─  
+ [38;5;240m   │[0m               ╰─── Opened here
+ [38;5;240m   │[0m 
+ [38;5;246m61 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249m/[0msection[38;5;249m>[0m
+ [38;5;240m   │[0m         ───┬───  
+ [38;5;240m   │[0m            ╰───── Expected `</div>`
+[38;5;246m────╯[0m
+
+[31m[PARSE_ERROR] Error:[0m Expected corresponding JSX closing tag for 'div'.
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:88:7 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m56 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0mdiv[38;5;249m [0m[38;5;249mc[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249ms[0m[38;5;249ms[0m[38;5;249mN[0m[38;5;249ma[0m[38;5;249mm[0m[38;5;249me[0m[38;5;249m=[0m[38;5;249m"[0m[38;5;249mr[0m[38;5;249me[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249mt[0m[38;5;249mi[0m[38;5;249mv[0m[38;5;249me[0m[38;5;249m"[0m[38;5;249m>[0m
+ [38;5;240m   │[0m            ─┬─  
+ [38;5;240m   │[0m             ╰─── Opened here
+ [38;5;240m   │[0m 
+ [38;5;246m88 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249m/[0mPageShell[38;5;249m>[0m
+ [38;5;240m   │[0m       ────┬────  
+ [38;5;240m   │[0m           ╰────── Expected `</div>`
+[38;5;246m────╯[0m
+
+[31m[PARSE_ERROR] Error:[0m Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:90:1 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m90 │[0m [38;5;249m}[0m
+ [38;5;240m   │[0m │ 
+ [38;5;240m   │[0m ╰─ 
+[38;5;246m────╯[0m
+
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Home.jsx[39m
+[2m10:00:53 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 3 errors:
+
+[31m[PARSE_ERROR] Error:[0m Expected corresponding JSX closing tag for 'div'.
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:61:9 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m58 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0mdiv[38;5;249m [0m[38;5;249mc[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249ms[0m[38;5;249ms[0m[38;5;249mN[0m[38;5;249ma[0m[38;5;249mm[0m[38;5;249me[0m[38;5;249m=[0m[38;5;249m"[0m[38;5;249ma[0m[38;5;249mb[0m[38;5;249ms[0m[38;5;249mo[0m[38;5;249ml[0m[38;5;249mu[0m[38;5;249mt[0m[38;5;249me[0m[38;5;249m [0m[38;5;249m-[0m[38;5;249mb[0m[38;5;249mo[0m[38;5;249mt[0m[38;5;249mt[0m[38;5;249mo[0m[38;5;249mm[0m[38;5;249m-[0m[38;5;249m6[0m[38;5;249m [0m[38;5;249ml[0m[38;5;249me[0m[38;5;249mf[0m[38;5;249mt[0m[38;5;249m-[0m[38;5;249m6[0m[38;5;249m [0m[38;5;249mr[0m[38;5;249mi[0m[38;5;249mg[0m[38;5;249mh[0m[38;5;249mt[0m[38;5;249m-[0m[38;5;249m6[0m[38;5;249m [0m[38;5;249mr[0m[38;5;249mo[0m[38;5;249mu[0m[38;5;249mn[0m[38;5;249md[0m[38;5;249me[0m[38;5;249md[0m[38;5;249m-[0m[38;5;249m3[0m[38;5;249mx[0m[38;5;249ml[0m[38;5;249m [0m[38;5;249mb[0m[38;5;249mg[0m[38;5;249m-[0m[38;5;249mw[0m[38;5;249mh[0m[38;5;249mi[0m[38;5;249mt[0m[38;5;249me[0m[38;5;249m [0m[38;5;249mp[0m[38;5;249m-[0m[38;5;249m5[0m[38;5;249m [0m[38;5;249ms[0m[38;5;249mh[0m[38;5;249ma[0m[38;5;249md[0m[38;5;249mo[0m[38;5;249mw[0m[38;5;249m-[0m[38;5;249ms[0m[38;5;249mo[0m[38;5;249mf[0m[38;5;249mt[0m[38;5;249m"[0m[38;5;249m>[0m
+ [38;5;240m   │[0m              ─┬─  
+ [38;5;240m   │[0m               ╰─── Opened here
+ [38;5;240m   │[0m 
+ [38;5;246m61 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249m/[0msection[38;5;249m>[0m
+ [38;5;240m   │[0m         ───┬───  
+ [38;5;240m   │[0m            ╰───── Expected `</div>`
+[38;5;246m────╯[0m
+
+[31m[PARSE_ERROR] Error:[0m Expected corresponding JSX closing tag for 'div'.
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:88:7 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m56 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0mdiv[38;5;249m [0m[38;5;249mc[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249ms[0m[38;5;249ms[0m[38;5;249mN[0m[38;5;249ma[0m[38;5;249mm[0m[38;5;249me[0m[38;5;249m=[0m[38;5;249m"[0m[38;5;249mr[0m[38;5;249me[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249mt[0m[38;5;249mi[0m[38;5;249mv[0m[38;5;249me[0m[38;5;249m"[0m[38;5;249m>[0m
+ [38;5;240m   │[0m            ─┬─  
+ [38;5;240m   │[0m             ╰─── Opened here
+ [38;5;240m   │[0m 
+ [38;5;246m88 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249m/[0mPageShell[38;5;249m>[0m
+ [38;5;240m   │[0m       ────┬────  
+ [38;5;240m   │[0m           ╰────── Expected `</div>`
+[38;5;246m────╯[0m
+
+[31m[PARSE_ERROR] Error:[0m Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:90:1 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m90 │[0m [38;5;249m}[0m
+ [38;5;240m   │[0m │ 
+ [38;5;240m   │[0m ╰─ 
+[38;5;246m────╯[0m
+[39m
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Home.jsx[39m
+      at transformWithOxc (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3340:19)
+      at TransformPluginContext.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3408:26)
+      at EnvironmentPluginContainer.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:30193:51)
+      at async loadAndTransform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24511:26)
+      at async viteTransformMiddleware (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24305:20)
+[2m10:00:59 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] Error:[0m Unexpected token
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:74:8 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m74 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m/[38;5;249ms[0m[38;5;249me[0m[38;5;249mc[0m[38;5;249mt[0m[38;5;249mi[0m[38;5;249mo[0m[38;5;249mn[0m[38;5;249m>[0m
+ [38;5;240m   │[0m        ┬  
+ [38;5;240m   │[0m        ╰── 
+[38;5;246m────╯[0m
+
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Home.jsx[39m
+[2m10:00:59 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] Error:[0m Unexpected token
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:74:8 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m74 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m/[38;5;249ms[0m[38;5;249me[0m[38;5;249mc[0m[38;5;249mt[0m[38;5;249mi[0m[38;5;249mo[0m[38;5;249mn[0m[38;5;249m>[0m
+ [38;5;240m   │[0m        ┬  
+ [38;5;240m   │[0m        ╰── 
+[38;5;246m────╯[0m
+[39m
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Home.jsx[39m
+      at transformWithOxc (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3340:19)
+      at TransformPluginContext.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3408:26)
+      at EnvironmentPluginContainer.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:30193:51)
+      at async loadAndTransform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24511:26)
+      at async viteTransformMiddleware (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24305:20)
+[2m10:01:04 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 3 errors:
+
+[31m[PARSE_ERROR] Error:[0m Expected corresponding JSX closing tag for 'div'.
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:87:9 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m86 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0mdiv[38;5;249m>[0m
+ [38;5;240m   │[0m              ─┬─  
+ [38;5;240m   │[0m               ╰─── Opened here
+ [38;5;246m87 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249m/[0msection[38;5;249m>[0m
+ [38;5;240m   │[0m         ───┬───  
+ [38;5;240m   │[0m            ╰───── Expected `</div>`
+[38;5;246m────╯[0m
+
+[31m[PARSE_ERROR] Error:[0m Expected corresponding JSX closing tag for 'div'.
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:88:7 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m85 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0mdiv[38;5;249m [0m[38;5;249mc[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249ms[0m[38;5;249ms[0m[38;5;249mN[0m[38;5;249ma[0m[38;5;249mm[0m[38;5;249me[0m[38;5;249m=[0m[38;5;249m"[0m[38;5;249mg[0m[38;5;249mr[0m[38;5;249mi[0m[38;5;249md[0m[38;5;249m [0m[38;5;249mi[0m[38;5;249mt[0m[38;5;249me[0m[38;5;249mm[0m[38;5;249ms[0m[38;5;249m-[0m[38;5;249mc[0m[38;5;249me[0m[38;5;249mn[0m[38;5;249mt[0m[38;5;249me[0m[38;5;249mr[0m[38;5;249m [0m[38;5;249mg[0m[38;5;249ma[0m[38;5;249mp[0m[38;5;249m-[0m[38;5;249m8[0m[38;5;249m [0m[38;5;249ml[0m[38;5;249mg[0m[38;5;249m:[0m[38;5;249mg[0m[38;5;249mr[0m[38;5;249mi[0m[38;5;249md[0m[38;5;249m-[0m[38;5;249mc[0m[38;5;249mo[0m[38;5;249ml[0m[38;5;249ms[0m[38;5;249m-[0m[38;5;249m2[0m[38;5;249m"[0m[38;5;249m>[0m
+ [38;5;240m   │[0m            ─┬─  
+ [38;5;240m   │[0m             ╰─── Opened here
+ [38;5;240m   │[0m 
+ [38;5;246m88 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249m/[0mPageShell[38;5;249m>[0m
+ [38;5;240m   │[0m       ────┬────  
+ [38;5;240m   │[0m           ╰────── Expected `</div>`
+[38;5;246m────╯[0m
+
+[31m[PARSE_ERROR] Error:[0m Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:90:1 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m90 │[0m [38;5;249m}[0m
+ [38;5;240m   │[0m │ 
+ [38;5;240m   │[0m ╰─ 
+[38;5;246m────╯[0m
+
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Home.jsx[39m
+[2m10:01:04 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 3 errors:
+
+[31m[PARSE_ERROR] Error:[0m Expected corresponding JSX closing tag for 'div'.
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:87:9 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m86 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0mdiv[38;5;249m>[0m
+ [38;5;240m   │[0m              ─┬─  
+ [38;5;240m   │[0m               ╰─── Opened here
+ [38;5;246m87 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249m/[0msection[38;5;249m>[0m
+ [38;5;240m   │[0m         ───┬───  
+ [38;5;240m   │[0m            ╰───── Expected `</div>`
+[38;5;246m────╯[0m
+
+[31m[PARSE_ERROR] Error:[0m Expected corresponding JSX closing tag for 'div'.
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:88:7 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m85 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0mdiv[38;5;249m [0m[38;5;249mc[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249ms[0m[38;5;249ms[0m[38;5;249mN[0m[38;5;249ma[0m[38;5;249mm[0m[38;5;249me[0m[38;5;249m=[0m[38;5;249m"[0m[38;5;249mg[0m[38;5;249mr[0m[38;5;249mi[0m[38;5;249md[0m[38;5;249m [0m[38;5;249mi[0m[38;5;249mt[0m[38;5;249me[0m[38;5;249mm[0m[38;5;249ms[0m[38;5;249m-[0m[38;5;249mc[0m[38;5;249me[0m[38;5;249mn[0m[38;5;249mt[0m[38;5;249me[0m[38;5;249mr[0m[38;5;249m [0m[38;5;249mg[0m[38;5;249ma[0m[38;5;249mp[0m[38;5;249m-[0m[38;5;249m8[0m[38;5;249m [0m[38;5;249ml[0m[38;5;249mg[0m[38;5;249m:[0m[38;5;249mg[0m[38;5;249mr[0m[38;5;249mi[0m[38;5;249md[0m[38;5;249m-[0m[38;5;249mc[0m[38;5;249mo[0m[38;5;249ml[0m[38;5;249ms[0m[38;5;249m-[0m[38;5;249m2[0m[38;5;249m"[0m[38;5;249m>[0m
+ [38;5;240m   │[0m            ─┬─  
+ [38;5;240m   │[0m             ╰─── Opened here
+ [38;5;240m   │[0m 
+ [38;5;246m88 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249m/[0mPageShell[38;5;249m>[0m
+ [38;5;240m   │[0m       ────┬────  
+ [38;5;240m   │[0m           ╰────── Expected `</div>`
+[38;5;246m────╯[0m
+
+[31m[PARSE_ERROR] Error:[0m Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:90:1 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m90 │[0m [38;5;249m}[0m
+ [38;5;240m   │[0m │ 
+ [38;5;240m   │[0m ╰─ 
+[38;5;246m────╯[0m
+[39m
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Home.jsx[39m
+      at transformWithOxc (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3340:19)
+      at TransformPluginContext.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3408:26)
+      at EnvironmentPluginContainer.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:30193:51)
+      at async loadAndTransform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24511:26)
+      at async viteTransformMiddleware (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24305:20)
+[2m10:01:06 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] Error:[0m Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:90:1 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m90 │[0m [38;5;249m}[0m
+ [38;5;240m   │[0m │ 
+ [38;5;240m   │[0m ╰─ 
+[38;5;246m────╯[0m
+
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Home.jsx[39m
+[2m10:01:06 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] Error:[0m Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:90:1 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m90 │[0m [38;5;249m}[0m
+ [38;5;240m   │[0m │ 
+ [38;5;240m   │[0m ╰─ 
+[38;5;246m────╯[0m
+[39m
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Home.jsx[39m
+      at transformWithOxc (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3340:19)
+      at TransformPluginContext.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3408:26)
+      at EnvironmentPluginContainer.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:30193:51)
+      at async loadAndTransform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24511:26)
+      at async viteTransformMiddleware (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24305:20)
+[2m10:01:07 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] Error:[0m Unexpected token
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:90:19 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m90 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249m/[0m[38;5;249md[0m[38;5;249mi[0m[38;5;249mv[0m[38;5;249m>[0m
+ [38;5;240m   │[0m                   ─┬  
+ [38;5;240m   │[0m                    ╰── 
+[38;5;246m────╯[0m
+
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Home.jsx[39m
+[2m10:01:07 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] Error:[0m Unexpected token
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:90:19 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m90 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249m/[0m[38;5;249md[0m[38;5;249mi[0m[38;5;249mv[0m[38;5;249m>[0m
+ [38;5;240m   │[0m                   ─┬  
+ [38;5;240m   │[0m                    ╰── 
+[38;5;246m────╯[0m
+[39m
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Home.jsx[39m
+      at transformWithOxc (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3340:19)
+      at TransformPluginContext.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3408:26)
+      at EnvironmentPluginContainer.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:30193:51)
+      at async loadAndTransform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24511:26)
+      at async viteTransformMiddleware (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24305:20)
+[2m10:01:09 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] Error:[0m Unexpected token
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:94:17 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m94 │[0m ╭─▶ [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249m/[0m[38;5;249ms[0m[38;5;249me[0m[38;5;249mc[0m[38;5;249mt[0m[38;5;249mi[0m[38;5;249mo[0m[38;5;249mn[0m[38;5;249m>[0m
+ [38;5;240m   ┆[0m ┆   
+ [38;5;246m96 │[0m ├─▶ 
+ [38;5;240m   │[0m │       
+ [38;5;240m   │[0m ╰─────── 
+[38;5;246m────╯[0m
+
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Home.jsx[39m
+[2m10:01:09 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] Error:[0m Unexpected token
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:94:17 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m94 │[0m ╭─▶ [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249m/[0m[38;5;249ms[0m[38;5;249me[0m[38;5;249mc[0m[38;5;249mt[0m[38;5;249mi[0m[38;5;249mo[0m[38;5;249mn[0m[38;5;249m>[0m
+ [38;5;240m   ┆[0m ┆   
+ [38;5;246m96 │[0m ├─▶ 
+ [38;5;240m   │[0m │       
+ [38;5;240m   │[0m ╰─────── 
+[38;5;246m────╯[0m
+[39m
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Home.jsx[39m
+      at transformWithOxc (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3340:19)
+      at TransformPluginContext.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3408:26)
+      at EnvironmentPluginContainer.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:30193:51)
+      at async loadAndTransform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24511:26)
+      at async viteTransformMiddleware (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24305:20)
+[2m10:01:14 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] Error:[0m Unexpected token
+     [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:104:67 [38;5;246m][0m
+     [38;5;246m│[0m
+ [38;5;246m104 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249md[0m[38;5;249mi[0m[38;5;249mv[0m[38;5;249m [0m[38;5;249mc[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249ms[0m[38;5;249ms[0m[38;5;249mN[0m[38;5;249ma[0m[38;5;249mm[0m[38;5;249me[0m[38;5;249m=[0m[38;5;249m"[0m[38;5;249mg[0m[38;5;249mr[0m[38;5;249mi[0m[38;5;249md[0m[38;5;249m [0m[38;5;249mg[0m[38;5;249ma[0m[38;5;249mp[0m[38;5;249m-[0m[38;5;249m6[0m[38;5;249m [0m[38;5;249mm[0m[38;5;249md[0m[38;5;249m:[0m[38;5;249mg[0m[38;5;249mr[0m[38;5;249mi[0m[38;5;249md[0m[38;5;249m-[0m[38;5;249mc[0m[38;5;249mo[0m[38;5;249ml[0m[38;5;249ms[0m[38;5;249m-[0m[38;5;249m2[0m[38;5;249m [0m[38;5;249ml[0m[38;5;249mg[0m[38;5;249m:[0m[38;5;249mg[0m[38;5;249mr[0m[38;5;249mi[0m[38;5;249md[0m[38;5;249m-[0m[38;5;249mc[0m[38;5;249mo[0m[38;5;249ml[0m[38;5;249ms[0m[38;5;249m-[0m[38;5;249m3[0m[38;5;249m"[0m[38;5;249m>[0m
+ [38;5;240m    │[0m                                                                   ─┬  
+ [38;5;240m    │[0m                                                                    ╰── 
+[38;5;246m─────╯[0m
+
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Home.jsx[39m
+[2m10:01:14 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] Error:[0m Unexpected token
+     [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Home.jsx:104:67 [38;5;246m][0m
+     [38;5;246m│[0m
+ [38;5;246m104 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249md[0m[38;5;249mi[0m[38;5;249mv[0m[38;5;249m [0m[38;5;249mc[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249ms[0m[38;5;249ms[0m[38;5;249mN[0m[38;5;249ma[0m[38;5;249mm[0m[38;5;249me[0m[38;5;249m=[0m[38;5;249m"[0m[38;5;249mg[0m[38;5;249mr[0m[38;5;249mi[0m[38;5;249md[0m[38;5;249m [0m[38;5;249mg[0m[38;5;249ma[0m[38;5;249mp[0m[38;5;249m-[0m[38;5;249m6[0m[38;5;249m [0m[38;5;249mm[0m[38;5;249md[0m[38;5;249m:[0m[38;5;249mg[0m[38;5;249mr[0m[38;5;249mi[0m[38;5;249md[0m[38;5;249m-[0m[38;5;249mc[0m[38;5;249mo[0m[38;5;249ml[0m[38;5;249ms[0m[38;5;249m-[0m[38;5;249m2[0m[38;5;249m [0m[38;5;249ml[0m[38;5;249mg[0m[38;5;249m:[0m[38;5;249mg[0m[38;5;249mr[0m[38;5;249mi[0m[38;5;249md[0m[38;5;249m-[0m[38;5;249mc[0m[38;5;249mo[0m[38;5;249ml[0m[38;5;249ms[0m[38;5;249m-[0m[38;5;249m3[0m[38;5;249m"[0m[38;5;249m>[0m
+ [38;5;240m    │[0m                                                                   ─┬  
+ [38;5;240m    │[0m                                                                    ╰── 
+[38;5;246m─────╯[0m
+[39m
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Home.jsx[39m
+      at transformWithOxc (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3340:19)
+      at TransformPluginContext.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3408:26)
+      at EnvironmentPluginContainer.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:30193:51)
+      at async loadAndTransform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24511:26)
+      at async viteTransformMiddleware (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24305:20)
+[2m10:01:52 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] Error:[0m Unexpected token
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Suppliers.jsx:43:16 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m43 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249md[0m[38;5;249mi[0m[38;5;249mv[0m[38;5;249m>[0m
+ [38;5;240m   │[0m                ─┬  
+ [38;5;240m   │[0m                 ╰── 
+[38;5;246m────╯[0m
+
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Suppliers.jsx[39m
+[2m10:01:52 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] Error:[0m Unexpected token
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Suppliers.jsx:43:16 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m43 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249md[0m[38;5;249mi[0m[38;5;249mv[0m[38;5;249m>[0m
+ [38;5;240m   │[0m                ─┬  
+ [38;5;240m   │[0m                 ╰── 
+[38;5;246m────╯[0m
+[39m
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Suppliers.jsx[39m
+      at transformWithOxc (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3340:19)
+      at TransformPluginContext.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3408:26)
+      at EnvironmentPluginContainer.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:30193:51)
+      at async loadAndTransform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24511:26)
+      at async viteTransformMiddleware (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24305:20)
+[2m10:01:54 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] Error:[0m Unexpected token
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Suppliers.jsx:45:96 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m45 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249mh[0m[38;5;249m1[0m[38;5;249m [0m[38;5;249mc[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249ms[0m[38;5;249ms[0m[38;5;249mN[0m[38;5;249ma[0m[38;5;249mm[0m[38;5;249me[0m[38;5;249m=[0m[38;5;249m"[0m[38;5;249mm[0m[38;5;249mt[0m[38;5;249m-[0m[38;5;249m4[0m[38;5;249m [0m[38;5;249mt[0m[38;5;249me[0m[38;5;249mx[0m[38;5;249mt[0m[38;5;249m-[0m[38;5;249m5[0m[38;5;249mx[0m[38;5;249ml[0m[38;5;249m [0m[38;5;249mf[0m[38;5;249mo[0m[38;5;249mn[0m[38;5;249mt[0m[38;5;249m-[0m[38;5;249mb[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249mc[0m[38;5;249mk[0m[38;5;249m [0m[38;5;249mt[0m[38;5;249me[0m[38;5;249mx[0m[38;5;249mt[0m[38;5;249m-[0m[38;5;249mh[0m[38;5;249ma[0m[38;5;249mr[0m[38;5;249mv[0m[38;5;249me[0m[38;5;249ms[0m[38;5;249mt[0m[38;5;249m-[0m[38;5;249mg[0m[38;5;249mr[0m[38;5;249me[0m[38;5;249me[0m[38;5;249mn[0m[38;5;249m"[0m[38;5;249m>[0m[38;5;249mS[0m[38;5;249mu[0m[38;5;249mp[0m[38;5;249mp[0m[38;5;249ml[0m[38;5;249mi[0m[38;5;249me[0m[38;5;249mr[0m[38;5;249m [0m[38;5;249mD[0m[38;5;249mi[0m[38;5;249ms[0m[38;5;249mc[0m[38;5;249mo[0m[38;5;249mv[0m[38;5;249me[0m[38;5;249mr[0m[38;5;249my[0m[38;5;249m<[0m[38;5;249m/[0m[38;5;249mh[0m[38;5;249m1[0m[38;5;249m>[0m
+ [38;5;240m   │[0m                                                                                                ─┬  
+ [38;5;240m   │[0m                                                                                                 ╰── 
+[38;5;246m────╯[0m
+
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Suppliers.jsx[39m
+[2m10:01:54 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] Error:[0m Unexpected token
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/pages/Suppliers.jsx:45:96 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m45 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249mh[0m[38;5;249m1[0m[38;5;249m [0m[38;5;249mc[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249ms[0m[38;5;249ms[0m[38;5;249mN[0m[38;5;249ma[0m[38;5;249mm[0m[38;5;249me[0m[38;5;249m=[0m[38;5;249m"[0m[38;5;249mm[0m[38;5;249mt[0m[38;5;249m-[0m[38;5;249m4[0m[38;5;249m [0m[38;5;249mt[0m[38;5;249me[0m[38;5;249mx[0m[38;5;249mt[0m[38;5;249m-[0m[38;5;249m5[0m[38;5;249mx[0m[38;5;249ml[0m[38;5;249m [0m[38;5;249mf[0m[38;5;249mo[0m[38;5;249mn[0m[38;5;249mt[0m[38;5;249m-[0m[38;5;249mb[0m[38;5;249ml[0m[38;5;249ma[0m[38;5;249mc[0m[38;5;249mk[0m[38;5;249m [0m[38;5;249mt[0m[38;5;249me[0m[38;5;249mx[0m[38;5;249mt[0m[38;5;249m-[0m[38;5;249mh[0m[38;5;249ma[0m[38;5;249mr[0m[38;5;249mv[0m[38;5;249me[0m[38;5;249ms[0m[38;5;249mt[0m[38;5;249m-[0m[38;5;249mg[0m[38;5;249mr[0m[38;5;249me[0m[38;5;249me[0m[38;5;249mn[0m[38;5;249m"[0m[38;5;249m>[0m[38;5;249mS[0m[38;5;249mu[0m[38;5;249mp[0m[38;5;249mp[0m[38;5;249ml[0m[38;5;249mi[0m[38;5;249me[0m[38;5;249mr[0m[38;5;249m [0m[38;5;249mD[0m[38;5;249mi[0m[38;5;249ms[0m[38;5;249mc[0m[38;5;249mo[0m[38;5;249mv[0m[38;5;249me[0m[38;5;249mr[0m[38;5;249my[0m[38;5;249m<[0m[38;5;249m/[0m[38;5;249mh[0m[38;5;249m1[0m[38;5;249m>[0m
+ [38;5;240m   │[0m                                                                                                ─┬  
+ [38;5;240m   │[0m                                                                                                 ╰── 
+[38;5;246m────╯[0m
+[39m
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Suppliers.jsx[39m
+      at transformWithOxc (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3340:19)
+      at TransformPluginContext.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3408:26)
+      at EnvironmentPluginContainer.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:30193:51)
+      at async loadAndTransform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24511:26)
+      at async viteTransformMiddleware (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24305:20)

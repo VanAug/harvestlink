@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import PageShell from "../layout/PageShell";
 import ProductCard from "../cards/ProductCard";
 import SkeletonCard from "../SkeletonCard";
@@ -6,9 +7,19 @@ import { categories, products as fallbackProducts } from "../../data/mockData";
 import { apiGet, mapProduct } from "../../lib/api";
 
 export default function Products() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [products, setProducts] = useState(fallbackProducts);
   const [query, setQuery] = useState("");
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState("");
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const category = searchParams.get('category');
+    if (category) {
+      setSelectedCategories([category]);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     async function load() {
@@ -25,10 +36,36 @@ export default function Products() {
   }, []);
 
   const filtered = useMemo(() => {
-    if (!query) return products;
-    const q = query.toLowerCase();
-    return products.filter((p) => [p.name, p.category, p.country, p.seller].join(' ').toLowerCase().includes(q));
-  }, [products, query]);
+    let results = products;
+    
+    // Category filter
+    if (selectedCategories.length > 0) {
+      results = results.filter((p) => selectedCategories.includes(p.category));
+    }
+    
+    // Country filter
+    if (selectedCountry) {
+      results = results.filter((p) => p.country === selectedCountry);
+    }
+    
+    // Text search
+    if (query) {
+      const q = query.toLowerCase();
+      results = results.filter((p) => [p.name, p.category, p.country, p.seller].join(' ').toLowerCase().includes(q));
+    }
+    
+    return results;
+  }, [products, query, selectedCategories, selectedCountry]);
+
+  const handleCategoryChange = (categoryName, checked) => {
+    setSelectedCategories(prev => {
+      if (checked) {
+        return [...prev, categoryName];
+      } else {
+        return prev.filter(c => c !== categoryName);
+      }
+    });
+  };
 
   return (
     <PageShell>
@@ -49,11 +86,11 @@ export default function Products() {
           <div className="mt-5 space-y-5">
             <div>
               <label className="text-sm font-bold">Category</label>
-              <div className="mt-3 space-y-2 text-sm text-gray-600">{categories.map(c => <label key={c.name} className="block"><input type="checkbox" className="mr-2"/> {c.name}</label>)}</div>
+              <div className="mt-3 space-y-2 text-sm text-gray-600">{categories.map(c => <label key={c.name} className="block"><input type="checkbox" checked={selectedCategories.includes(c.name)} onChange={(e) => handleCategoryChange(c.name, e.target.checked)} className="mr-2"/> {c.name}</label>)}</div>
             </div>
             <div>
               <label className="text-sm font-bold">Country</label>
-              <select className="mt-2 w-full rounded-xl border p-3"><option>All Countries</option><option>Kenya</option><option>Tanzania</option><option>Ethiopia</option><option>United Arab Emirates</option></select>
+              <select value={selectedCountry} onChange={(e) => setSelectedCountry(e.target.value)} className="mt-2 w-full rounded-xl border p-3"><option value="">All Countries</option><option>Kenya</option><option>Tanzania</option><option>Ethiopia</option><option>Nigeria</option><option>India</option><option>Ukraine</option></select>
             </div>
             <div>
               <label className="text-sm font-bold">Trade Layer</label>

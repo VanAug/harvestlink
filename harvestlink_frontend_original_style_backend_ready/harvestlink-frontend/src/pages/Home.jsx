@@ -1,10 +1,30 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import PageShell from "../components/layout/PageShell";
 import ProductCard from "../components/cards/ProductCard";
-import { categories, products, stats } from "../data/mockData";
+import SkeletonCard from "../components/SkeletonCard";
+import { categories, products as fallbackProducts, stats } from "../data/mockData";
+import { apiGet, mapProduct } from "../lib/api";
 import { ArrowRight, BadgeCheck, Globe2, LockKeyhole, ShieldCheck } from "lucide-react";
 
 export default function Home() {
+  const [featuredProducts, setFeaturedProducts] = useState(fallbackProducts);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const [apiProducts, companies] = await Promise.all([apiGet('/products'), apiGet('/companies')]);
+        setFeaturedProducts(apiProducts.map((p) => mapProduct(p, companies)));
+      } catch (error) {
+        console.warn('Using fallback products on homepage:', error.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+    load();
+  }, []);
+
   return (
     <PageShell>
       <section className="bg-grid relative overflow-hidden bg-harvest-cream">
@@ -51,7 +71,7 @@ export default function Home() {
         </div>
         <div className="grid gap-4 md:grid-cols-4 lg:grid-cols-8">
           {categories.map(cat => (
-            <Link key={cat.name} to="/products" className="rounded-3xl border border-green-900/10 bg-white p-5 text-center shadow-sm hover:shadow-soft">
+            <Link key={cat.name} to={`/products?category=${encodeURIComponent(cat.name)}`} className="rounded-3xl border border-green-900/10 bg-white p-5 text-center shadow-sm hover:shadow-soft">
               <div className="text-4xl">{cat.emoji}</div>
               <div className="mt-3 text-sm font-bold">{cat.name}</div>
               <div className="text-xs text-gray-400">{cat.count} listings</div>
@@ -82,7 +102,7 @@ export default function Home() {
           <Link to="/products" className="font-bold text-harvest-leaf">View all</Link>
         </div>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {products.slice(0,6).map(p => <ProductCard key={p.id} product={p}/>)}
+          {loading ? <SkeletonCard count={6} /> : featuredProducts.slice(0,6).map(p => <ProductCard key={p.id} product={p}/>)}
         </div>
       </section>
     </PageShell>
