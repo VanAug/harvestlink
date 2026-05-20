@@ -1,11 +1,73 @@
+import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import PageShell from "../layout/PageShell";
-import { products } from "../../data/mockData";
+import { products as fallbackProducts } from "../../data/mockData";
+import { apiGet, mapProduct } from "../../lib/api";
 import { BadgeCheck, Globe2, Truck, ShieldCheck } from "lucide-react";
 
 export default function ProductDetail() {
   const { id } = useParams();
-  const product = products.find(p => p.id === id) || products[0];
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const [apiProduct, companies] = await Promise.all([
+          apiGet(`/products/${id}`),
+          apiGet('/companies'),
+        ]);
+        setProduct(mapProduct(apiProduct, companies));
+      } catch (error) {
+        console.warn('Using fallback product because API is unavailable:', error.message);
+        const fallback = fallbackProducts.find(p => p.id === id) || fallbackProducts[0];
+        setProduct(fallback);
+      } finally {
+        setLoading(false);
+      }
+    }
+    load();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <PageShell>
+        <main className="mx-auto max-w-7xl px-4 py-12 lg:px-6">
+          <div className="grid gap-10 lg:grid-cols-2 animate-pulse">
+            <div className="h-[480px] w-full rounded-[2rem] bg-gray-200" />
+            <div className="space-y-5">
+              <div className="h-8 w-1/3 rounded-full bg-gray-200" />
+              <div className="h-12 w-3/4 rounded-full bg-gray-200" />
+              <div className="h-6 w-1/2 rounded-full bg-gray-200" />
+              <div className="mt-8 grid grid-cols-2 gap-4">
+                <div className="h-20 rounded-2xl bg-gray-200" />
+                <div className="h-20 rounded-2xl bg-gray-200" />
+                <div className="h-20 rounded-2xl bg-gray-200" />
+                <div className="h-20 rounded-2xl bg-gray-200" />
+              </div>
+            </div>
+          </div>
+        </main>
+      </PageShell>
+    );
+  }
+
+  if (!product) {
+    return (
+      <PageShell>
+        <main className="mx-auto max-w-7xl px-4 py-12 text-center lg:px-6">
+          <h1 className="text-4xl font-black text-harvest-green">Product not found</h1>
+          <Link to="/products" className="mt-6 inline-block rounded-2xl bg-harvest-green px-6 py-3 font-bold text-white">
+            Browse Products
+          </Link>
+        </main>
+      </PageShell>
+    );
+  }
+
+  const supplierLink = product.supplierId
+    ? `/suppliers/${product.supplierId}`
+    : '/suppliers';
 
   return (
     <PageShell>
@@ -31,7 +93,7 @@ export default function ProductDetail() {
             </div>
             <div className="mt-8 flex gap-3">
               <Link to="/create-rfq" className="rounded-2xl bg-harvest-green px-6 py-3 font-bold text-white">Request Quote</Link>
-              <Link to="/suppliers/green-valley-exports" className="rounded-2xl border border-harvest-green px-6 py-3 font-bold text-harvest-green">View Supplier</Link>
+              <Link to={supplierLink} className="rounded-2xl border border-harvest-green px-6 py-3 font-bold text-harvest-green">View Supplier</Link>
             </div>
           </div>
         </div>

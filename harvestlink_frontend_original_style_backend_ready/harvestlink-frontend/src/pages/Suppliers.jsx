@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import PageShell from "../components/layout/PageShell";
 import SupplierCard from "../components/cards/SupplierCard";
+import SkeletonCard from "../components/SkeletonCard";
 import { suppliers as fallbackSuppliers } from "../data/mockData";
 import { apiGet, mapSupplier } from "../lib/api";
 
 export default function Suppliers() {
   const [suppliers, setSuppliers] = useState(fallbackSuppliers);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function load() {
@@ -14,6 +16,8 @@ export default function Suppliers() {
         setSuppliers(companies.map(mapSupplier));
       } catch (error) {
         console.warn('Using fallback suppliers because API is unavailable:', error.message);
+      } finally {
+        setLoading(false);
       }
     }
     load();
@@ -31,7 +35,7 @@ export default function Suppliers() {
           <input className="rounded-2xl border border-gray-200 px-5 py-3" placeholder="Search suppliers..." />
         </div>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {suppliers.map(s => <SupplierCard key={s.id} supplier={s}/>) }
+          {loading ? <SkeletonCard count={6} /> : suppliers.map(s => <SupplierCard key={s.id} supplier={s}/>)}
         </div>
       </section>
     </PageShell>

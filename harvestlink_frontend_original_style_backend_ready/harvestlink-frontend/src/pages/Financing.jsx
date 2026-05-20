@@ -5,20 +5,31 @@ import { BadgeDollarSign, BarChart3, CheckCircle2, ShieldCheck } from "lucide-re
 
 export default function Financing() {
   const [requests, setRequests] = useState([]);
+  const [companies, setCompanies] = useState([]);
   const [eligibility, setEligibility] = useState({ financing_eligible_amount: 20000, trade_score: 78, total_trade_value: 85000, total_deals: 8 });
 
   useEffect(() => {
     async function load() {
       try {
-        const [financeRequests, score] = await Promise.all([apiGet('/financing'), apiGet('/financing/eligibility/1')]);
+        const [financeRequests, score, allCompanies] = await Promise.all([
+          apiGet('/financing'),
+          apiGet('/financing/eligibility/1'),
+          apiGet('/companies'),
+        ]);
         setRequests(financeRequests);
         setEligibility(score);
+        setCompanies(allCompanies);
       } catch (error) {
         console.warn('Using fallback financing data because API is unavailable:', error.message);
       }
     }
     load();
   }, []);
+
+  function companyName(companyId) {
+    const company = companies.find(c => c.id === companyId);
+    return company?.name || `Company #${companyId}`;
+  }
 
   return (
     <PageShell>
@@ -54,7 +65,13 @@ export default function Financing() {
               <thead className="text-gray-500"><tr><th className="p-3">Exporter</th><th className="p-3">Requested</th><th className="p-3">Eligible</th><th className="p-3">Score</th><th className="p-3">Status</th></tr></thead>
               <tbody>
                 {(requests.length ? requests : [{id: 1, exporter_company_id: 1, requested_amount: 20000, eligible_amount: 8600, score: 78, status: 'under_review'}]).map((r) => (
-                  <tr key={r.id} className="border-t"><td className="p-3">Company #{r.exporter_company_id}</td><td className="p-3">${r.requested_amount?.toLocaleString?.()}</td><td className="p-3">${r.eligible_amount?.toLocaleString?.()}</td><td className="p-3">{r.score}</td><td className="p-3"><span className="rounded-full bg-green-100 px-3 py-1 text-xs font-bold text-green-700">{r.status}</span></td></tr>
+                  <tr key={r.id} className="border-t">
+                    <td className="p-3 font-bold text-harvest-green">{companyName(r.exporter_company_id)}</td>
+                    <td className="p-3">${r.requested_amount?.toLocaleString?.()}</td>
+                    <td className="p-3">${r.eligible_amount?.toLocaleString?.()}</td>
+                    <td className="p-3">{r.score}</td>
+                    <td className="p-3"><span className="rounded-full bg-green-100 px-3 py-1 text-xs font-bold text-green-700">{r.status}</span></td>
+                  </tr>
                 ))}
               </tbody>
             </table>

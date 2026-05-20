@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import PageShell from "../layout/PageShell";
 import ProductCard from "../cards/ProductCard";
+import SkeletonCard from "../SkeletonCard";
 import { categories, products as fallbackProducts } from "../../data/mockData";
 import { apiGet, mapProduct } from "../../lib/api";
 
@@ -68,7 +69,7 @@ export default function Products() {
             <select className="rounded-xl border bg-white p-3 text-sm"><option>Sort by Latest</option><option>Lowest MOQ</option><option>Verified Suppliers</option></select>
           </div>
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {filtered.map(p => <ProductCard key={p.id} product={p}/>) }
+            {loading ? <SkeletonCard count={6} /> : filtered.map(p => <ProductCard key={p.id} product={p}/>)}
           </div>
         </section>
       </main>

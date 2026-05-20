@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import PageShell from "../layout/PageShell";
 import RFQCard from "../cards/RFQCard";
+import SkeletonCard from "../SkeletonCard";
 import { rfqs as fallbackRFQs } from "../../data/mockData";
 import { apiGet, mapRFQ } from "../../lib/api";
 
 export default function RFQs() {
   const [rfqs, setRfqs] = useState(fallbackRFQs);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function load() {
@@ -15,6 +17,8 @@ export default function RFQs() {
         setRfqs(data.map(mapRFQ));
       } catch (error) {
         console.warn('Using fallback RFQs because API is unavailable:', error.message);
+      } finally {
+        setLoading(false);
       }
     }
     load();
@@ -35,7 +39,7 @@ export default function RFQs() {
         </div>
       </section>
       <section className="mx-auto grid max-w-7xl gap-6 px-4 py-10 md:grid-cols-2 lg:grid-cols-3 lg:px-6">
-        {rfqs.map(r => <RFQCard key={r.id} rfq={r}/>) }
+        {loading ? <SkeletonCard count={6} /> : rfqs.map(r => <RFQCard key={r.id} rfq={r}/>)}
       </section>
     </PageShell>
   );

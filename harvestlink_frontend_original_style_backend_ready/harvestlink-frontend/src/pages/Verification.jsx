@@ -1,9 +1,20 @@
-import PageShell from "../components/layout/PageShell";
 import { Link } from "react-router-dom";
+import PageShell from "../components/layout/PageShell";
 import { BadgeCheck, ShieldCheck, Sparkles, Users } from "lucide-react";
+import { isLoggedIn } from "../lib/api";
 
 export default function Verification({ type = "buyer" }) {
   const isBuyer = type === "buyer";
+  const loggedIn = isLoggedIn();
+
+  const ctaLink = loggedIn
+    ? "/buyer/profile"
+    : "/register";
+
+  const ctaLabel = loggedIn
+    ? "Go to Profile to Complete Verification"
+    : "Create an Account - $90 One-time Fee";
+
   return (
     <PageShell>
       <main className="mx-auto max-w-7xl px-4 py-16 lg:px-6">
@@ -30,7 +41,12 @@ export default function Verification({ type = "buyer" }) {
             <div className="mt-6 space-y-3 text-gray-700">
               {["Secure verification process","Money-back guarantee if not approved","Premium badge","Priority marketplace access","Profile trust score"].map(x => <div key={x}>✅ {x}</div>)}
             </div>
-            <Link to="/register" className="mt-8 block rounded-2xl bg-harvest-orange px-6 py-4 text-center font-black text-white">Start Verification - $90 One-time Fee</Link>
+            <Link to={ctaLink} className="mt-8 block rounded-2xl bg-harvest-orange px-6 py-4 text-center font-black text-white">
+              {ctaLabel}
+            </Link>
+            {loggedIn && (
+              <p className="mt-3 text-center text-xs text-gray-500">Already logged in — update your profile to complete verification.</p>
+            )}
           </div>
         </div>
       </main>
