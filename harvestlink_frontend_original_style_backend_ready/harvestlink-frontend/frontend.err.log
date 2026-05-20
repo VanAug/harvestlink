@@ -769,3 +769,161 @@ Visit https://react.dev/link/error-boundaries to learn more about error boundari
 
 [2m9:46:47 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to load url /src/pages/Dashboard.jsx (resolved id: C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Dashboard.jsx) in C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/main.jsx. Does the file exist?
 [2m9:56:02 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to load url /src/pages/Auth.jsx (resolved id: C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Auth.jsx) in C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/main.jsx. Does the file exist?
+[2m8:34:25 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mReferenceError[22m: Auth is not defined
+[39m > src/main.jsx:60:39
+    58 |          <Route path="/financing" element={<Financing />} />
+    59 |          <Route path="/pricing" element={<Pricing />} />
+    60 |          <Route path="/login" element={<Auth mode="login" />} />
+       |                                         ^
+    61 |          <Route path="/register" element={<Auth mode="register" />} />
+    62 |          <Route path="/password-reset" element={<PasswordReset />} />
+
+[2m8:34:30 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mReferenceError[22m: Auth is not defined
+[39m > src/main.jsx:60:39
+    58 |          <Route path="/financing" element={<Financing />} />
+    59 |          <Route path="/pricing" element={<Pricing />} />
+    60 |          <Route path="/login" element={<Auth mode="login" />} />
+       |                                         ^
+    61 |          <Route path="/register" element={<Auth mode="register" />} />
+    62 |          <Route path="/password-reset" element={<PasswordReset />} />
+
+[2m8:34:33 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mReferenceError[22m: Auth is not defined
+[39m > src/main.jsx:60:39
+    58 |          <Route path="/financing" element={<Financing />} />
+    59 |          <Route path="/pricing" element={<Pricing />} />
+    60 |          <Route path="/login" element={<Auth mode="login" />} />
+       |                                         ^
+    61 |          <Route path="/register" element={<Auth mode="register" />} />
+    62 |          <Route path="/password-reset" element={<PasswordReset />} />
+
+[2m8:41:31 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to load url /src/pages/Login.jsx (resolved id: C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Login.jsx) in C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/main.jsx. Does the file exist?
+[2m8:41:31 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to load url /src/pages/Registration.jsx (resolved id: C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Registration.jsx) in C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/main.jsx. Does the file exist?
+[2m8:46:54 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to load url /src/pages/Dashboard.jsx (resolved id: C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Dashboard.jsx) in C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/main.jsx. Does the file exist?
+[2m8:47:30 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to load url /src/pages/Dashboard.jsx (resolved id: C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/Dashboard.jsx) in C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/main.jsx. Does the file exist?
+[2m8:47:30 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to load url /src/pages/EmailVerification.jsx (resolved id: C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/pages/EmailVerification.jsx) in C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/main.jsx. Does the file exist?
+[2m8:51:32 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "./pages/EmailVerification" from "src/main.jsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/main.jsx[39m:29:30
+[33m  26 |  import DeliveryReview from "./pages/DeliveryReview";
+  27 |  import PasswordReset from "./pages/PasswordReset";
+  28 |  import EmailVerification from "./pages/EmailVerification";
+     |                                 ^
+  29 |  import NotFound from "./pages/NotFound";
+  30 |  import ProtectedRoute from "./components/ProtectedRoute";[39m
+[2m8:51:32 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "../data/mockData" from "src/components/dashboard/Dashboard.jsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/components/dashboard/Dashboard.jsx[39m:7:67
+[33m  5  |  import BuyerDashboard from "./BuyerDashboard";
+  6  |  import ExporterDashboard, { exporterFallbackMetrics } from "./ExporterDashboard";
+  7  |  import { products as fallbackProducts, rfqs as fallbackRFQs } from "../data/mockData";
+     |                                                                      ^
+  8  |  import { apiGet, mapProduct, mapRFQ } from "../lib/api";
+  9  |  var _jsxFileName = "C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/har...[39m
+[2m8:51:32 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "./pages/EmailVerification" from "src/main.jsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/main.jsx[39m:29:30
+[33m  26 |  import DeliveryReview from "./pages/DeliveryReview";
+  27 |  import PasswordReset from "./pages/PasswordReset";
+  28 |  import EmailVerification from "./pages/EmailVerification";
+     |                                 ^
+  29 |  import NotFound from "./pages/NotFound";
+  30 |  import ProtectedRoute from "./components/ProtectedRoute";[39m
+      at TransformPluginContext._formatLog (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:30408:39)
+      at TransformPluginContext.error (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:30405:14)
+      at normalizeUrl (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:27662:18)
+      at async file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:27725:30
+      at async Promise.all (index 27)
+      at async TransformPluginContext.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:27693:4)
+      at async EnvironmentPluginContainer.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:30193:14)
+      at async loadAndTransform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24511:26)
+      at async viteTransformMiddleware (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24305:20)
+[2m8:51:32 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "../data/mockData" from "src/components/dashboard/Dashboard.jsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/components/dashboard/Dashboard.jsx[39m:7:67
+[33m  5  |  import BuyerDashboard from "./BuyerDashboard";
+  6  |  import ExporterDashboard, { exporterFallbackMetrics } from "./ExporterDashboard";
+  7  |  import { products as fallbackProducts, rfqs as fallbackRFQs } from "../data/mockData";
+     |                                                                      ^
+  8  |  import { apiGet, mapProduct, mapRFQ } from "../lib/api";
+  9  |  var _jsxFileName = "C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/har...[39m
+[2m8:51:45 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "../lib/api" from "src/components/dashboard/Dashboard.jsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/components/dashboard/Dashboard.jsx[39m:8:43
+[33m  6  |  import ExporterDashboard, { exporterFallbackMetrics } from "./ExporterDashboard";
+  7  |  import { products as fallbackProducts, rfqs as fallbackRFQs } from "../data/mockData";
+  8  |  import { apiGet, mapProduct, mapRFQ } from "../lib/api";
+     |                                              ^
+  9  |  var _jsxFileName = "C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/har...
+  10 |  import { jsxDEV as _jsxDEV } from "react/jsx-dev-runtime";[39m
+[2m8:51:45 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "../lib/api" from "src/components/Auth/EmailVerification.jsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/components/Auth/EmailVerification.jsx[39m:4:24
+[33m  2  |  import { useSearchParams } from "react-router-dom";
+  3  |  import PageShell from "../layout/PageShell";
+  4  |  import { apiPost } from "../lib/api";
+     |                           ^
+  5  |  var _jsxFileName = "C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/har...
+  6  |  import { jsxDEV as _jsxDEV } from "react/jsx-dev-runtime";[39m
+[2m8:51:45 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "../data/mockData" from "src/components/dashboard/Dashboard.jsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/components/dashboard/Dashboard.jsx[39m:7:67
+[33m  5  |  import BuyerDashboard from "./BuyerDashboard";
+  6  |  import ExporterDashboard, { exporterFallbackMetrics } from "./ExporterDashboard";
+  7  |  import { products as fallbackProducts, rfqs as fallbackRFQs } from "../data/mockData";
+     |                                                                      ^
+  8  |  import { apiGet, mapProduct, mapRFQ } from "../lib/api";
+  9  |  var _jsxFileName = "C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/har...[39m
+      at TransformPluginContext._formatLog (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:30408:39)
+      at TransformPluginContext.error (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:30405:14)
+      at normalizeUrl (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:27662:18)
+      at async file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:27725:30
+      at async Promise.all (index 6)
+      at async TransformPluginContext.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:27693:4)
+      at async EnvironmentPluginContainer.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:30193:14)
+      at async loadAndTransform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24511:26)
+      at async viteTransformMiddleware (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24305:20)
+[2m8:51:45 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "../lib/api" from "src/components/Auth/EmailVerification.jsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/components/Auth/EmailVerification.jsx[39m:4:24
+[33m  2  |  import { useSearchParams } from "react-router-dom";
+  3  |  import PageShell from "../layout/PageShell";
+  4  |  import { apiPost } from "../lib/api";
+     |                           ^
+  5  |  var _jsxFileName = "C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/har...
+  6  |  import { jsxDEV as _jsxDEV } from "react/jsx-dev-runtime";[39m
+      at TransformPluginContext._formatLog (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:30408:39)
+      at TransformPluginContext.error (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:30405:14)
+      at normalizeUrl (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:27662:18)
+      at async file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:27725:30
+      at async Promise.all (index 3)
+      at async TransformPluginContext.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:27693:4)
+      at async EnvironmentPluginContainer.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:30193:14)
+      at async loadAndTransform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24511:26)
+      at async viteTransformMiddleware (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24305:20)
+[2m8:52:40 AM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Failed to resolve import "../lib/api" from "src/components/Auth/EmailVerification.jsx". Does the file exist?
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/components/Auth/EmailVerification.jsx[39m:4:24
+[33m  2  |  import { useSearchParams } from "react-router-dom";
+  3  |  import PageShell from "../layout/PageShell";
+  4  |  import { apiPost } from "../lib/api";
+     |                           ^
+  5  |  var _jsxFileName = "C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/har...
+  6  |  import { jsxDEV as _jsxDEV } from "react/jsx-dev-runtime";[39m
+[2m8:52:40 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: Failed to resolve import "../lib/api" from "src/components/Auth/EmailVerification.jsx". Does the file exist?[39m
+  Plugin: [35mvite:import-analysis[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/components/Auth/EmailVerification.jsx[39m:4:24
+[33m  2  |  import { useSearchParams } from "react-router-dom";
+  3  |  import PageShell from "../layout/PageShell";
+  4  |  import { apiPost } from "../lib/api";
+     |                           ^
+  5  |  var _jsxFileName = "C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/har...
+  6  |  import { jsxDEV as _jsxDEV } from "react/jsx-dev-runtime";[39m
+      at TransformPluginContext._formatLog (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:30408:39)
+      at TransformPluginContext.error (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:30405:14)
+      at normalizeUrl (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:27662:18)
+      at async file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:27725:30
+      at async Promise.all (index 3)
+      at async TransformPluginContext.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:27693:4)
+      at async EnvironmentPluginContainer.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:30193:14)
+      at async loadAndTransform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24511:26)
+      at async viteTransformMiddleware (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24305:20)

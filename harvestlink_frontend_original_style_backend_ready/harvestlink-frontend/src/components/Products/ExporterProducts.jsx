@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Archive, Edit3, PackagePlus } from "lucide-react";
-import PageShell from "../components/layout/PageShell";
-import { apiGet, apiPatch, mapProduct } from "../lib/api";
+import PageShell from "../layout/PageShell";
+import { apiGet, apiPatch, mapProduct } from "../../lib/api";
 
 export default function ExporterProducts() {
   const [company, setCompany] = useState(null);

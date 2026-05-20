@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import PageShell from "../components/layout/PageShell";
-import RFQCard from "../components/cards/RFQCard";
-import { rfqs as fallbackRFQs } from "../data/mockData";
-import { apiGet, mapRFQ } from "../lib/api";
+import PageShell from "../layout/PageShell";
+import RFQCard from "../cards/RFQCard";
+import { rfqs as fallbackRFQs } from "../../data/mockData";
+import { apiGet, mapRFQ } from "../../lib/api";
 
 export default function RFQs() {
   const [rfqs, setRfqs] = useState(fallbackRFQs);

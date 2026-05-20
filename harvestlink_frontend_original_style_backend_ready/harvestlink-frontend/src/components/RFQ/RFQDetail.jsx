@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Check, X } from "lucide-react";
-import PageShell from "../components/layout/PageShell";
-import { Input } from "../components/forms/Input";
-import { apiGet, apiPost, mapRFQ } from "../lib/api";
+import PageShell from "../layout/PageShell";
+import { Input } from "../forms/Input";
+import { apiGet, apiPost, mapRFQ } from "../../lib/api";
 
 export default function RFQDetail() {
   const { id } = useParams();

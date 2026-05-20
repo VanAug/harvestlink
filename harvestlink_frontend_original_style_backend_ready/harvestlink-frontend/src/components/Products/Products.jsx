@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
-import PageShell from "../components/layout/PageShell";
-import ProductCard from "../components/cards/ProductCard";
-import { categories, products as fallbackProducts } from "../data/mockData";
-import { apiGet, mapProduct } from "../lib/api";
+import PageShell from "../layout/PageShell";
+import ProductCard from "../cards/ProductCard";
+import { categories, products as fallbackProducts } from "../../data/mockData";
+import { apiGet, mapProduct } from "../../lib/api";
 
 export default function Products() {
   const [products, setProducts] = useState(fallbackProducts);

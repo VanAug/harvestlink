@@ -5,10 +5,10 @@ import {
   BadgeCheck, Clock, Package, TrendingUp, ArrowRight,
   Settings, UserCircle, ShieldCheck, MapPin, DollarSign
 } from "lucide-react";
-import PageShell from "../components/layout/PageShell";
-import { Input } from "../components/forms/Input";
-import { apiGet, apiPatch, apiPost } from "../lib/api";
-import { products as fallbackProducts, rfqs as fallbackRFQs } from "../data/mockData";
+import PageShell from "../layout/PageShell";
+import { Input } from "../forms/Input";
+import { apiGet, apiPatch, apiPost } from "../../lib/api";
+import { products as fallbackProducts, rfqs as fallbackRFQs } from "../../data/mockData";
 
 const emptyCompany = {
   name: "",

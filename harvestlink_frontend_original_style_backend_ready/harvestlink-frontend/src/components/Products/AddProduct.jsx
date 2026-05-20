@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, PackagePlus, Sprout } from "lucide-react";
-import PageShell from "../components/layout/PageShell";
-import { Input } from "../components/forms/Input";
-import { apiGet, apiPatch, apiPost } from "../lib/api";
-import { categories } from "../data/mockData";
+import PageShell from "../layout/PageShell";
+import { Input } from "../forms/Input";
+import { apiGet, apiPatch, apiPost } from "../../lib/api";
+import { categories } from "../../data/mockData";
 
 const initialForm = {
   name: "",

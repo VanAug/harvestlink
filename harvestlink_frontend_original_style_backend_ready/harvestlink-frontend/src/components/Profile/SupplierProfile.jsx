@@ -1,7 +1,7 @@
 import { useParams, Link } from "react-router-dom";
-import PageShell from "../components/layout/PageShell";
-import ProductCard from "../components/cards/ProductCard";
-import { suppliers, products } from "../data/mockData";
+import PageShell from "../layout/PageShell";
+import ProductCard from "../cards/ProductCard";
+import { suppliers, products } from "../../data/mockData";
 import { BadgeCheck } from "lucide-react";
 
 export default function SupplierProfile() {

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import PageShell from "../components/layout/PageShell";
-import { Input, Select } from "../components/forms/Input";
-import { apiGet, apiPost } from "../lib/api";
+import PageShell from "../layout/PageShell";
+import { Input, Select } from "../forms/Input";
+import { apiGet, apiPost } from "../../lib/api";
 
 export default function CreateRFQ() {
   const navigate = useNavigate();

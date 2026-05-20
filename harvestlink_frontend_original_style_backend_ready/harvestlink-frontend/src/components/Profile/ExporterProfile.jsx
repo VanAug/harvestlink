@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { BadgeCheck, FileText, ShieldCheck } from "lucide-react";
-import PageShell from "../components/layout/PageShell";
-import { Input } from "../components/forms/Input";
-import { apiGet, apiPatch, apiPost } from "../lib/api";
+import PageShell from "../layout/PageShell";
+import { Input } from "../forms/Input";
+import { apiGet, apiPatch, apiPost } from "../../lib/api";
 
 const emptyCompany = {
   name: "",

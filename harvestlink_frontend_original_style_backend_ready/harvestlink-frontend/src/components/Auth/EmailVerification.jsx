@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import PageShell from "../components/layout/PageShell";
-import { apiPost } from "../lib/api";
+import PageShell from "../layout/PageShell";
+import { apiPost } from "../../lib/api";
 
 export default function EmailVerification() {
   const [searchParams] = useSearchParams();

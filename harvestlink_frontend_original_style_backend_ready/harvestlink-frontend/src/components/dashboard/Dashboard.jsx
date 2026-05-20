@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { BadgeDollarSign, FileText, Globe2, Handshake, LockKeyhole, Package, PackageCheck, ShoppingBag } from "lucide-react";
-import PageShell from "../components/layout/PageShell";
-import AdminDashboard from "../components/dashboard/AdminDashboard";
-import BuyerDashboard from "../components/dashboard/BuyerDashboard";
-import ExporterDashboard, { exporterFallbackMetrics } from "../components/dashboard/ExporterDashboard";
-import { products as fallbackProducts, rfqs as fallbackRFQs } from "../data/mockData";
-import { apiGet, mapProduct, mapRFQ } from "../lib/api";
+import PageShell from "../layout/PageShell";
+import AdminDashboard from "./AdminDashboard";
+import BuyerDashboard from "./BuyerDashboard";
+import ExporterDashboard, { exporterFallbackMetrics } from "./ExporterDashboard";
+import { products as fallbackProducts, rfqs as fallbackRFQs } from "../../data/mockData";
+import { apiGet, mapProduct, mapRFQ } from "../../lib/api";
 
 export default function Dashboard({ role = "buyer" }) {
   const [state, setState] = useState({

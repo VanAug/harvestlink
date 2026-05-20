@@ -1,6 +1,6 @@
 import { useParams, Link } from "react-router-dom";
-import PageShell from "../components/layout/PageShell";
-import { products } from "../data/mockData";
+import PageShell from "../layout/PageShell";
+import { products } from "../../data/mockData";
 import { BadgeCheck, Globe2, Truck, ShieldCheck } from "lucide-react";
 
 export default function ProductDetail() {
