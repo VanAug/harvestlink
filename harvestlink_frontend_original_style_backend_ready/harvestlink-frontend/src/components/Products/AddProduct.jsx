@@ -31,6 +31,7 @@ export default function AddProduct() {
   const [companyId, setCompanyId] = useState("");
   const [message, setMessage] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [countries, setCountries] = useState([]);
 
   useEffect(() => {
     async function loadCompanies() {
@@ -59,6 +60,18 @@ export default function AddProduct() {
     }
     loadCompanies();
   }, [id, isEditing]);
+
+  useEffect(() => {
+    async function loadCountries() {
+      try {
+        const data = await apiGet('/countries');
+        setCountries(data);
+      } catch (err) {
+        // ignore
+      }
+    }
+    loadCountries();
+  }, []);
 
   const selectedCompany = useMemo(
     () => companies.find((company) => String(company.id) === String(companyId)),
@@ -156,7 +169,16 @@ export default function AddProduct() {
               </label>
               <Input label="Variety" value={form.variety} onChange={(e) => updateField("variety", e.target.value)} placeholder="Hass, Arabica, Roses" />
               <Input label="Grade" value={form.grade} onChange={(e) => updateField("grade", e.target.value)} placeholder="Export Grade" />
-              <Input required label="Country of Origin" value={form.country_of_origin} onChange={(e) => updateField("country_of_origin", e.target.value)} placeholder="Kenya" />
+              <label className="block">
+                <span className="mb-2 block text-sm font-bold text-gray-800">Country of Origin</span>
+                <select value={form.country_of_origin} onChange={(e) => updateField("country_of_origin", e.target.value)} className="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 outline-none focus:border-harvest-leaf">
+                  {countries.length === 0 ? (
+                    <option>Kenya</option>
+                  ) : (
+                    countries.map((c) => <option key={c.code} value={c.name}>{c.name}</option>)
+                  )}
+                </select>
+              </label>
               <Input required label="Available Quantity" type="number" min="0" step="0.01" value={form.available_quantity} onChange={(e) => updateField("available_quantity", e.target.value)} placeholder="20" />
               <Input required label="Unit" value={form.unit} onChange={(e) => updateField("unit", e.target.value)} placeholder="tons/week" />
               <Input label="Minimum Order Quantity" type="number" min="0" step="0.01" value={form.minimum_order_quantity} onChange={(e) => updateField("minimum_order_quantity", e.target.value)} placeholder="5" />

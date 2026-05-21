@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import PageShell from "../layout/PageShell";
 import { Input } from "../forms/Input";
-import { apiPost, register } from "../../lib/api";
+import { apiPost, register, apiGet } from "../../lib/api";
 
 const roleOptions = [
   { value: "buyer", label: "Buyer" },
@@ -19,6 +19,7 @@ export default function Registration() {
   const [role, setRole] = useState("buyer");
   const [companyName, setCompanyName] = useState("");
   const [country, setCountry] = useState("Kenya");
+  const [countries, setCountries] = useState([]);
   const [message, setMessage] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
@@ -65,6 +66,20 @@ export default function Registration() {
       setSubmitting(false);
     }
   }
+
+  // load countries for dropdown
+  useEffect(() => {
+    async function load() {
+      try {
+        const data = await apiGet('/countries');
+        setCountries(data);
+        if (!country && data.length) setCountry(data[0].name);
+      } catch (err) {
+        // keep default
+      }
+    }
+    load();
+  }, []);
 
   return (
     <PageShell>
@@ -133,13 +148,20 @@ export default function Registration() {
               onChange={(e) => setCompanyName(e.target.value)}
               placeholder="Company or business name"
             />
-            <Input
-              required
-              label="Country"
-              value={country}
-              onChange={(e) => setCountry(e.target.value)}
-              placeholder="Kenya"
-            />
+            <label className="block">
+              <span className="mb-2 block text-sm font-bold text-gray-800">Country</span>
+              <select
+                value={country}
+                onChange={(e) => setCountry(e.target.value)}
+                className="w-full rounded-2xl border border-gray-200 p-3"
+              >
+                {countries.length === 0 ? (
+                  <option>Kenya</option>
+                ) : (
+                  countries.map((c) => <option key={c.code} value={c.name}>{c.name}</option>)
+                )}
+              </select>
+            </label>
           </div>
 
           {message && (

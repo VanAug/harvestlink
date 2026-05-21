@@ -24,13 +24,33 @@ export default function BuyerProfile() {
   const [company, setCompany] = useState(null);
   const [form, setForm] = useState(emptyCompany);
   const [message, setMessage] = useState("");
+  const [countries, setCountries] = useState([]);
   const [activeTab, setActiveTab] = useState("profile");
   const [myRfqs, setMyRfqs] = useState([]);
   const [myDeals, setMyDeals] = useState([]);
   const [recentProducts, setRecentProducts] = useState([]);
   const [watchlist, setWatchlist] = useState([]);
   const [stats, setStats] = useState({ totalRfqs: 0, activeRfqs: 0, totalDeals: 0, savedProducts: 0 });
+  const [showDestDropdown, setShowDestDropdown] = useState(false);
   const userId = Number(localStorage.getItem("harvestlink_user_id"));
+
+  const selectedDestArray = form.preferred_destinations
+    ? form.preferred_destinations.split(',').map(s => s.trim()).filter(Boolean)
+    : [];
+  const selectedDestCount = selectedDestArray.length;
+
+  function toggleDestination(name) {
+    const current = selectedDestArray;
+    const updated = current.includes(name)
+      ? current.filter(d => d !== name)
+      : [...current, name];
+    updateField('preferred_destinations', updated.join(', '));
+  }
+
+  function removeDestination(name) {
+    const updated = selectedDestArray.filter(d => d !== name);
+    updateField('preferred_destinations', updated.join(', '));
+  }
 
   async function load() {
     if (!userId) return;
@@ -85,6 +105,18 @@ export default function BuyerProfile() {
 
   useEffect(() => {
     load().catch((error) => setMessage(`Profile could not load. ${error.message}`));
+  }, []);
+
+  useEffect(() => {
+    async function loadCountries() {
+      try {
+        const data = await apiGet('/countries');
+        setCountries(data);
+      } catch (err) {
+        // ignore
+      }
+    }
+    loadCountries();
   }, []);
 
   function updateField(field, value) {
@@ -229,13 +261,16 @@ export default function BuyerProfile() {
                     placeholder="Your company name"
                     required
                   />
-                  <Input
-                    label="Country"
-                    value={form.country}
-                    onChange={(e) => updateField("country", e.target.value)}
-                    placeholder="Your country"
-                    required
-                  />
+                  <label>
+                    <span className="mb-2 block text-sm font-bold text-gray-800">Country</span>
+                    <select value={form.country} onChange={(e) => updateField("country", e.target.value)} className="w-full rounded-2xl border border-gray-200 p-3" required>
+                      {countries.length === 0 ? (
+                        <option>Kenya</option>
+                      ) : (
+                        countries.map((c) => <option key={c.code} value={c.name}>{c.name}</option>)
+                      )}
+                    </select>
+                  </label>
                   <Input
                     label="Address"
                     value={form.address}
@@ -255,13 +290,64 @@ export default function BuyerProfile() {
                     textarea
                     placeholder="What products or commodities are you looking to source? (e.g., Avocados, Coffee, Grains)"
                   />
-                  <Input
-                    label="Preferred Destinations"
-                    value={form.preferred_destinations}
-                    onChange={(e) => updateField("preferred_destinations", e.target.value)}
-                    textarea
-                    placeholder="Which countries/regions do you prefer to source from?"
-                  />
+                  <div>
+                    <span className="mb-2 block text-sm font-bold text-gray-800">Preferred Destinations</span>
+                    <div className="relative">
+                      <button
+                        type="button"
+                        onClick={() => setShowDestDropdown(!showDestDropdown)}
+                        className="w-full rounded-2xl border border-gray-200 p-3 text-left text-sm flex items-center justify-between bg-white"
+                      >
+                        <span>{selectedDestCount > 0 ? `${selectedDestCount} destination(s) selected` : "Select destinations..."}</span>
+                        <svg className={`w-4 h-4 transition-transform ${showDestDropdown ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </button>
+                      {selectedDestCount > 0 && (
+                        <div className="mt-2 flex flex-wrap gap-2">
+                          {selectedDestArray.map((dest) => (
+                            <span key={dest} className="inline-flex items-center gap-1 rounded-full bg-harvest-green/10 px-3 py-1 text-xs font-bold text-harvest-green">
+                              {dest}
+                              <button
+                                type="button"
+                                onClick={() => removeDestination(dest)}
+                                className="hover:text-red-500"
+                              >
+                                ×
+                              </button>
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                      {showDestDropdown && (
+                        <div className="absolute z-50 mt-1 max-h-48 w-full overflow-y-auto rounded-2xl border border-gray-200 bg-white p-2 shadow-lg">
+                          {countries.length === 0 ? (
+                            <div className="p-3 text-sm text-gray-400">Loading countries...</div>
+                          ) : (
+                            countries.map((c) => {
+                              const isSelected = selectedDestArray.includes(c.name);
+                              return (
+                                <label
+                                  key={c.code}
+                                  className={`flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2 text-sm transition ${
+                                    isSelected ? "bg-harvest-green/10 text-harvest-green" : "text-gray-700 hover:bg-gray-50"
+                                  }`}
+                                >
+                                  <input
+                                    type="checkbox"
+                                    checked={isSelected}
+                                    onChange={() => toggleDestination(c.name)}
+                                    className="h-4 w-4 rounded border-gray-300 text-harvest-green focus:ring-harvest-green"
+                                  />
+                                  {c.name}
+                                </label>
+                              );
+                            })
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </div>
                   <Input
                     label="Company Description"
                     value={form.description}

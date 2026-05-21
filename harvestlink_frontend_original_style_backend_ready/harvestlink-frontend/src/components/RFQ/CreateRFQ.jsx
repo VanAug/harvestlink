@@ -20,6 +20,7 @@ export default function CreateRFQ() {
     additional_notes: "",
   });
   const [message, setMessage] = useState("");
+  const [countries, setCountries] = useState([]);
   const userId = Number(localStorage.getItem("harvestlink_user_id"));
 
   useEffect(() => {
@@ -37,6 +38,18 @@ export default function CreateRFQ() {
       }
     }
     load().catch((error) => setMessage(`Could not load companies. ${error.message}`));
+  }, []);
+
+  useEffect(() => {
+    async function loadCountries() {
+      try {
+        const data = await apiGet('/countries');
+        setCountries(data);
+      } catch (err) {
+        // ignore
+      }
+    }
+    loadCountries();
   }, []);
 
   function updateField(field, value) {
@@ -157,11 +170,21 @@ export default function CreateRFQ() {
             />
             <Input
               label="Delivery Location"
-              value={form.destination_country}
-              onChange={(e) => updateField("destination_country", e.target.value)}
-              placeholder="Destination country"
-              required
+              // replaced by select dropdown
             />
+            <label>
+              <span className="mb-2 block text-sm font-bold text-gray-800">Delivery Location</span>
+              <select value={form.destination_country} onChange={(e) => updateField("destination_country", e.target.value)} className="w-full rounded-2xl border border-gray-200 p-3" required>
+                {countries.length === 0 ? (
+                  <option value="">-- Select destination --</option>
+                ) : (
+                  <>
+                    <option value="">-- Select destination --</option>
+                    {countries.map((c) => <option key={c.code} value={c.name}>{c.name}</option>)}
+                  </>
+                )}
+              </select>
+            </label>
             <Input
               label="Delivery Timeline"
               value={form.delivery_timeline}

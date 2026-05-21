@@ -10,12 +10,12 @@ import { logout } from "../../lib/api";
 const publicNavItems = [
   ["Products", "/products"],
   ["RFQ Market", "/rfqs"],
+  ["Suppliers", "/suppliers"],
   ["Pricing", "/pricing"],
   ["Buyer Verification", "/buyer-verification"],
 ];
 
 const loggedInNavItems = [
-  ["Suppliers", "/suppliers"],
   ["Deals", "/deals"],
   ["Escrow", "/escrow"],
   ["Financing", "/financing"],

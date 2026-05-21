@@ -13,6 +13,7 @@ export default function Products() {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState("");
   const [loading, setLoading] = useState(true);
+  const [countries, setCountries] = useState([]);
 
   useEffect(() => {
     const category = searchParams.get('category');
@@ -33,6 +34,18 @@ export default function Products() {
       }
     }
     load();
+  }, []);
+
+  useEffect(() => {
+    async function loadCountries() {
+      try {
+        const data = await apiGet('/countries');
+        setCountries(data);
+      } catch (err) {
+        // ignore
+      }
+    }
+    loadCountries();
   }, []);
 
   const filtered = useMemo(() => {
@@ -90,7 +103,13 @@ export default function Products() {
             </div>
             <div>
               <label className="text-sm font-bold">Country</label>
-              <select value={selectedCountry} onChange={(e) => setSelectedCountry(e.target.value)} className="mt-2 w-full rounded-xl border p-3"><option value="">All Countries</option><option>Kenya</option><option>Tanzania</option><option>Ethiopia</option><option>Nigeria</option><option>India</option><option>Ukraine</option></select>
+              <select value={selectedCountry} onChange={(e) => setSelectedCountry(e.target.value)} className="mt-2 w-full rounded-xl border p-3">
+                <option value="">All Countries</option>
+                {countries.length === 0
+                  ? <option>Kenya</option>
+                  : countries.map((c) => <option key={c.code} value={c.name}>{c.name}</option>)
+                }
+              </select>
             </div>
             <div>
               <label className="text-sm font-bold">Trade Layer</label>

@@ -31,6 +31,7 @@ export default function ExporterProfile() {
   const [docForm, setDocForm] = useState({ document_type: requiredDocs[0], title: "", file_url: "", notes: "" });
   const [message, setMessage] = useState("");
   const userId = Number(localStorage.getItem("harvestlink_user_id"));
+  const [countries, setCountries] = useState([]);
 
   async function load() {
     if (!userId) return;
@@ -45,6 +46,18 @@ export default function ExporterProfile() {
 
   useEffect(() => {
     load().catch((error) => setMessage(`Profile could not load. ${error.message}`));
+  }, []);
+
+  useEffect(() => {
+    async function loadCountries() {
+      try {
+        const data = await apiGet('/countries');
+        setCountries(data);
+      } catch (err) {
+        // ignore
+      }
+    }
+    loadCountries();
   }, []);
 
   function updateField(field, value) {
@@ -109,7 +122,16 @@ export default function ExporterProfile() {
             <h2 className="text-2xl font-black text-harvest-green">Exporter Details</h2>
             <div className="mt-5 grid gap-4 md:grid-cols-2">
               <Input required label="Company Name" value={form.name} onChange={(e) => updateField("name", e.target.value)} placeholder="Green Valley Avocados Ltd" />
-              <Input required label="Country" value={form.country} onChange={(e) => updateField("country", e.target.value)} placeholder="Kenya" />
+              <label className="block">
+                <span className="mb-2 block text-sm font-bold text-gray-800">Country</span>
+                <select value={form.country} onChange={(e) => updateField("country", e.target.value)} className="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3">
+                  {countries.length === 0 ? (
+                    <option>Kenya</option>
+                  ) : (
+                    countries.map((c) => <option key={c.code} value={c.name}>{c.name}</option>)
+                  )}
+                </select>
+              </label>
               <Input label="Address" value={form.address || ""} onChange={(e) => updateField("address", e.target.value)} placeholder="Nairobi, Kenya" />
               <Input label="Website" value={form.website || ""} onChange={(e) => updateField("website", e.target.value)} placeholder="https://company.example" />
               <Input label="Products Offered" value={form.products_offered || ""} onChange={(e) => updateField("products_offered", e.target.value)} placeholder="Avocados, herbs, macadamia" />
