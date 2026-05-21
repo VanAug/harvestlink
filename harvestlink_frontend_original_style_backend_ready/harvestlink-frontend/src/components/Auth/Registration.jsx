@@ -18,6 +18,7 @@ export default function Registration() {
   const [fullName, setFullName] = useState("");
   const [role, setRole] = useState("buyer");
   const [companyName, setCompanyName] = useState("");
+  const [productsOffered, setProductsOffered] = useState("");
   const [country, setCountry] = useState("Kenya");
   const [countries, setCountries] = useState([]);
   const [message, setMessage] = useState("");
@@ -56,7 +57,7 @@ export default function Registration() {
         description: `${roleLabel(role)} profile created during registration.`,
         buying_interests: role === "buyer" ? "Add buying interests in profile" : undefined,
         preferred_destinations: role === "buyer" ? country : undefined,
-        products_offered: role === "exporter" ? "Add products in exporter profile" : undefined,
+        products_offered: role === "exporter" ? productsOffered.trim() || "Add products in exporter profile" : undefined,
         export_markets: role === "exporter" ? country : undefined,
       });
       navigate(nextPathForRole(data.role));
@@ -148,6 +149,14 @@ export default function Registration() {
               onChange={(e) => setCompanyName(e.target.value)}
               placeholder="Company or business name"
             />
+            {role === "exporter" && (
+              <Input
+                label="Products Offered"
+                value={productsOffered}
+                onChange={(e) => setProductsOffered(e.target.value)}
+                placeholder="Avocados, herbs, macadamia"
+              />
+            )}
             <label className="block">
               <span className="mb-2 block text-sm font-bold text-gray-800">Country</span>
               <select

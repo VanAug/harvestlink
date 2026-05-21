@@ -10,10 +10,16 @@ router = APIRouter(tags=["deals"])
 
 
 @router.get("/deals", response_model=list[DealOut])
-async def deals(exporter_company_id: int | None = None, db: AsyncSession = Depends(get_db)):
+async def deals(
+    exporter_company_id: int | None = None,
+    buyer_company_id: int | None = None,
+    db: AsyncSession = Depends(get_db),
+):
     stmt = select(Deal).order_by(Deal.id)
-    if exporter_company_id:
+    if exporter_company_id is not None:
         stmt = stmt.where(Deal.exporter_company_id == exporter_company_id)
+    if buyer_company_id is not None:
+        stmt = stmt.where(Deal.buyer_company_id == buyer_company_id)
     return list(await db.scalars(stmt))
 
 

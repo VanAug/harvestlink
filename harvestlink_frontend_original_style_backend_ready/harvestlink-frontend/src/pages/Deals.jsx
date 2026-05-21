@@ -5,14 +5,9 @@ import { Input } from "../components/forms/Input";
 import { apiGet, apiPatch, apiPost } from "../lib/api";
 import { LockKeyhole, MessageSquare, PackageCheck, Truck, Star, MapPin } from "lucide-react";
 
-const fallbackDeals = [
-  { id: 1, product_name: "Hass Avocados", quantity: 20, unit: "tons", total_amount: 25000, currency: "USD", destination_country: "UAE", delivery_terms: "FOB Mombasa", status: "funds_in_escrow", escrow_status: "funded" },
-  { id: 2, product_name: "Fresh Cut Flowers", quantity: 40, unit: "boxes", total_amount: 14800, currency: "USD", destination_country: "Netherlands", delivery_terms: "CIF Rotterdam", status: "completed", escrow_status: "released" },
-];
-
 export default function Deals() {
   const [company, setCompany] = useState(null);
-  const [deals, setDeals] = useState(fallbackDeals);
+  const [deals, setDeals] = useState([]);
   const [activeId, setActiveId] = useState(null);
   const [messages, setMessages] = useState([]);
   const [documents, setDocuments] = useState([]);
@@ -25,24 +20,34 @@ export default function Deals() {
 
   async function load() {
     const userId = Number(localStorage.getItem("harvestlink_user_id"));
-    let exporter = null;
+    let selectedCompany = null;
+    let path = "/deals";
+
     if (userId) {
       const companies = await apiGet(`/companies/owner/${userId}`);
-      exporter = companies.find((item) => item.type === "exporter") || companies[0];
-      setCompany(exporter);
+      selectedCompany = companies.find((item) => item.type === "exporter") || companies[0] || null;
+      if (selectedCompany) {
+        setCompany(selectedCompany);
+        const filterKey = selectedCompany.type === "buyer" ? "buyer_company_id" : "exporter_company_id";
+        path = `/deals?${filterKey}=${selectedCompany.id}`;
+      }
     }
-    const apiDeals = await apiGet(exporter ? `/deals?exporter_company_id=${exporter.id}` : "/deals");
-    setDeals(apiDeals.length ? apiDeals : fallbackDeals);
-    const selected = apiDeals.find((deal) => deal.id === activeId) || apiDeals[0] || fallbackDeals[0];
-    setActiveId(selected?.id);
+
+    const apiDeals = await apiGet(path);
+    setDeals(apiDeals);
+    const selected = apiDeals.find((deal) => deal.id === activeId) || apiDeals[0] || null;
+    setActiveId(selected?.id ?? null);
     if (selected) {
       setMessages(await apiGet(`/deals/${selected.id}/messages`));
       setDocuments(await apiGet(`/documents?owner_type=deal&owner_id=${selected.id}`));
+    } else {
+      setMessages([]);
+      setDocuments([]);
     }
   }
 
   useEffect(() => {
-    load().catch((error) => setNotice(`Using fallback deals because API is unavailable: ${error.message}`));
+    load().catch((error) => setNotice(`Unable to load deals: ${error.message}`));
   }, []);
 
   async function selectDeal(dealId) {
@@ -118,7 +123,7 @@ export default function Deals() {
 
         <div className="grid gap-8 lg:grid-cols-3">
           <section className="space-y-4">
-            {deals.map((deal) => (
+            {deals.length ? deals.map((deal) => (
               <button key={deal.id} onClick={() => selectDeal(deal.id)} className={`w-full rounded-3xl bg-white p-5 text-left shadow-sm hover:shadow-soft ${activeDeal?.id === deal.id ? "ring-2 ring-harvest-orange" : ""}`}>
                 <div className="flex items-center justify-between gap-3">
                   <h3 className="font-black text-harvest-green">{deal.product_name}</h3>
@@ -127,16 +132,21 @@ export default function Deals() {
                 <p className="mt-2 text-sm text-gray-600">{deal.quantity} {deal.unit} - {deal.destination_country}</p>
                 <p className="mt-2 font-black text-harvest-orange">{deal.currency} {deal.total_amount?.toLocaleString?.()}</p>
               </button>
-            ))}
+            )) : (
+              <div className="rounded-3xl bg-white p-6 text-center text-gray-600 shadow-sm">
+                <p className="font-bold">No deal rooms found.</p>
+                <p className="mt-2">Create or join a deal to start tracking messages, documents, and escrow.</p>
+              </div>
+            )}
           </section>
 
           <section className="rounded-3xl bg-white p-6 shadow-sm lg:col-span-2">
             <div className="flex flex-col justify-between gap-4 border-b pb-5 md:flex-row md:items-start">
               <div>
-                <h2 className="text-3xl font-black text-harvest-green">{activeDeal?.product_name}</h2>
-                <p className="mt-2 text-gray-600">{activeDeal?.quantity} {activeDeal?.unit} to {activeDeal?.destination_country}</p>
+                <h2 className="text-3xl font-black text-harvest-green">{activeDeal ? activeDeal.product_name : "No deal selected"}</h2>
+                <p className="mt-2 text-gray-600">{activeDeal ? `${activeDeal.quantity} ${activeDeal.unit} to ${activeDeal.destination_country}` : "Select a deal from the left to view messages, documents, and status updates."}</p>
               </div>
-              <span className="rounded-full bg-harvest-green px-4 py-2 text-sm font-bold text-white">Escrow: {activeDeal?.escrow_status}</span>
+              <span className="rounded-full bg-harvest-green px-4 py-2 text-sm font-bold text-white">Escrow: {activeDeal?.escrow_status || "N/A"}</span>
             </div>
 
             <div className="mt-6 grid gap-4 md:grid-cols-4">
@@ -147,14 +157,14 @@ export default function Deals() {
             </div>
 
             <div className="mt-6 flex flex-wrap gap-3">
-              <button onClick={() => updateStatus("in_fulfillment")} className="rounded-2xl bg-harvest-green px-4 py-2 text-sm font-black text-white">Mark In Fulfillment</button>
-              <button onClick={() => updateStatus("shipped")} className="rounded-2xl bg-harvest-orange px-4 py-2 text-sm font-black text-white">Mark Shipped</button>
-              <button onClick={requestRelease} className="rounded-2xl border border-harvest-green px-4 py-2 text-sm font-black text-harvest-green">Request Escrow Release</button>
-              <Link to={`/deals/${activeDeal?.id}/tracking`} className="rounded-2xl bg-blue-500 px-4 py-2 text-sm font-black text-white hover:bg-blue-600 inline-flex items-center gap-2">
+              <button disabled={!activeDeal} onClick={() => activeDeal && updateStatus("in_fulfillment")} className="rounded-2xl bg-harvest-green px-4 py-2 text-sm font-black text-white disabled:opacity-50 disabled:cursor-not-allowed">Mark In Fulfillment</button>
+              <button disabled={!activeDeal} onClick={() => activeDeal && updateStatus("shipped")} className="rounded-2xl bg-harvest-orange px-4 py-2 text-sm font-black text-white disabled:opacity-50 disabled:cursor-not-allowed">Mark Shipped</button>
+              <button disabled={!activeDeal} onClick={requestRelease} className="rounded-2xl border border-harvest-green px-4 py-2 text-sm font-black text-harvest-green disabled:opacity-50 disabled:cursor-not-allowed">Request Escrow Release</button>
+              <Link to={activeDeal ? `/deals/${activeDeal.id}/tracking` : "#"} className="rounded-2xl bg-blue-500 px-4 py-2 text-sm font-black text-white hover:bg-blue-600 inline-flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
                 <MapPin size={16} />
                 Track Shipment
               </Link>
-              <Link to={`/deals/${activeDeal?.id}/review`} className="rounded-2xl bg-yellow-500 px-4 py-2 text-sm font-black text-white hover:bg-yellow-600 inline-flex items-center gap-2">
+              <Link to={activeDeal ? `/deals/${activeDeal.id}/review` : "#"} className="rounded-2xl bg-yellow-500 px-4 py-2 text-sm font-black text-white hover:bg-yellow-600 inline-flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
                 <Star size={16} />
                 Rate & Review
               </Link>

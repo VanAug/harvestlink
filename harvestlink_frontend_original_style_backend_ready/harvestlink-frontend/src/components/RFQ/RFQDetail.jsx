@@ -32,7 +32,7 @@ export default function RFQDetail() {
     const userId = Number(localStorage.getItem("harvestlink_user_id"));
     if (userId) {
       const companies = await apiGet(`/companies/owner/${userId}`);
-      setCompany(companies.find((item) => item.type === "exporter") || companies[0]);
+      setCompany(companies.find((item) => item.type === "exporter") || null);
     }
   }
 
@@ -106,7 +106,9 @@ export default function RFQDetail() {
   }
 
   const selectedOffersData = offers.filter((o) => selectedOffers.includes(o.id));
-  const isBuyer = !company || company.type === "buyer";
+  const isExporter = company?.type === "exporter";
+  const isBuyer = !isExporter;
+  const offersTitle = isExporter ? "Submitted Offers" : "Received Offers";
 
   return (
     <PageShell>
@@ -130,7 +132,7 @@ export default function RFQDetail() {
 
             <div className="rounded-3xl bg-white p-7 shadow-sm">
               <div className="mb-5 flex items-center justify-between">
-                <h2 className="text-2xl font-black text-harvest-green">Submitted Offers</h2>
+                <h2 className="text-2xl font-black text-harvest-green">{offersTitle}</h2>
                 {isBuyer && selectedOffers.length > 0 && (
                   <button
                     onClick={() => setViewMode(viewMode === "list" ? "compare" : "list")}
@@ -233,7 +235,7 @@ export default function RFQDetail() {
                           </div>
                         </div>
                         <div className="flex items-center gap-2">
-                          <span className="rounded-full bg-white px-3 py-1 text-xs font-bold text-harvest-green">{offer.status}</span>
+                          <span className="rounded-full bg-white px-3 py-1 text-xs font-bold text-harvest-green">{isBuyer && offer.status === "submitted" ? "Pending" : offer.status}</span>
                           {isBuyer && offer.status === "submitted" && (
                             <div className="flex gap-1">
                               <button
@@ -264,17 +266,33 @@ export default function RFQDetail() {
           </section>
 
           <aside className="rounded-3xl bg-white p-7 shadow-soft">
-            <h3 className="text-xl font-black text-harvest-green">Submit Offer</h3>
-            {!company && <Link to="/exporter/profile" className="mt-3 block rounded-2xl bg-harvest-soft p-3 text-sm font-bold text-harvest-green">Create exporter profile first</Link>}
-            <form onSubmit={submitOffer} className="mt-5 space-y-4">
-              <Input required label="Unit Price (USD)" type="number" min="0" step="0.01" value={form.price} onChange={(e) => updateField("price", e.target.value)} placeholder="1250" />
-              <Input required label="Available Quantity" type="number" min="0" step="0.01" value={form.quantity} onChange={(e) => updateField("quantity", e.target.value)} placeholder="20" />
-              <Input required label="Incoterms / Delivery Terms" value={form.delivery_terms} onChange={(e) => updateField("delivery_terms", e.target.value)} placeholder="FOB Mombasa" />
-              <Input required label="Estimated Delivery Date" type="date" value={form.estimated_delivery_date} onChange={(e) => updateField("estimated_delivery_date", e.target.value)} />
-              <Input label="Offer Document Reference" value={form.document} onChange={(e) => updateField("document", e.target.value)} placeholder="proforma-invoice.pdf" />
-              <Input label="Notes" textarea value={form.notes} onChange={(e) => updateField("notes", e.target.value)} placeholder="Describe packing, certifications, lead time, and terms." />
-              <button className="w-full rounded-2xl bg-harvest-orange px-5 py-3 font-bold text-white">Submit Offer</button>
-            </form>
+            {isExporter ? (
+              <>
+                <h3 className="text-xl font-black text-harvest-green">Submit Offer</h3>
+                <form onSubmit={submitOffer} className="mt-5 space-y-4">
+                  <Input required label="Unit Price (USD)" type="number" min="0" step="0.01" value={form.price} onChange={(e) => updateField("price", e.target.value)} placeholder="1250" />
+                  <Input required label="Available Quantity" type="number" min="0" step="0.01" value={form.quantity} onChange={(e) => updateField("quantity", e.target.value)} placeholder="20" />
+                  <Input required label="Incoterms / Delivery Terms" value={form.delivery_terms} onChange={(e) => updateField("delivery_terms", e.target.value)} placeholder="FOB Mombasa" />
+                  <Input required label="Estimated Delivery Date" type="date" value={form.estimated_delivery_date} onChange={(e) => updateField("estimated_delivery_date", e.target.value)} />
+                  <Input label="Offer Document Reference" value={form.document} onChange={(e) => updateField("document", e.target.value)} placeholder="proforma-invoice.pdf" />
+                  <Input label="Notes" textarea value={form.notes} onChange={(e) => updateField("notes", e.target.value)} placeholder="Describe packing, certifications, lead time, and terms." />
+                  <button className="w-full rounded-2xl bg-harvest-orange px-5 py-3 font-bold text-white">Submit Offer</button>
+                </form>
+              </>
+            ) : (
+              <>
+                <h3 className="text-xl font-black text-harvest-green">Offer Responses</h3>
+                <p className="mt-3 text-sm text-gray-600">
+                  This RFQ is visible to exporters for sourcing. If you are a buyer, review the received offers above.
+                </p>
+                <p className="mt-4 rounded-2xl bg-harvest-soft p-3 text-sm text-gray-700">
+                  Exporters can submit offers by creating or selecting an exporter company profile.
+                </p>
+                <Link to="/exporter/profile" className="mt-5 inline-flex rounded-2xl bg-harvest-green px-5 py-3 text-sm font-bold text-white">
+                  Create exporter profile
+                </Link>
+              </>
+            )}
           </aside>
         </div>
       </main>
