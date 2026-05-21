@@ -14,3 +14,96 @@
 [2m2:05:18 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Profile/ExporterProfile.jsx[22m
 [2m2:05:20 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Profile/ExporterProfile.jsx[22m
 [2m2:05:40 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Profile/ExporterProfile.jsx[22m
+[2m8:50:17 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Profile/ExporterProfile.jsx[22m
+[2m8:55:05 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Profile/ExporterProfile.jsx[22m
+[2m8:55:09 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Profile/ExporterProfile.jsx[22m
+[2m8:55:12 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Profile/ExporterProfile.jsx[22m
+[2m8:56:11 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Profile/ExporterProfile.jsx[22m
+[2m8:56:13 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Profile/ExporterProfile.jsx[22m
+[2m8:56:16 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Profile/ExporterProfile.jsx[22m
+[2m8:56:18 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Profile/ExporterProfile.jsx[22m
+[2m8:56:29 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Profile/ExporterProfile.jsx[22m
+[2m8:56:38 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Profile/ExporterProfile.jsx[22m
+[2m8:56:45 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Profile/ExporterProfile.jsx[22m
+[2m8:57:45 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Profile/ExporterProfile.jsx[22m
+[2m8:57:46 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Profile/ExporterProfile.jsx[22m
+[2m8:57:47 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] Error:[0m Expected `,` or `)` but found `Identifier`
+     [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/components/Profile/ExporterProfile.jsx:136:19 [38;5;246m][0m
+     [38;5;246m│[0m
+ [38;5;246m131 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m{[0m[38;5;249mc[0m[38;5;249mo[0m[38;5;249mm[0m[38;5;249mp[0m[38;5;249ma[0m[38;5;249mn[0m[38;5;249my[0m[38;5;249m [0m[38;5;249m&[0m[38;5;249m&[0m[38;5;249m [0m(
+ [38;5;240m    │[0m                       ┬  
+ [38;5;240m    │[0m                       ╰── Opened here
+ [38;5;240m    │[0m 
+ [38;5;246m136 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249ms[0m[38;5;249mp[0m[38;5;249ma[0m[38;5;249mn[0m[38;5;249m [0mclassName[38;5;249m=[0m[38;5;249m"[0m[38;5;249mi[0m[38;5;249mn[0m[38;5;249ml[0m[38;5;249mi[0m[38;5;249mn[0m[38;5;249me[0m[38;5;249m-[0m[38;5;249mf[0m[38;5;249ml[0m[38;5;249me[0m[38;5;249mx[0m[38;5;249m [0m[38;5;249mi[0m[38;5;249mt[0m[38;5;249me[0m[38;5;249mm[0m[38;5;249ms[0m[38;5;249m-[0m[38;5;249mc[0m[38;5;249me[0m[38;5;249mn[0m[38;5;249mt[0m[38;5;249me[0m[38;5;249mr[0m[38;5;249m [0m[38;5;249mg[0m[38;5;249ma[0m[38;5;249mp[0m[38;5;249m-[0m[38;5;249m2[0m[38;5;249m [0m[38;5;249mr[0m[38;5;249mo[0m[38;5;249mu[0m[38;5;249mn[0m[38;5;249md[0m[38;5;249me[0m[38;5;249md[0m[38;5;249m-[0m[38;5;249m2[0m[38;5;249mx[0m[38;5;249ml[0m[38;5;249m [0m[38;5;249mb[0m[38;5;249mg[0m[38;5;249m-[0m[38;5;249mw[0m[38;5;249mh[0m[38;5;249mi[0m[38;5;249mt[0m[38;5;249me[0m[38;5;249m/[0m[38;5;249m1[0m[38;5;249m0[0m[38;5;249m [0m[38;5;249mp[0m[38;5;249mx[0m[38;5;249m-[0m[38;5;249m4[0m[38;5;249m [0m[38;5;249mp[0m[38;5;249my[0m[38;5;249m-[0m[38;5;249m2[0m[38;5;249m [0m[38;5;249mt[0m[38;5;249me[0m[38;5;249mx[0m[38;5;249mt[0m[38;5;249m-[0m[38;5;249ms[0m[38;5;249mm[0m[38;5;249m [0m[38;5;249mf[0m[38;5;249mo[0m[38;5;249mn[0m[38;5;249mt[0m[38;5;249m-[0m[38;5;249mb[0m[38;5;249mo[0m[38;5;249ml[0m[38;5;249md[0m[38;5;249m"[0m[38;5;249m>[0m
+ [38;5;240m    │[0m                   ────┬────  
+ [38;5;240m    │[0m                       ╰────── `,` or `)` expected
+[38;5;246m─────╯[0m
+
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/components/Profile/ExporterProfile.jsx[39m
+[2m8:57:47 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] Error:[0m Expected `,` or `)` but found `Identifier`
+     [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/components/Profile/ExporterProfile.jsx:136:19 [38;5;246m][0m
+     [38;5;246m│[0m
+ [38;5;246m131 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m{[0m[38;5;249mc[0m[38;5;249mo[0m[38;5;249mm[0m[38;5;249mp[0m[38;5;249ma[0m[38;5;249mn[0m[38;5;249my[0m[38;5;249m [0m[38;5;249m&[0m[38;5;249m&[0m[38;5;249m [0m(
+ [38;5;240m    │[0m                       ┬  
+ [38;5;240m    │[0m                       ╰── Opened here
+ [38;5;240m    │[0m 
+ [38;5;246m136 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249ms[0m[38;5;249mp[0m[38;5;249ma[0m[38;5;249mn[0m[38;5;249m [0mclassName[38;5;249m=[0m[38;5;249m"[0m[38;5;249mi[0m[38;5;249mn[0m[38;5;249ml[0m[38;5;249mi[0m[38;5;249mn[0m[38;5;249me[0m[38;5;249m-[0m[38;5;249mf[0m[38;5;249ml[0m[38;5;249me[0m[38;5;249mx[0m[38;5;249m [0m[38;5;249mi[0m[38;5;249mt[0m[38;5;249me[0m[38;5;249mm[0m[38;5;249ms[0m[38;5;249m-[0m[38;5;249mc[0m[38;5;249me[0m[38;5;249mn[0m[38;5;249mt[0m[38;5;249me[0m[38;5;249mr[0m[38;5;249m [0m[38;5;249mg[0m[38;5;249ma[0m[38;5;249mp[0m[38;5;249m-[0m[38;5;249m2[0m[38;5;249m [0m[38;5;249mr[0m[38;5;249mo[0m[38;5;249mu[0m[38;5;249mn[0m[38;5;249md[0m[38;5;249me[0m[38;5;249md[0m[38;5;249m-[0m[38;5;249m2[0m[38;5;249mx[0m[38;5;249ml[0m[38;5;249m [0m[38;5;249mb[0m[38;5;249mg[0m[38;5;249m-[0m[38;5;249mw[0m[38;5;249mh[0m[38;5;249mi[0m[38;5;249mt[0m[38;5;249me[0m[38;5;249m/[0m[38;5;249m1[0m[38;5;249m0[0m[38;5;249m [0m[38;5;249mp[0m[38;5;249mx[0m[38;5;249m-[0m[38;5;249m4[0m[38;5;249m [0m[38;5;249mp[0m[38;5;249my[0m[38;5;249m-[0m[38;5;249m2[0m[38;5;249m [0m[38;5;249mt[0m[38;5;249me[0m[38;5;249mx[0m[38;5;249mt[0m[38;5;249m-[0m[38;5;249ms[0m[38;5;249mm[0m[38;5;249m [0m[38;5;249mf[0m[38;5;249mo[0m[38;5;249mn[0m[38;5;249mt[0m[38;5;249m-[0m[38;5;249mb[0m[38;5;249mo[0m[38;5;249ml[0m[38;5;249md[0m[38;5;249m"[0m[38;5;249m>[0m
+ [38;5;240m    │[0m                   ────┬────  
+ [38;5;240m    │[0m                       ╰────── `,` or `)` expected
+[38;5;246m─────╯[0m
+[39m
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/components/Profile/ExporterProfile.jsx[39m
+      at transformWithOxc (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3340:19)
+      at TransformPluginContext.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:3408:26)
+      at EnvironmentPluginContainer.transform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:30193:51)
+      at async loadAndTransform (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24511:26)
+      at async viteTransformMiddleware (file:///C:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/node_modules/vite/dist/node/chunks/node.js:24305:20)
+[2m8:58:29 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Profile/ExporterProfile.jsx[22m
+[2m8:58:31 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Profile/ExporterProfile.jsx[22m
+[2m8:59:13 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Profile/ExporterProfile.jsx[22m
+[2m8:59:57 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Profile/ExporterProfile.jsx[22m
+[2m8:59:58 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: Transform failed with 1 error:
+
+[31m[PARSE_ERROR] Error:[0m Expected `,` or `)` but found `Identifier`
+     [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/components/Profile/ExporterProfile.jsx:136:19 [38;5;246m][0m
+     [38;5;246m│[0m
+ [38;5;246m131 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m{[0m[38;5;249mc[0m[38;5;249mo[0m[38;5;249mm[0m[38;5;249mp[0m[38;5;249ma[0m[38;5;249mn[0m[38;5;249my[0m[38;5;249m [0m[38;5;249m&[0m[38;5;249m&[0m[38;5;249m [0m(
+ [38;5;240m    │[0m                       ┬  
+ [38;5;240m    │[0m                       ╰── Opened here
+ [38;5;240m    │[0m 
+ [38;5;246m136 │[0m [38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m [0m[38;5;249m<[0m[38;5;249ms[0m[38;5;249mp[0m[38;5;249ma[0m[38;5;249mn[0m[38;5;249m [0mclassName[38;5;249m=[0m[38;5;249m"[0m[38;5;249mi[0m[38;5;249mn[0m[38;5;249ml[0m[38;5;249mi[0m[38;5;249mn[0m[38;5;249me[0m[38;5;249m-[0m[38;5;249mf[0m[38;5;249ml[0m[38;5;249me[0m[38;5;249mx[0m[38;5;249m [0m[38;5;249mi[0m[38;5;249mt[0m[38;5;249me[0m[38;5;249mm[0m[38;5;249ms[0m[38;5;249m-[0m[38;5;249mc[0m[38;5;249me[0m[38;5;249mn[0m[38;5;249mt[0m[38;5;249me[0m[38;5;249mr[0m[38;5;249m [0m[38;5;249mg[0m[38;5;249ma[0m[38;5;249mp[0m[38;5;249m-[0m[38;5;249m2[0m[38;5;249m [0m[38;5;249mr[0m[38;5;249mo[0m[38;5;249mu[0m[38;5;249mn[0m[38;5;249md[0m[38;5;249me[0m[38;5;249md[0m[38;5;249m-[0m[38;5;249m2[0m[38;5;249mx[0m[38;5;249ml[0m[38;5;249m [0m[38;5;249mb[0m[38;5;249mg[0m[38;5;249m-[0m[38;5;249mw[0m[38;5;249mh[0m[38;5;249mi[0m[38;5;249mt[0m[38;5;249me[0m[38;5;249m/[0m[38;5;249m1[0m[38;5;249m0[0m[38;5;249m [0m[38;5;249mp[0m[38;5;249mx[0m[38;5;249m-[0m[38;5;249m4[0m[38;5;249m [0m[38;5;249mp[0m[38;5;249my[0m[38;5;249m-[0m[38;5;249m2[0m[38;5;249m [0m[38;5;249mt[0m[38;5;249me[0m[38;5;249mx[0m[38;5;249mt[0m[38;5;249m-[0m[38;5;249ms[0m[38;5;249mm[0m[38;5;249m [0m[38;5;249mf[0m[38;5;249mo[0m[38;5;249mn[0m[38;5;249mt[0m[38;5;249m-[0m[38;5;249mb[0m[38;5;249mo[0m[38;5;249ml[0m[38;5;249md[0m[38;5;249m"[0m[38;5;249m>[0m
+ [38;5;240m    │[0m                   ────┬────  
+ [38;5;240m    │[0m                       ╰────── `,` or `)` expected
+[38;5;246m─────╯[0m
+
+  Plugin: [35mvite:oxc[39m
+  File: [36mC:/Users/ADMIN/OneDrive/Desktop/harvestlink/harvestlink_frontend_original_style_backend_ready/harvestlink-frontend/src/components/Profile/ExporterProfile.jsx[39m
+[2m8:59:58 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Profile/ExporterProfile.jsx[22m
+[2m9:00:38 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Profile/ExporterProfile.jsx[22m
+[2m9:00:52 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Profile/ExporterProfile.jsx[22m
+[2m9:01:13 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Profile/ExporterProfile.jsx[22m
+[2m9:02:50 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Profile/ExporterProfile.jsx[22m
+[2m9:02:54 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Profile/ExporterProfile.jsx[22m
+[2m9:03:09 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Profile/ExporterProfile.jsx[22m
+[2m9:11:26 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Products/ExporterProducts.jsx[22m
+[2m9:11:30 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Products/ExporterProducts.jsx[22m
+[2m9:11:36 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Products/ExporterProducts.jsx[22m
+[2m9:11:38 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Products/ExporterProducts.jsx[22m
+[2m9:11:48 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Products/ExporterProducts.jsx[22m
+[2m9:12:02 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Products/ExporterProducts.jsx[22m
+[2m9:12:12 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Products/ExporterProducts.jsx[22m
+[2m9:12:18 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Products/ExporterProducts.jsx[22m
+[2m9:12:20 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Products/ExporterProducts.jsx[22m
+[2m9:12:46 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Products/ExporterProducts.jsx[22m
+[2m9:12:53 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Products/ExporterProducts.jsx[22m
+[2m9:13:11 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Products/ExporterProducts.jsx[22m
+[2m9:13:34 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Products/ExporterProducts.jsx[22m
+[2m9:16:36 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Products/ExporterProducts.jsx[22m
+[2m9:18:58 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Products/AddProduct.jsx[22m
+[2m9:20:47 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/components/Products/AddProduct.jsx[22m

@@ -32,13 +32,13 @@ export default function ExporterProducts() {
   return (
     <PageShell>
       <main className="mx-auto max-w-7xl px-4 py-10 lg:px-6">
-        <div className="flex flex-col justify-between gap-5 rounded-[2rem] bg-white p-8 shadow-soft md:flex-row md:items-end">
+        <div className="flex flex-col justify-between gap-5 rounded-[2rem]  bg-harvest-green  text-white p-8 shadow-soft md:flex-row md:items-end">
           <div>
             <div className="inline-flex rounded-full bg-harvest-soft px-4 py-2 text-sm font-bold text-harvest-green">Exporter Inventory</div>
-            <h1 className="mt-4 text-4xl font-black text-harvest-green">My Product Listings</h1>
-            <p className="mt-2 text-gray-600">{company?.name || "Create your exporter profile first"}.</p>
+            <h1 className="mt-4 text-4xl font-black text-white">My Product Listings</h1>
+            <p className="mt-2  text-white">{company?.name || "Create your exporter profile first"}.</p>
           </div>
-          <Link to="/exporter/products/new" className="inline-flex items-center justify-center gap-2 rounded-2xl bg-harvest-green px-5 py-3 font-black text-white">
+          <Link to="/exporter/products/new" className="inline-flex items-center gap-2 rounded-2xl bg-white/10 px-4 py-3 text-sm font-bold">
             <PackagePlus size={18} />
             Add Product
           </Link>

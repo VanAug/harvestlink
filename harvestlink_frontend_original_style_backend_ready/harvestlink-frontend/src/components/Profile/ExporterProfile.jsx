@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { BadgeCheck, FileText, ShieldCheck } from "lucide-react";
+import { BadgeCheck, FileText, ShieldCheck, UserCircle, MapPin } from "lucide-react";
 import PageShell from "../layout/PageShell";
 import { Input } from "../forms/Input";
 import { apiGet, apiPatch, apiPost } from "../../lib/api";
@@ -122,13 +122,22 @@ export default function ExporterProfile() {
     <PageShell>
       <main className="mx-auto max-w-7xl px-4 py-10 lg:px-6">
         <div className="rounded-[2rem] bg-harvest-green p-8 text-white shadow-soft">
-          <div className="inline-flex rounded-full bg-white/10 px-4 py-2 text-sm font-bold">Exporter Verification</div>
+          <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm font-bold">
+                <UserCircle size={16} />
+                Exporter Hub
+              </div>
           <h1 className="mt-4 text-4xl font-black">{company?.name || 'Company Profile'}</h1>
           <p className="mt-2 max-w-3xl text-white/80">Create your exporter profile and submit the documents needed for verification.</p>
           {company && (
-            <div className="mt-5 inline-flex items-center gap-2 rounded-2xl bg-white/10 px-4 py-3 text-sm font-bold">
-              <ShieldCheck size={18} />
-              Verification: {company.verification_status}
+            <div className="mt-5 flex flex-wrap items-center gap-3">
+              <div className="inline-flex items-center gap-2 rounded-2xl bg-white/10 px-4 py-3 text-sm font-bold">
+                <ShieldCheck size={18} />
+                Verification: {company.verification_status}
+              </div>
+              <div className="inline-flex items-center gap-2 rounded-2xl bg-white/10 px-4 py-3 text-sm font-bold">
+                <MapPin size={18} />
+                {company.address || company.country}
+              </div>
             </div>
           )}
         </div>

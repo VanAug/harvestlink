@@ -36,14 +36,20 @@ export default function AddProduct() {
   useEffect(() => {
     async function loadCompanies() {
       try {
-        const data = await apiGet("/companies?type=exporter");
-        setCompanies(data);
         const userId = Number(localStorage.getItem("harvestlink_user_id"));
-        const ownedCompany = data.find((company) => company.owner_id === userId);
-        const selected = ownedCompany || data[0];
+        const ownerCompanies = await apiGet(`/companies/owner/${userId}`);
+        const ownedExporters = ownerCompanies.filter((company) => company.type === "exporter");
+        setCompanies(ownedExporters);
+        const selected = ownedExporters[0] || null;
         setCompanyId(String(selected?.id || ""));
+
         if (isEditing) {
           const product = await apiGet(`/products/${id}`);
+          const ownedProductCompany = ownedExporters.find((company) => company.id === product.company_id);
+          if (!ownedProductCompany) {
+            setMessage("You can only edit products for your own exporter company.");
+            return;
+          }
           setForm({
             ...initialForm,
             ...product,
@@ -52,7 +58,7 @@ export default function AddProduct() {
             price_max: product.price_max == null ? "" : String(product.price_max),
             minimum_order_quantity: product.minimum_order_quantity == null ? "" : String(product.minimum_order_quantity),
           });
-          setCompanyId(String(product.company_id));
+          setCompanyId(String(ownedProductCompany.id));
         }
       } catch (error) {
         setMessage(`Exporter company lookup failed. ${error.message}`);
