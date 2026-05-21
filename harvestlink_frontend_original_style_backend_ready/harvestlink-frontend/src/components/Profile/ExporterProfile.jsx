@@ -32,6 +32,24 @@ export default function ExporterProfile() {
   const [message, setMessage] = useState("");
   const userId = Number(localStorage.getItem("harvestlink_user_id"));
   const [countries, setCountries] = useState([]);
+  const [showMarketsDropdown, setShowMarketsDropdown] = useState(false);
+
+  const selectedExportMarketsArray = form.export_markets
+    ? form.export_markets.split(',').map((s) => s.trim()).filter(Boolean)
+    : [];
+
+  function toggleExportMarket(name) {
+    const current = selectedExportMarketsArray;
+    const updated = current.includes(name)
+      ? current.filter((market) => market !== name)
+      : [...current, name];
+    updateField('export_markets', updated.join(', '));
+  }
+
+  function removeExportMarket(name) {
+    const updated = selectedExportMarketsArray.filter((market) => market !== name);
+    updateField('export_markets', updated.join(', '));
+  }
 
   async function load() {
     if (!userId) return;
@@ -105,7 +123,7 @@ export default function ExporterProfile() {
       <main className="mx-auto max-w-7xl px-4 py-10 lg:px-6">
         <div className="rounded-[2rem] bg-harvest-green p-8 text-white shadow-soft">
           <div className="inline-flex rounded-full bg-white/10 px-4 py-2 text-sm font-bold">Exporter Verification</div>
-          <h1 className="mt-4 text-4xl font-black">Company Profile</h1>
+          <h1 className="mt-4 text-4xl font-black">{company?.name || 'Company Profile'}</h1>
           <p className="mt-2 max-w-3xl text-white/80">Create your exporter profile and submit the documents needed for verification.</p>
           {company && (
             <div className="mt-5 inline-flex items-center gap-2 rounded-2xl bg-white/10 px-4 py-3 text-sm font-bold">
@@ -137,7 +155,60 @@ export default function ExporterProfile() {
               <Input label="Products Offered" value={form.products_offered || ""} onChange={(e) => updateField("products_offered", e.target.value)} placeholder="Avocados, herbs, macadamia" />
               <Input label="Certifications" value={form.certifications || ""} onChange={(e) => updateField("certifications", e.target.value)} placeholder="GlobalG.A.P, HACCP" />
               <Input label="Export Capacity" value={form.export_capacity || ""} onChange={(e) => updateField("export_capacity", e.target.value)} placeholder="20 tons/week" />
-              <Input label="Export Markets" value={form.export_markets || ""} onChange={(e) => updateField("export_markets", e.target.value)} placeholder="UAE, Netherlands, Saudi Arabia" />
+              <div className="relative">
+                <span className="mb-2 block text-sm font-bold text-gray-800">Export Markets</span>
+                <button
+                  type="button"
+                  onClick={() => setShowMarketsDropdown((current) => !current)}
+                  className="w-full rounded-2xl border border-gray-200 p-3 text-left text-sm flex items-center justify-between bg-white"
+                >
+                  <span>
+                    {selectedExportMarketsArray.length > 0
+                      ? `${selectedExportMarketsArray.length} market(s) selected`
+                      : "Select export markets..."}
+                  </span>
+                  <svg className={`w-4 h-4 transition-transform ${showMarketsDropdown ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                {selectedExportMarketsArray.length > 0 && (
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {selectedExportMarketsArray.map((market) => (
+                      <span key={market} className="inline-flex items-center gap-1 rounded-full bg-harvest-green/10 px-3 py-1 text-xs font-bold text-harvest-green">
+                        {market}
+                        <button type="button" onClick={() => removeExportMarket(market)} className="hover:text-red-500">×</button>
+                      </span>
+                    ))}
+                  </div>
+                )}
+                {showMarketsDropdown && (
+                  <div className="absolute z-50 mt-1 max-h-48 w-full overflow-y-auto rounded-2xl border border-gray-200 bg-white p-2 shadow-lg">
+                    {countries.length === 0 ? (
+                      <div className="p-3 text-sm text-gray-400">Loading countries...</div>
+                    ) : (
+                      countries.map((c) => {
+                        const isSelected = selectedExportMarketsArray.includes(c.name);
+                        return (
+                          <label
+                            key={c.code}
+                            className={`flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2 text-sm transition ${
+                              isSelected ? "bg-harvest-green/10 text-harvest-green" : "text-gray-700 hover:bg-gray-50"
+                            }`}
+                          >
+                            <input
+                              type="checkbox"
+                              checked={isSelected}
+                              onChange={() => toggleExportMarket(c.name)}
+                              className="h-4 w-4 rounded border-gray-300 text-harvest-green focus:ring-harvest-green"
+                            />
+                            {c.name}
+                          </label>
+                        );
+                      })
+                    )}
+                  </div>
+                )}
+              </div>
               <div className="md:col-span-2">
                 <Input label="Company Description" textarea value={form.description || ""} onChange={(e) => updateField("description", e.target.value)} placeholder="Describe your operation, sourcing, packing, and export readiness." />
               </div>
