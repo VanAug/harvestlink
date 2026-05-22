@@ -12,10 +12,10 @@ from app.core.config import settings
 import httpx
 
 router = APIRouter(tags=["documents"])
-UPLOAD_DIR = Path(__file__).resolve().parents[4] / "uploads" / "documents"
-# Do NOT create the upload directory at import time. Some hosts (Vercel) use a read-only
-# filesystem during import/build. We'll attempt to create the directory at runtime when
-# handling an upload, and fall back to Vercel Blob when configured.
+# Use the system temporary directory on platforms like Vercel where the project
+# filesystem is read-only. /tmp is writable for the lifetime of the function
+# invocation. Do NOT call mkdir() at module import time.
+UPLOAD_DIR = Path("/tmp/uploads/documents")
 
 
 @router.get("/documents", response_model=list[TradeDocumentOut])
