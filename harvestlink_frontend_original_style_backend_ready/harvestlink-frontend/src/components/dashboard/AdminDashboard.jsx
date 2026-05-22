@@ -167,7 +167,12 @@ export default function AdminDashboard({ overview, userName, companies = [], doc
                         <p className="text-sm font-semibold text-slate-900">{document.title}</p>
                         <p className="mt-1 text-xs text-slate-500">{document.document_type}</p>
                         {document.notes ? <p className="mt-2 text-xs text-slate-500">{document.notes}</p> : null}
-                        <p className="mt-3 text-xs text-slate-500">Status: {document.status}</p>
+                        <div className="mt-3 flex items-center gap-3">
+                          <p className="text-xs text-slate-500">Status: {document.status}</p>
+                          <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${document.file_url && document.file_url.includes("/uploads/documents/") ? "bg-blue-50 text-blue-700" : "bg-indigo-50 text-indigo-700"}`}>
+                            {document.file_url && document.file_url.includes("/uploads/documents/") ? "Local" : "Blob"}
+                          </span>
+                        </div>
                       </a>
                     ))}
                     {!documentsByCompany[company.id] && (

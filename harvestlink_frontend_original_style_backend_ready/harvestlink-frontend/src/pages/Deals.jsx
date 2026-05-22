@@ -238,9 +238,14 @@ export default function Deals() {
                           <b>{doc.document_type}</b>
                           <div className="text-gray-600">{doc.title}</div>
                         </div>
-                        <button type="button" onClick={() => deleteDocument(doc.id)} className="rounded-full bg-red-50 px-3 py-1 text-xs font-bold text-red-700 hover:bg-red-100">
-                          <Trash2 size={14} /> Delete
-                        </button>
+                        <div className="flex items-center gap-2">
+                          <button type="button" onClick={() => deleteDocument(doc.id)} className="rounded-full bg-red-50 px-3 py-1 text-xs font-bold text-red-700 hover:bg-red-100">
+                            <Trash2 size={14} /> Delete
+                          </button>
+                          <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${doc.file_url && doc.file_url.includes("/uploads/documents/") ? "bg-blue-50 text-blue-700" : "bg-indigo-50 text-indigo-700"}`}>
+                            {doc.file_url && doc.file_url.includes("/uploads/documents/") ? "Local" : "Blob"}
+                          </span>
+                        </div>
                       </div>
                       {doc.file_url && (
                         <a href={doc.file_url} target="_blank" rel="noreferrer" className="mt-2 inline-block text-sm font-bold text-harvest-green hover:underline">

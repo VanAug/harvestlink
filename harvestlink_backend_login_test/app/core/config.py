@@ -6,6 +6,10 @@ class Settings(BaseSettings):
     SECRET_KEY: str = "change-this-secret-key"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 1440
     BACKEND_CORS_ORIGINS: str = "http://localhost:5173,http://localhost:3000,http://127.0.0.1:5173"
+    VERCEL_BLOB_UPLOAD_URL: str | None = None
+    VERCEL_BLOB_TOKEN: str | None = None
+    VERCEL_BLOB_BASE_URL: str | None = None
+    VERCEL_BLOB_DELETE_URL: str | None = None
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
