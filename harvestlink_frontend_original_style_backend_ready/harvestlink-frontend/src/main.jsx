@@ -30,7 +30,9 @@ import EmailVerification from "./components/Auth/EmailVerification";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 
-const Protected = ({ children }) => <ProtectedRoute>{children}</ProtectedRoute>;
+const Protected = ({ children, roles }) => (
+  <ProtectedRoute roles={roles}>{children}</ProtectedRoute>
+);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -53,21 +55,21 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/verify-email" element={<EmailVerification />} />
 
         {/* Protected routes — require login */}
-        <Route path="/create-rfq" element={<Protected><CreateRFQ /></Protected>} />
-        <Route path="/exporter/products/new" element={<Protected><AddProduct /></Protected>} />
-        <Route path="/exporter/products/:id/edit" element={<Protected><AddProduct /></Protected>} />
-        <Route path="/exporter/products" element={<Protected><ExporterProducts /></Protected>} />
-        <Route path="/exporter/profile" element={<Protected><ExporterProfile /></Protected>} />
-        <Route path="/buyer/profile" element={<Protected><BuyerProfile /></Protected>} />
-        <Route path="/deals/:dealId/tracking" element={<Protected><ShippingTracking /></Protected>} />
-        <Route path="/deals/:dealId/review" element={<Protected><DeliveryReview /></Protected>} />
-        <Route path="/buyer-dashboard" element={<Protected><Dashboard role="buyer" /></Protected>} />
-        <Route path="/supplier-dashboard" element={<Protected><Dashboard role="supplier" /></Protected>} />
-        <Route path="/exporter-dashboard" element={<Protected><Dashboard role="exporter" /></Protected>} />
-        <Route path="/admin-dashboard" element={<Protected><Dashboard role="admin" /></Protected>} />
-        <Route path="/deals" element={<Protected><Deals /></Protected>} />
-        <Route path="/escrow" element={<Protected><Escrow /></Protected>} />
-        <Route path="/financing" element={<Protected><Financing /></Protected>} />
+        <Route path="/create-rfq" element={<Protected roles={["buyer"]}><CreateRFQ /></Protected>} />
+        <Route path="/exporter/products/new" element={<Protected roles={["exporter"]}><AddProduct /></Protected>} />
+        <Route path="/exporter/products/:id/edit" element={<Protected roles={["exporter"]}><AddProduct /></Protected>} />
+        <Route path="/exporter/products" element={<Protected roles={["exporter"]}><ExporterProducts /></Protected>} />
+        <Route path="/exporter/profile" element={<Protected roles={["exporter"]}><ExporterProfile /></Protected>} />
+        <Route path="/buyer/profile" element={<Protected roles={["buyer"]}><BuyerProfile /></Protected>} />
+        <Route path="/deals/:dealId/tracking" element={<Protected roles={["buyer","exporter","finance_partner","admin"]}><ShippingTracking /></Protected>} />
+        <Route path="/deals/:dealId/review" element={<Protected roles={["buyer","exporter","finance_partner","admin"]}><DeliveryReview /></Protected>} />
+        <Route path="/buyer-dashboard" element={<Protected roles={["buyer"]}><Dashboard role="buyer" /></Protected>} />
+        <Route path="/supplier-dashboard" element={<Protected roles={["exporter"]}><Dashboard role="supplier" /></Protected>} />
+        <Route path="/exporter-dashboard" element={<Protected roles={["exporter"]}><Dashboard role="exporter" /></Protected>} />
+        <Route path="/admin-dashboard" element={<Protected roles={["admin"]}><Dashboard role="admin" /></Protected>} />
+        <Route path="/deals" element={<Protected roles={["buyer","exporter","finance_partner","admin"]}><Deals /></Protected>} />
+        <Route path="/escrow" element={<Protected roles={["buyer","exporter","finance_partner","admin"]}><Escrow /></Protected>} />
+        <Route path="/financing" element={<Protected roles={["finance_partner"]}><Financing /></Protected>} />
 
         {/* 404 catch-all */}
         <Route path="*" element={<NotFound />} />

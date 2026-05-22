@@ -15,11 +15,34 @@ const publicNavItems = [
   ["Buyer Verification", "/buyer-verification"],
 ];
 
-const loggedInNavItems = [
-  ["Deals", "/deals"],
-  ["Escrow", "/escrow"],
-  ["Financing", "/financing"],
-];
+function getLoggedInNavItems(role) {
+  switch (role) {
+    case "buyer":
+      return [
+        ["Deals", "/deals"],
+        ["Escrow", "/escrow"],
+        ["Financing", "/financing"],
+      ];
+    case "exporter":
+    case "supplier":
+      return [
+        ["Deals", "/deals"],
+        ["Escrow", "/escrow"],
+      ];
+    case "finance_partner":
+      return [
+        ["Financing", "/financing"],
+      ];
+    case "admin":
+      return [
+        ["Deals", "/deals"],
+        ["Escrow", "/escrow"],
+        ["Financing", "/financing"],
+      ];
+    default:
+      return [];
+  }
+}
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -122,8 +145,8 @@ export default function Navbar() {
               {label}
             </NavLink>
           ))}
-          {/* Logged-in only */}
-          {isLoggedIn && loggedInNavItems.map(([label, path]) => (
+          {/* Logged-in only — filtered by role */}
+          {isLoggedIn && getLoggedInNavItems(session.role).map(([label, path]) => (
             <NavLink key={path} to={path} className={({isActive}) => isActive ? "text-harvest-leaf" : "text-gray-700 hover:text-harvest-leaf"}>
               {label}
             </NavLink>
@@ -264,11 +287,11 @@ export default function Navbar() {
                 {label}
               </NavLink>
             ))}
-            {/* Logged-in only mobile links */}
+            {/* Logged-in only mobile links — filtered by role */}
             {isLoggedIn && (
               <>
                 <div className="mt-2 px-2 py-1 text-xs font-bold uppercase tracking-wider text-gray-400">Trade Tools</div>
-                {loggedInNavItems.map(([label, path]) => (
+                {getLoggedInNavItems(session.role).map(([label, path]) => (
                   <NavLink
                     key={path}
                     to={path}

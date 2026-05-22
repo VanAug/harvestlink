@@ -8,24 +8,25 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db.session import get_db
 from app.models.models import EmailVerification, PasswordReset, User
-from app.schemas.schemas import EmailVerificationRequest, PasswordResetConfirm, PasswordResetRequest
+from app.schemas.schemas import EmailVerificationRequest, EmailVerificationSendRequest, PasswordResetConfirm, PasswordResetRequest
 
 router = APIRouter(tags=["account"])
 
 
 @router.post("/auth/email/verify-request")
-async def request_email_verification(user_id: int, db: AsyncSession = Depends(get_db)):
-    user = await db.get(User, user_id)
+async def request_email_verification(payload: EmailVerificationSendRequest, db: AsyncSession = Depends(get_db)):
+    email = payload.email.lower()
+    user = await db.scalar(select(User).where(User.email == email))
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
-    existing = await db.scalar(select(EmailVerification).where(EmailVerification.user_id == user_id))
+    existing = await db.scalar(select(EmailVerification).where(EmailVerification.user_id == user.id))
     if existing:
         await db.delete(existing)
 
     token = secrets.token_urlsafe(32)
     verification = EmailVerification(
-        user_id=user_id,
+        user_id=user.id,
         token=token,
         expires_at=datetime.utcnow() + timedelta(hours=24),
     )

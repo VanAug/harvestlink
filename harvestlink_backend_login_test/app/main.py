@@ -1,12 +1,19 @@
+from pathlib import Path
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from app.api.v1.router import api_router
 from app.core.config import settings
 from app.db.base import Base
 from app.db.session import engine, AsyncSessionLocal
 from app.seed.seed import seed
 
+UPLOADS_DIR = Path(__file__).resolve().parent.parent / "uploads"
+UPLOADS_DIR.mkdir(parents=True, exist_ok=True)
+
 app = FastAPI(title=settings.APP_NAME, version="1.0.0", description="Backend for testing HarvestLink frontend login and demo data.")
+app.mount("/uploads", StaticFiles(directory=str(UPLOADS_DIR)), name="uploads")
 
 app.add_middleware(
     CORSMiddleware,

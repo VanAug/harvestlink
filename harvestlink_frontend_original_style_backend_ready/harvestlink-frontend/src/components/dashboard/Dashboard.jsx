@@ -17,6 +17,9 @@ export default function Dashboard({ role = "buyer" }) {
     overview: null,
     eligibility: null,
     userName: "Trader",
+    companies: [],
+    companyDocs: [],
+    users: [],
   });
 
   const isBuyer = role === "buyer";
@@ -24,8 +27,8 @@ export default function Dashboard({ role = "buyer" }) {
   const isAdmin = role === "admin";
 
   useEffect(() => {
-    loadDashboard({ isBuyer, setState });
-  }, [isBuyer]);
+    loadDashboard({ isBuyer, isAdmin, setState });
+  }, [isBuyer, isAdmin]);
 
   const buyerMetrics = useMemo(() => [
     ["My Active RFQs", state.myRfqs.filter((rfq) => rfq.status === "open" || rfq.status === "Open").length, FileText],
@@ -62,7 +65,7 @@ export default function Dashboard({ role = "buyer" }) {
             eligibility={state.eligibility}
           />
         )}
-        {isAdmin && <AdminDashboard overview={state.overview} userName={state.userName} />}
+        {isAdmin && <AdminDashboard overview={state.overview} userName={state.userName} companies={state.companies} documents={state.companyDocs} users={state.users} />}
       </main>
     </PageShell>
   );
@@ -73,12 +76,14 @@ async function loadDashboard({ isBuyer, setState }) {
   const userName = localStorage.getItem("harvestlink_full_name") || "Trader";
 
   try {
-    const [apiProducts, companies, apiRfqs, overview, eligibility] = await Promise.all([
+    const [apiProducts, companies, apiRfqs, overview, eligibility, companyDocs, users] = await Promise.all([
       apiGet("/products"),
       apiGet("/companies"),
       apiGet("/rfqs"),
-      apiGet("/admin/overview"),
+      isAdmin ? apiGet("/admin/overview") : Promise.resolve(null),
       apiGet("/financing/eligibility/1"),
+      isAdmin ? apiGet("/documents?owner_type=company") : Promise.resolve([]),
+      isAdmin ? apiGet("/admin/users") : Promise.resolve([]),
     ]);
 
     const products = apiProducts.map((product) => mapProduct(product, companies));
@@ -92,6 +97,9 @@ async function loadDashboard({ isBuyer, setState }) {
     setState({
       products,
       rfqs,
+      companies,
+      companyDocs,
+      users,
       overview,
       eligibility,
       userName,

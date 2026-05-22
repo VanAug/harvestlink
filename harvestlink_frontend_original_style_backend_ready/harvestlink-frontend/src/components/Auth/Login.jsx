@@ -83,6 +83,12 @@ export default function Login() {
               Create an account
             </Link>
           </div>
+          <div className="mt-3 text-center text-sm text-gray-600">
+            Need a verification link?{" "}
+            <Link className="font-bold text-harvest-green" to="/verify-email">
+              Request or resend one
+            </Link>
+          </div>
         </form>
       </main>
     </PageShell>

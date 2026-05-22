@@ -4,6 +4,23 @@ import PageShell from "../layout/PageShell";
 import { Input } from "../forms/Input";
 import { apiPost, register, apiGet } from "../../lib/api";
 
+const productCategoryOptions = [
+  "Fruits and Vegetables",
+  "Coffee and Tea",
+  "Flowers",
+  "Herbs and Spices",
+  "Nuts and Oil Seeds",
+  "Cereals and Grains",
+  "Dairy and Eggs",
+  "Meat and Poultry",
+  "Fish and Seafood",
+  "Honey and Bee Products",
+  "Essential Oils",
+  "Handicrafts",
+  "Textiles",
+  "Other",
+];
+
 const roleOptions = [
   { value: "buyer", label: "Buyer" },
   { value: "exporter", label: "Exporter" },
@@ -21,8 +38,26 @@ export default function Registration() {
   const [productsOffered, setProductsOffered] = useState("");
   const [country, setCountry] = useState("Kenya");
   const [countries, setCountries] = useState([]);
+  const [showProductsDropdown, setShowProductsDropdown] = useState(false);
   const [message, setMessage] = useState("");
   const [submitting, setSubmitting] = useState(false);
+
+  const selectedProductsArray = productsOffered
+    ? productsOffered.split(',').map((s) => s.trim()).filter(Boolean)
+    : [];
+
+  function toggleProductCategory(name) {
+    const current = selectedProductsArray;
+    const updated = current.includes(name)
+      ? current.filter((p) => p !== name)
+      : [...current, name];
+    setProductsOffered(updated.join(', '));
+  }
+
+  function removeProductCategory(name) {
+    const updated = selectedProductsArray.filter((p) => p !== name);
+    setProductsOffered(updated.join(', '));
+  }
 
   function nextPathForRole(role) {
     if (role === "buyer") return "/buyer/profile";
@@ -49,17 +84,18 @@ export default function Registration() {
       }
 
       const data = await register(fullName, email, password, role);
-      await apiPost("/companies", {
+      const companyPayload = {
         owner_id: data.user_id,
         name: companyName.trim(),
         type: role,
         country,
         description: `${roleLabel(role)} profile created during registration.`,
-        buying_interests: role === "buyer" ? "Add buying interests in profile" : undefined,
-        preferred_destinations: role === "buyer" ? country : undefined,
-        products_offered: role === "exporter" ? productsOffered.trim() || "Add products in exporter profile" : undefined,
-        export_markets: role === "exporter" ? country : undefined,
-      });
+      };
+      if (role === "exporter") {
+        companyPayload.products_offered = productsOffered.trim() || "";
+        companyPayload.export_markets = "";
+      }
+      await apiPost("/companies", companyPayload);
       navigate(nextPathForRole(data.role));
     } catch (error) {
       setMessage(`Registration failed. ${error.message}`);
@@ -150,12 +186,56 @@ export default function Registration() {
               placeholder="Company or business name"
             />
             {role === "exporter" && (
-              <Input
-                label="Products Offered"
-                value={productsOffered}
-                onChange={(e) => setProductsOffered(e.target.value)}
-                placeholder="Avocados, herbs, macadamia"
-              />
+              <div className="relative">
+                <span className="mb-2 block text-sm font-bold text-gray-800">Products Offered</span>
+                <button
+                  type="button"
+                  onClick={() => setShowProductsDropdown((current) => !current)}
+                  className="w-full rounded-2xl border border-gray-200 p-3 text-left text-sm flex items-center justify-between bg-white"
+                >
+                  <span>
+                    {selectedProductsArray.length > 0
+                      ? `${selectedProductsArray.length} product category(s)`
+                      : "Select product categories..."}
+                  </span>
+                  <svg className={`w-4 h-4 transition-transform ${showProductsDropdown ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                {selectedProductsArray.length > 0 && (
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {selectedProductsArray.map((item) => (
+                      <span key={item} className="inline-flex items-center gap-1 rounded-full bg-harvest-green/10 px-3 py-1 text-xs font-bold text-harvest-green">
+                        {item}
+                        <button type="button" onClick={() => removeProductCategory(item)} className="hover:text-red-500">×</button>
+                      </span>
+                    ))}
+                  </div>
+                )}
+                {showProductsDropdown && (
+                  <div className="absolute z-50 mt-1 max-h-48 w-full overflow-y-auto rounded-2xl border border-gray-200 bg-white p-2 shadow-lg">
+                    {productCategoryOptions.map((cat) => {
+                      const isSelected = selectedProductsArray.includes(cat);
+                      return (
+                        <label
+                          key={cat}
+                          className={`flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2 text-sm transition ${
+                            isSelected ? "bg-harvest-green/10 text-harvest-green" : "text-gray-700 hover:bg-gray-50"
+                          }`}
+                        >
+                          <input
+                            type="checkbox"
+                            checked={isSelected}
+                            onChange={() => toggleProductCategory(cat)}
+                            className="h-4 w-4 rounded border-gray-300 text-harvest-green focus:ring-harvest-green"
+                          />
+                          {cat}
+                        </label>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
             )}
             <label className="block">
               <span className="mb-2 block text-sm font-bold text-gray-800">Country</span>

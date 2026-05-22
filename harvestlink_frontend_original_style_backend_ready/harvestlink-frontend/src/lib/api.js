@@ -35,11 +35,30 @@ export async function apiPost(path, body) {
   return res.json();
 }
 
+export async function apiPostMultipart(path, formData) {
+  const res = await fetch(`${API_BASE_URL}${path}`, {
+    method: 'POST',
+    headers: { ...authHeaders() },
+    body: formData,
+  });
+  if (!res.ok) throw new Error(await apiErrorMessage(res, path));
+  return res.json();
+}
+
 export async function apiPatch(path, body) {
   const res = await fetch(`${API_BASE_URL}${path}`, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json', ...authHeaders() },
     body: JSON.stringify(body),
+  });
+  if (!res.ok) throw new Error(await apiErrorMessage(res, path));
+  return res.json();
+}
+
+export async function apiDelete(path) {
+  const res = await fetch(`${API_BASE_URL}${path}`, {
+    method: 'DELETE',
+    headers: { ...authHeaders() },
   });
   if (!res.ok) throw new Error(await apiErrorMessage(res, path));
   return res.json();

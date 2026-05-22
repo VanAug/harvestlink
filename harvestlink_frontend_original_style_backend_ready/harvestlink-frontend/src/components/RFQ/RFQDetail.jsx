@@ -30,9 +30,15 @@ export default function RFQDetail() {
     setRfq(mapRFQ(apiRfq));
     setOffers(apiOffers);
     const userId = Number(localStorage.getItem("harvestlink_user_id"));
+    const userRole = localStorage.getItem("harvestlink_role");
     if (userId) {
       const companies = await apiGet(`/companies/owner/${userId}`);
-      setCompany(companies.find((item) => item.type === "exporter") || null);
+      // Only set company for exporters — buyers don't need a company object here
+      if (userRole === "exporter" || userRole === "supplier") {
+        setCompany(companies.find((item) => item.type === "exporter") || null);
+      } else {
+        setCompany(null); // Buyers, finance partners, admins get null
+      }
     }
   }
 
@@ -106,9 +112,10 @@ export default function RFQDetail() {
   }
 
   const selectedOffersData = offers.filter((o) => selectedOffers.includes(o.id));
-  const isExporter = company?.type === "exporter";
-  const isBuyer = !isExporter;
-  const offersTitle = isExporter ? "Submitted Offers" : "Received Offers";
+  const userRole = localStorage.getItem("harvestlink_role");
+  const isExporter = userRole === "exporter" || userRole === "supplier";
+  const isBuyer = userRole === "buyer";
+  const offersTitle = isExporter ? "Submitted Offers" : isBuyer ? "Received Offers" : "Offers";
 
   return (
     <PageShell>

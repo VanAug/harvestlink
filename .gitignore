@@ -5,6 +5,7 @@ dist/
 __pycache__/
 *.pyc
 harvestlink.db
+uploads/
 *.out.log
 *.err.log
 backend-server-out.log

@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db.session import get_db
 from app.models.models import Deal, EscrowTransaction, Message
-from app.schemas.schemas import DealOut, DealStatusUpdate, EscrowOut, MessageCreate, MessageOut
+from app.schemas.schemas import DealCreate, DealOut, DealStatusUpdate, EscrowOut, MessageCreate, MessageOut
 
 router = APIRouter(tags=["deals"])
 
@@ -29,6 +29,15 @@ async def deal(deal_id: int, db: AsyncSession = Depends(get_db)):
     if not item:
         raise HTTPException(status_code=404, detail="Deal not found")
     return item
+
+
+@router.post("/deals", response_model=DealOut, status_code=201)
+async def create_deal(payload: DealCreate, db: AsyncSession = Depends(get_db)):
+    deal = Deal(**payload.model_dump())
+    db.add(deal)
+    await db.commit()
+    await db.refresh(deal)
+    return deal
 
 
 @router.patch("/deals/{deal_id}/status", response_model=DealOut)

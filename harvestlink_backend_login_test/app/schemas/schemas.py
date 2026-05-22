@@ -78,6 +78,12 @@ class CompanyUpdate(BaseModel):
     buying_interests: Optional[str] = None
     preferred_destinations: Optional[str] = None
 
+class RoleUpdate(BaseModel):
+    role: str
+
+class CompanyVerificationUpdate(BaseModel):
+    verification_status: str
+
 class ProductOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     id: int
@@ -196,6 +202,21 @@ class DealOut(BaseModel):
     delivery_terms: str
     status: str
     escrow_status: str
+
+class DealCreate(BaseModel):
+    buyer_company_id: int
+    exporter_company_id: int
+    buyer_name: str
+    exporter_name: str
+    rfq_id: Optional[int] = None
+    offer_id: Optional[int] = None
+    product_name: str
+    quantity: float
+    unit: str
+    total_amount: float
+    currency: str = "USD"
+    destination_country: str
+    delivery_terms: str
 
 class DealStatusUpdate(BaseModel):
     status: str
@@ -319,6 +340,9 @@ class PasswordResetRequest(BaseModel):
 class PasswordResetConfirm(BaseModel):
     token: str
     new_password: str
+
+class EmailVerificationSendRequest(BaseModel):
+    email: EmailStr
 
 class EmailVerificationRequest(BaseModel):
     token: str

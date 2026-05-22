@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { 
   Building2, FileText, Globe2, Heart, ShoppingBag, 
   BadgeCheck, Clock, Package, TrendingUp, ArrowRight,
-  Settings, UserCircle, ShieldCheck, MapPin, DollarSign
+  Settings, UserCircle, ShieldCheck, MapPin, DollarSign, Trash2
 } from "lucide-react";
 import PageShell from "../layout/PageShell";
 import { Input } from "../forms/Input";
-import { apiGet, apiPatch, apiPost } from "../../lib/api";
+import { apiDelete, apiGet, apiPatch, apiPost, apiPostMultipart } from "../../lib/api";
 import { products as fallbackProducts, rfqs as fallbackRFQs } from "../../data/mockData";
 
 const emptyCompany = {
@@ -20,6 +20,13 @@ const emptyCompany = {
   preferred_destinations: "",
 };
 
+const verificationDocs = [
+  "Business License",
+  "Company Registration",
+  "Tax Certificate",
+  "Bank Reference",
+];
+
 export default function BuyerProfile() {
   const [company, setCompany] = useState(null);
   const [form, setForm] = useState(emptyCompany);
@@ -30,9 +37,14 @@ export default function BuyerProfile() {
   const [myDeals, setMyDeals] = useState([]);
   const [recentProducts, setRecentProducts] = useState([]);
   const [watchlist, setWatchlist] = useState([]);
+  const [documents, setDocuments] = useState([]);
+  const [docForm, setDocForm] = useState({ document_type: verificationDocs[0], title: "", file_url: "", notes: "" });
+  const [selectedFileName, setSelectedFileName] = useState("");
+  const fileInputRef = useRef(null);
   const [stats, setStats] = useState({ totalRfqs: 0, activeRfqs: 0, totalDeals: 0, savedProducts: 0 });
   const [showDestDropdown, setShowDestDropdown] = useState(false);
   const userId = Number(localStorage.getItem("harvestlink_user_id"));
+  const userEmail = localStorage.getItem("harvestlink_email");
 
   const selectedDestArray = form.preferred_destinations
     ? form.preferred_destinations.split(',').map(s => s.trim()).filter(Boolean)
@@ -55,39 +67,46 @@ export default function BuyerProfile() {
   async function load() {
     if (!userId) return;
     try {
-      const companies = await apiGet(`/companies/owner/${userId}`);
-      const buyer = companies.find((item) => item.type === "buyer") || null;
+      // Retry up to 5 times with 500ms delay to handle race condition after registration
+      let buyer = null;
+      for (let attempt = 0; attempt < 5; attempt++) {
+        const companies = await apiGet(`/companies/owner/${userId}`);
+        buyer = companies.find((item) => item.type === "buyer") || null;
+        if (buyer) break;
+        await new Promise((resolve) => setTimeout(resolve, 500));
+      }
       if (buyer) {
         setCompany(buyer);
         setForm({ ...emptyCompany, ...buyer });
+        setDocuments(await apiGet(`/documents?owner_type=company&owner_id=${buyer.id}`));
       }
 
       // Load buyer's own RFQs
-      const allRfqs = await apiGet('/rfqs').catch(() => fallbackRFQs);
-      const buyerRfqs = allRfqs.filter(r => 
-        r.buyer_company_id === buyer?.id || r.buyer_name === buyer?.name
-      );
+      const allRfqs = await apiGet('/rfqs').catch(() => []);
+      const buyerRfqs = buyer ? allRfqs.filter(r => 
+        r.buyer_company_id === buyer.id || r.buyer_name === buyer.name
+      ) : [];
       
       // Map RFQs to our format
       const mappedRfqs = buyerRfqs.length > 0 
         ? buyerRfqs.map(r => ({
-            id: String(r.id || r.product),
+            id: String(r.id),
             product: r.product_name || r.product,
             status: r.status || "Open",
             location: r.destination_country || r.location,
-            quantity: r.quantity ? `${r.quantity} ${r.unit}` : r.quantity,
-            target_price: r.target_price ? `$${r.target_price}` : r.target,
+            quantity: r.quantity ? `${r.quantity} ${r.unit}` : "",
+            target_price: r.target_price ? `$${r.target_price}` : "",
           }))
-        : fallbackRFQs.slice(0, 2);
+        : [];
 
       setMyRfqs(mappedRfqs);
 
       // Load buyer's deals
       const allDeals = await apiGet('/deals').catch(() => []);
       const buyerDeals = buyer ? allDeals.filter(d => d.buyer_company_id === buyer.id) : [];
-      setMyDeals(buyerDeals.length > 0 ? buyerDeals : []);
+      setMyDeals(buyerDeals);
 
-      // Stats
+      // Stats — only real data, no fallback
       setStats({
         totalRfqs: mappedRfqs.length,
         activeRfqs: mappedRfqs.filter(r => r.status === "Open" || r.status === "open").length,
@@ -95,8 +114,8 @@ export default function BuyerProfile() {
         savedProducts: watchlist.length,
       });
 
-      // Recent products for recommendations
-      setRecentProducts(fallbackProducts.slice(0, 4));
+      // Recent products — empty for new users
+      setRecentProducts([]);
 
     } catch (error) {
       setMessage(`Profile could not load. ${error.message}`);
@@ -119,6 +138,20 @@ export default function BuyerProfile() {
     loadCountries();
   }, []);
 
+  async function requestVerificationEmail() {
+    if (!userEmail) {
+      setMessage("Verification email request failed. Please log in again.");
+      return;
+    }
+    try {
+      setMessage("");
+      const data = await apiPost("/auth/email/verify-request", { email: userEmail });
+      setMessage(`Verification link sent to ${data.email}. Check your inbox.`);
+    } catch (error) {
+      setMessage(`Could not send verification email. ${error.message}`);
+    }
+  }
+
   function updateField(field, value) {
     setForm((current) => ({ ...current, [field]: value }));
   }
@@ -134,8 +167,54 @@ export default function BuyerProfile() {
       setCompany(saved);
       setForm({ ...emptyCompany, ...saved });
       setMessage("Buyer profile saved.");
+      setDocuments(await apiGet(`/documents?owner_type=company&owner_id=${saved.id}`));
     } catch (error) {
       setMessage(`Profile could not be saved. ${error.message}`);
+    }
+  }
+
+  async function submitDocument(e) {
+    e.preventDefault();
+    if (!company) {
+      setMessage("Save your company profile before uploading verification documents.");
+      return;
+    }
+    try {
+      const file = fileInputRef.current?.files?.[0];
+      if (file) {
+        const formData = new FormData();
+        formData.append("owner_type", "company");
+        formData.append("owner_id", String(company.id));
+        formData.append("document_type", docForm.document_type);
+        formData.append("title", docForm.title);
+        if (docForm.notes) formData.append("notes", docForm.notes);
+        formData.append("file", file);
+        await apiPostMultipart("/documents/upload", formData);
+      } else {
+        await apiPost("/documents", {
+          owner_type: "company",
+          owner_id: company.id,
+          ...docForm,
+        });
+      }
+      setDocForm({ document_type: verificationDocs[0], title: "", file_url: "", notes: "" });
+      setSelectedFileName("");
+      if (fileInputRef.current) fileInputRef.current.value = "";
+      setDocuments(await apiGet(`/documents?owner_type=company&owner_id=${company.id}`));
+      setMessage("Verification document submitted.");
+    } catch (error) {
+      setMessage(`Document could not be submitted. ${error.message}`);
+    }
+  }
+
+  async function deleteDocument(documentId) {
+    if (!window.confirm("Delete this document?")) return;
+    try {
+      await apiDelete(`/documents/${documentId}`);
+      setDocuments(await apiGet(`/documents?owner_type=company&owner_id=${company.id}`));
+      setMessage("Document deleted.");
+    } catch (error) {
+      setMessage(`Unable to delete document. ${error.message}`);
     }
   }
 
@@ -167,8 +246,17 @@ export default function BuyerProfile() {
                 <div className="mt-4 flex flex-wrap items-center gap-3">
                   <span className="inline-flex items-center gap-2 rounded-2xl bg-white/10 px-4 py-2 text-sm font-bold">
                     <ShieldCheck size={16} />
-                    {company.verification_status === "verified" ? "Verified Buyer" : "Verification: " + company.verification_status}
+                    {company.verification_status === "verified" ? "Verified Buyer" : "Verification: " + (company.verification_status || "pending")}
                   </span>
+                  {company.verification_status !== "verified" && (
+                    <button
+                      type="button"
+                      onClick={requestVerificationEmail}
+                      className="inline-flex items-center rounded-2xl bg-white/10 px-4 py-2 text-sm font-bold text-white transition hover:bg-white/20"
+                    >
+                      Resend verification email
+                    </button>
+                  )}
                   <span className="inline-flex items-center gap-2 rounded-2xl bg-white/10 px-4 py-2 text-sm font-bold">
                     <MapPin size={16} />
                     {company.country}
@@ -190,7 +278,7 @@ export default function BuyerProfile() {
             ["Active RFQs", stats.activeRfqs, FileText, "bg-blue-50 text-blue-600"],
             ["Total RFQs", stats.totalRfqs, ShoppingBag, "bg-green-50 text-green-600"],
             ["Active Deals", stats.totalDeals, Package, "bg-orange-50 text-orange-600"],
-            ["Saved Items", stats.savedProducts || recentProducts.length, Heart, "bg-pink-50 text-pink-600"],
+            ["Saved Items", stats.savedProducts, Heart, "bg-pink-50 text-pink-600"],
           ].map(([label, value, Icon, color]) => (
             <div key={label} className="rounded-2xl bg-white p-4 shadow-sm">
               <div className={`inline-flex rounded-xl ${color} p-2`}>
@@ -388,6 +476,77 @@ export default function BuyerProfile() {
                   <Link to="/buyer-verification" className="mt-4 flex items-center gap-2 text-sm font-bold text-harvest-orange hover:underline">
                     Get Verified <ArrowRight size={14} />
                   </Link>
+                </div>
+
+                <div className="rounded-3xl bg-white p-6 shadow-soft">
+                  <h3 className="text-lg font-black text-harvest-green">Verification Documents</h3>
+                  <p className="mt-2 text-sm text-gray-500">Upload documents to complete your buyer verification.</p>
+                  <form onSubmit={submitDocument} className="mt-4 space-y-4">
+                    <select
+                      value={docForm.document_type}
+                      onChange={(e) => setDocForm((current) => ({ ...current, document_type: e.target.value }))}
+                      className="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3"
+                    >
+                      {verificationDocs.map((doc) => <option key={doc}>{doc}</option>)}
+                    </select>
+                    <Input
+                      required
+                      label="Document Title"
+                      value={docForm.title}
+                      onChange={(e) => setDocForm((current) => ({ ...current, title: e.target.value }))}
+                      placeholder="Purchase order #1234"
+                    />
+                    <label className="block">
+                      <span className="mb-2 block text-sm font-bold text-gray-800">Upload Document</span>
+                      <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                        <button
+                          type="button"
+                          onClick={() => fileInputRef.current?.click()}
+                          className="inline-flex items-center justify-center rounded-2xl bg-harvest-green px-5 py-3 text-sm font-black text-white shadow-sm transition hover:bg-emerald-600"
+                        >
+                          Browse file
+                        </button>
+                        <span className="truncate text-sm text-gray-500">
+                          {selectedFileName || "No file selected"}
+                        </span>
+                      </div>
+                      <input
+                        ref={fileInputRef}
+                        type="file"
+                        accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+                        onChange={(e) => setSelectedFileName(e.target.files?.[0]?.name || "")}
+                        className="sr-only"
+                      />
+                    </label>
+                    <Input
+                      label="Notes"
+                      value={docForm.notes}
+                      onChange={(e) => setDocForm((current) => ({ ...current, notes: e.target.value }))}
+                      placeholder="Expiry date, issuing body, or reference"
+                    />
+                    <button className="w-full rounded-2xl bg-harvest-orange px-5 py-3 font-black text-white">
+                      Submit Document
+                    </button>
+                  </form>
+                  <div className="mt-6 space-y-3">
+                    {documents.map((doc) => (
+                      <div key={doc.id} className="rounded-2xl bg-harvest-soft p-4">
+                        <div className="flex items-center justify-between gap-2">
+                          <div className="font-black text-harvest-green">{doc.document_type}</div>
+                          <button type="button" onClick={() => deleteDocument(doc.id)} className="rounded-full bg-red-50 px-3 py-1 text-xs font-bold text-red-700 hover:bg-red-100">
+                            <Trash2 size={14} /> Delete
+                          </button>
+                        </div>
+                        <div className="mt-1 text-sm text-gray-600">{doc.title}</div>
+                        {doc.file_url && (
+                          <a href={doc.file_url} target="_blank" rel="noreferrer" className="mt-2 inline-block text-sm font-bold text-harvest-green hover:underline">
+                            View document
+                          </a>
+                        )}
+                        {doc.notes && <div className="mt-2 text-sm text-gray-500">{doc.notes}</div>}
+                      </div>
+                    ))}
+                  </div>
                 </div>
 
                 {company && (

@@ -7,10 +7,10 @@ export default function Verification({ type = "buyer" }) {
   const isBuyer = type === "buyer";
   const loggedIn = isLoggedIn();
 
-  const ctaLink = loggedIn
-    ? "/buyer/profile"
-    : "/register";
+  const role = localStorage.getItem("harvestlink_role");
+  const profileLink = role === "exporter" ? "/exporter/profile" : "/buyer/profile";
 
+  const ctaLink = loggedIn ? profileLink : "/register";
   const ctaLabel = loggedIn
     ? "Go to Profile to Complete Verification"
     : "Create an Account - $90 One-time Fee";
