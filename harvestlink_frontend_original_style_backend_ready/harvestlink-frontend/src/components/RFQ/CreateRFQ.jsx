@@ -46,7 +46,7 @@ export default function CreateRFQ() {
         const data = await apiGet('/countries');
         setCountries(data);
       } catch (err) {
-        // ignore
+        // ignore — the select will still show a placeholder
       }
     }
     loadCountries();
@@ -131,12 +131,12 @@ export default function CreateRFQ() {
               onChange={(e) => updateField("product_category", e.target.value)}
             >
               <option>Fruits</option>
-              <option>Grains & Cereals</option>
-              <option>Oils & Fats</option>
+              <option>Grains &amp; Cereals</option>
+              <option>Oils &amp; Fats</option>
               <option>Spices</option>
-              <option>Coffee & Tea</option>
+              <option>Coffee &amp; Tea</option>
               <option>Dairy</option>
-              <option>Meat & Seafood</option>
+              <option>Meat &amp; Seafood</option>
               <option>Other</option>
             </Select>
             <Input
@@ -168,19 +168,25 @@ export default function CreateRFQ() {
               placeholder="e.g. 750"
               type="number"
             />
-            <Input
-              label="Delivery Location"
-              // replaced by select dropdown
-            />
+            {/* Delivery Location — single select, no orphan Input above it */}
             <label>
               <span className="mb-2 block text-sm font-bold text-gray-800">Delivery Location</span>
-              <select value={form.destination_country} onChange={(e) => updateField("destination_country", e.target.value)} className="w-full rounded-2xl border border-gray-200 p-3" required>
+              <select
+                value={form.destination_country}
+                onChange={(e) => updateField("destination_country", e.target.value)}
+                className="w-full rounded-2xl border border-gray-200 p-3"
+                required
+              >
                 {countries.length === 0 ? (
                   <option value="">-- Select destination --</option>
                 ) : (
                   <>
                     <option value="">-- Select destination --</option>
-                    {countries.map((c) => <option key={c.code} value={c.name}>{c.name}</option>)}
+                    {countries.map((c) => (
+                      <option key={c.code} value={c.name}>
+                        {c.name}
+                      </option>
+                    ))}
                   </>
                 )}
               </select>
@@ -203,7 +209,11 @@ export default function CreateRFQ() {
           />
 
           {message && (
-            <div className={`mt-6 rounded-[2rem] p-4 ${message.includes("successfully") ? "bg-green-50 text-green-900" : "bg-red-50 text-red-900"}`}>
+            <div
+              className={`mt-6 rounded-[2rem] p-4 ${
+                message.includes("successfully") ? "bg-green-50 text-green-900" : "bg-red-50 text-red-900"
+              }`}
+            >
               {message}
             </div>
           )}
@@ -216,4 +226,3 @@ export default function CreateRFQ() {
     </PageShell>
   );
 }
-
