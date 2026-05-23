@@ -5,13 +5,22 @@ class Settings(BaseSettings):
     DATABASE_URL: str = "sqlite+aiosqlite:///./harvestlink.db"
     SECRET_KEY: str = "change-this-secret-key"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 1440
-    BACKEND_CORS_ORIGINS: str = "http://localhost:5173,http://localhost:3000,http://127.0.0.1:5173"
+
+    # Comma-separated list of allowed frontend origins.
+    # The production frontend is included in the default so the app works
+    # on Vercel even if this env var is not explicitly set.
+    BACKEND_CORS_ORIGINS: str = (
+        "http://localhost:5173,"
+        "http://localhost:3000,"
+        "http://127.0.0.1:5173,"
+        "https://harvestlink-nu.vercel.app"
+    )
+
     VERCEL_BLOB_UPLOAD_URL: str | None = None
     VERCEL_BLOB_TOKEN: str | None = None
     VERCEL_BLOB_BASE_URL: str | None = None
     VERCEL_BLOB_DELETE_URL: str | None = None
 
-    # Resend email config (https://resend.com — set RESEND_API_KEY in .env / Vercel env vars)
     RESEND_API_KEY: str | None = None
     EMAIL_FROM: str = "HarvestLink <noreply@harvestlink.trade>"
     FRONTEND_URL: str = "https://harvestlink-nu.vercel.app"
