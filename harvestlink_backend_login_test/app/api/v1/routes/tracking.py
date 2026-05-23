@@ -2,15 +2,29 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.core.security import get_current_user
 from app.db.session import get_db
-from app.models.models import Company, Deal, Review, ShippingTracking
+from app.models.models import Company, Deal, Review, ShippingTracking, User
 from app.schemas.schemas import ReviewCreate, ReviewOut, ShippingTrackingCreate, ShippingTrackingOut, ShippingTrackingUpdate
 
 router = APIRouter(tags=["tracking"])
 
 
+async def _assert_deal_participant(deal: Deal, current_user: User, db: AsyncSession):
+    if current_user.role in ("admin", "finance_partner"):
+        return
+    user_companies = list(await db.scalars(select(Company).where(Company.owner_id == current_user.id)))
+    company_ids = {c.id for c in user_companies}
+    if not company_ids.intersection({deal.buyer_company_id, deal.exporter_company_id}):
+        raise HTTPException(status_code=403, detail="You are not a participant in this deal")
+
+
 @router.get("/tracking", response_model=list[ShippingTrackingOut])
-async def tracking_list(deal_id: int | None = None, db: AsyncSession = Depends(get_db)):
+async def tracking_list(
+    deal_id: int | None = None,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
     stmt = select(ShippingTracking).order_by(ShippingTracking.id)
     if deal_id:
         stmt = stmt.where(ShippingTracking.deal_id == deal_id)
@@ -18,7 +32,11 @@ async def tracking_list(deal_id: int | None = None, db: AsyncSession = Depends(g
 
 
 @router.get("/tracking/{tracking_id}", response_model=ShippingTrackingOut)
-async def tracking_detail(tracking_id: int, db: AsyncSession = Depends(get_db)):
+async def tracking_detail(
+    tracking_id: int,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
     item = await db.get(ShippingTracking, tracking_id)
     if not item:
         raise HTTPException(status_code=404, detail="Tracking not found")
@@ -26,10 +44,16 @@ async def tracking_detail(tracking_id: int, db: AsyncSession = Depends(get_db)):
 
 
 @router.post("/deals/{deal_id}/tracking", response_model=ShippingTrackingOut)
-async def create_tracking(deal_id: int, payload: ShippingTrackingCreate, db: AsyncSession = Depends(get_db)):
+async def create_tracking(
+    deal_id: int,
+    payload: ShippingTrackingCreate,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
     deal = await db.get(Deal, deal_id)
     if not deal:
         raise HTTPException(status_code=404, detail="Deal not found")
+    await _assert_deal_participant(deal, current_user, db)
     existing = await db.scalar(select(ShippingTracking).where(ShippingTracking.deal_id == deal_id))
     if existing:
         raise HTTPException(status_code=400, detail="Tracking already exists for this deal")
@@ -41,10 +65,18 @@ async def create_tracking(deal_id: int, payload: ShippingTrackingCreate, db: Asy
 
 
 @router.patch("/tracking/{tracking_id}", response_model=ShippingTrackingOut)
-async def update_tracking(tracking_id: int, payload: ShippingTrackingUpdate, db: AsyncSession = Depends(get_db)):
+async def update_tracking(
+    tracking_id: int,
+    payload: ShippingTrackingUpdate,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
     item = await db.get(ShippingTracking, tracking_id)
     if not item:
         raise HTTPException(status_code=404, detail="Tracking not found")
+    deal = await db.get(Deal, item.deal_id)
+    if deal:
+        await _assert_deal_participant(deal, current_user, db)
     for key, value in payload.model_dump(exclude_unset=True).items():
         setattr(item, key, value)
     await db.commit()
@@ -53,7 +85,12 @@ async def update_tracking(tracking_id: int, payload: ShippingTrackingUpdate, db:
 
 
 @router.get("/reviews", response_model=list[ReviewOut])
-async def reviews_list(deal_id: int | None = None, reviewed_company_id: int | None = None, db: AsyncSession = Depends(get_db)):
+async def reviews_list(
+    deal_id: int | None = None,
+    reviewed_company_id: int | None = None,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
     stmt = select(Review).order_by(Review.id.desc())
     if deal_id:
         stmt = stmt.where(Review.deal_id == deal_id)
@@ -63,10 +100,16 @@ async def reviews_list(deal_id: int | None = None, reviewed_company_id: int | No
 
 
 @router.post("/deals/{deal_id}/reviews", response_model=ReviewOut)
-async def create_review(deal_id: int, payload: ReviewCreate, db: AsyncSession = Depends(get_db)):
+async def create_review(
+    deal_id: int,
+    payload: ReviewCreate,
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
     deal = await db.get(Deal, deal_id)
     if not deal:
         raise HTTPException(status_code=404, detail="Deal not found")
+    await _assert_deal_participant(deal, current_user, db)
     reviewer_company_id = payload.reviewer_company_id or deal.buyer_company_id
     existing = await db.scalar(
         select(Review).where(Review.deal_id == deal_id, Review.reviewer_company_id == reviewer_company_id)

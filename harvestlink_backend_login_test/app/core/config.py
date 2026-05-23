@@ -11,6 +11,11 @@ class Settings(BaseSettings):
     VERCEL_BLOB_BASE_URL: str | None = None
     VERCEL_BLOB_DELETE_URL: str | None = None
 
+    # Resend email config (https://resend.com — set RESEND_API_KEY in .env / Vercel env vars)
+    RESEND_API_KEY: str | None = None
+    EMAIL_FROM: str = "HarvestLink <noreply@harvestlink.trade>"
+    FRONTEND_URL: str = "https://harvestlink-nu.vercel.app"
+
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
     @property
