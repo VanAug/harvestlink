@@ -1,11 +1,11 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.v1.routes.common import eligibility
 from app.db.session import get_db
 from app.models.models import FinancingRequest
-from app.schemas.schemas import DashboardOut, FinancingCreate, FinancingOut
+from app.schemas.schemas import DashboardOut, FinancingCreate, FinancingOut, FinancingStatusUpdate
 
 router = APIRouter(tags=["financing"])
 
@@ -43,6 +43,17 @@ async def create_financing(payload: FinancingCreate, db: AsyncSession = Depends(
         status="submitted",
     )
     db.add(item)
+    await db.commit()
+    await db.refresh(item)
+    return item
+
+
+@router.patch("/financing/{request_id}/status", response_model=FinancingOut)
+async def update_financing_status(request_id: int, payload: FinancingStatusUpdate, db: AsyncSession = Depends(get_db)):
+    item = await db.get(FinancingRequest, request_id)
+    if not item:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Financing request not found")
+    item.status = payload.status
     await db.commit()
     await db.refresh(item)
     return item

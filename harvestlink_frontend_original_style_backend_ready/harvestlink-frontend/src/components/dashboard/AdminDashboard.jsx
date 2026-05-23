@@ -1,13 +1,18 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { BadgeDollarSign, Building2, CheckCircle, CreditCard, FileText, Globe2, Handshake, LockKeyhole, Package, ShieldCheck, Users } from "lucide-react";
+import { BadgeDollarSign, Building2, CheckCircle, CreditCard, FileText, Globe2, Handshake, LockKeyhole, Package, RefreshCw, Search, ShieldCheck, Users } from "lucide-react";
 import DashboardHero from "./DashboardHero";
 import MetricCard from "./MetricCard";
-import { apiPatch } from "../../lib/api";
+import { apiGet, apiPatch } from "../../lib/api";
 
-export default function AdminDashboard({ overview, userName, companies = [], documents = [], users = [] }) {
+export default function AdminDashboard({ overview, userName, companies = [], documents = [], users = [], onRefresh }) {
   const [companyList, setCompanyList] = useState(companies);
   const [userList, setUserList] = useState(users);
+  const [userSearch, setUserSearch] = useState("");
+  const [editingRoleId, setEditingRoleId] = useState(null);
+  const [editingRoleValue, setEditingRoleValue] = useState("");
+  const [financingRequests, setFinancingRequests] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     setCompanyList(companies);
@@ -16,6 +21,22 @@ export default function AdminDashboard({ overview, userName, companies = [], doc
   useEffect(() => {
     setUserList(users);
   }, [users]);
+
+  // Load financing requests for review
+  useEffect(() => {
+    apiGet("/financing").then(setFinancingRequests).catch(() => {});
+  }, []);
+
+  const filteredUsers = useMemo(() => {
+    if (!userSearch.trim()) return userList;
+    const query = userSearch.toLowerCase();
+    return userList.filter(
+      (u) =>
+        u.full_name?.toLowerCase().includes(query) ||
+        u.email?.toLowerCase().includes(query) ||
+        u.role?.toLowerCase().includes(query)
+    );
+  }, [userList, userSearch]);
 
   const documentsByCompany = useMemo(
     () => documents.reduce((map, document) => {
@@ -26,6 +47,9 @@ export default function AdminDashboard({ overview, userName, companies = [], doc
     }, {}),
     [documents]
   );
+
+  const pendingFinancing = financingRequests.filter((f) => f.status === "submitted" || f.status === "under_review");
+  const pendingFinanceCount = pendingFinancing.length;
 
   const pendingCompanies = companyList.filter((company) => company.verification_status !== "verified");
   const verifiedCompanies = companyList.filter((company) => company.verification_status === "verified");
@@ -39,6 +63,28 @@ export default function AdminDashboard({ overview, userName, companies = [], doc
       window.alert(`Verification status for ${updatedCompany.name} set to ${updatedCompany.verification_status}.`);
     } catch (error) {
       window.alert(`Unable to update verification status: ${error.message}`);
+    }
+  }
+
+  async function saveUserRole(userId) {
+    try {
+      const updated = await apiPatch(`/admin/users/${userId}/role`, { role: editingRoleValue });
+      setUserList((current) => current.map((u) => (u.id === updated.id ? updated : u)));
+      setEditingRoleId(null);
+      setEditingRoleValue("");
+    } catch (error) {
+      window.alert(`Unable to update user role: ${error.message}`);
+    }
+  }
+
+  async function updateFinancingStatus(requestId, status) {
+    try {
+      await apiPatch(`/financing/${requestId}/status`, { status });
+      setFinancingRequests((current) =>
+        current.map((req) => (req.id === requestId ? { ...req, status } : req))
+      );
+    } catch (error) {
+      window.alert(`Unable to update financing status: ${error.message}`);
     }
   }
 
@@ -220,13 +266,99 @@ export default function AdminDashboard({ overview, userName, companies = [], doc
         </div>
       </section>
 
+      {/* Financing Review Queue */}
+      <section className="mt-8 rounded-3xl bg-white p-6 shadow-sm">
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <h2 className="text-xl font-black text-harvest-green">Financing Review Queue</h2>
+            <p className="text-sm text-gray-500">Review and update financing requests from exporters.</p>
+          </div>
+          <span className="text-sm text-slate-500">{pendingFinanceCount} pending review</span>
+        </div>
+
+        <div className="mt-6 space-y-4">
+          {pendingFinancing.length === 0 ? (
+            <div className="rounded-3xl border border-green-200 bg-green-50 p-6 text-green-700">
+              No pending financing requests at this time.
+            </div>
+          ) : (
+            pendingFinancing.map((request) => (
+              <div key={request.id} className="rounded-3xl border border-slate-200 bg-slate-50 p-5">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                  <div>
+                    <p className="text-lg font-bold text-slate-900">{request.exporter_name}</p>
+                    <p className="text-sm text-slate-500">
+                      {request.currency} {request.requested_amount?.toLocaleString?.()} — {request.purpose}
+                    </p>
+                    <p className="text-sm text-slate-500">
+                      Score: {request.score} • Eligible: {request.currency} {request.eligible_amount?.toLocaleString?.()}
+                    </p>
+                  </div>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className={`rounded-full px-3 py-1 text-xs font-semibold ${
+                      request.status === "submitted" ? "bg-blue-100 text-blue-800" :
+                      request.status === "under_review" ? "bg-orange-100 text-orange-800" :
+                      "bg-green-100 text-green-800"
+                    }`}>
+                      {request.status}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => updateFinancingStatus(request.id, "under_review")}
+                      className="rounded-full bg-blue-500 px-4 py-2 text-xs font-semibold text-white transition hover:bg-blue-600"
+                    >
+                      Review
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => updateFinancingStatus(request.id, "approved")}
+                      className="rounded-full bg-harvest-green px-4 py-2 text-xs font-semibold text-white transition hover:bg-green-700"
+                    >
+                      Approve
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => updateFinancingStatus(request.id, "rejected")}
+                      className="rounded-full bg-red-500 px-4 py-2 text-xs font-semibold text-white transition hover:bg-red-600"
+                    >
+                      Reject
+                    </button>
+                  </div>
+                </div>
+                {request.linked_deal_id && (
+                  <Link
+                    to={`/deals`}
+                    className="mt-3 inline-flex items-center gap-1 text-xs font-bold text-harvest-green hover:underline"
+                  >
+                    Linked to Deal #{request.linked_deal_id} →
+                  </Link>
+                )}
+              </div>
+            ))
+          )}
+        </div>
+      </section>
+
+      {/* All Users with Search & Role Editing */}
       <section className="mt-8 rounded-3xl bg-white p-6 shadow-sm">
         <div className="flex items-center justify-between gap-4">
           <div>
             <h2 className="text-xl font-black text-harvest-green">All Platform Users</h2>
-            <p className="text-sm text-gray-500">Review every registered user account with role and status details.</p>
+            <p className="text-sm text-gray-500">Search, filter, and manage user roles and account status.</p>
           </div>
-          <span className="text-sm text-slate-500">{userList.length} users</span>
+          <div className="flex items-center gap-3">
+            <div className="relative">
+              <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+              <input
+                type="text"
+                value={userSearch}
+                onChange={(e) => setUserSearch(e.target.value)}
+                placeholder="Search users..."
+                className="w-48 rounded-xl border border-gray-200 py-2 pl-9 pr-3 text-sm outline-none focus:border-harvest-green"
+              />
+            </div>
+            <span className="text-sm text-slate-500">{filteredUsers.length} / {userList.length} users</span>
+          </div>
         </div>
 
         <div className="mt-6 overflow-x-auto">
@@ -239,15 +371,69 @@ export default function AdminDashboard({ overview, userName, companies = [], doc
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-200">
-              {userList.map((user) => (
-                <tr key={user.id} className="bg-slate-50 hover:bg-slate-100">
-                  <td className="px-4 py-3">{user.id}</td>
-                  <td className="px-4 py-3 font-semibold text-slate-900">{user.full_name}</td>
-                  <td className="px-4 py-3 text-slate-600">{user.email}</td>
-                  <td className="px-4 py-3 capitalize text-slate-700">{user.role}</td>
-                  <td className="px-4 py-3 text-slate-600">{user.status}</td>
+              {filteredUsers.length === 0 ? (
+                <tr>
+                  <td colSpan={userHeaders.length} className="px-4 py-8 text-center text-sm text-slate-400">
+                    No users match your search.
+                  </td>
                 </tr>
-              ))}
+              ) : (
+                filteredUsers.map((user) => (
+                  <tr key={user.id} className="bg-slate-50 hover:bg-slate-100">
+                    <td className="px-4 py-3">{user.id}</td>
+                    <td className="px-4 py-3 font-semibold text-slate-900">{user.full_name}</td>
+                    <td className="px-4 py-3 text-slate-600">{user.email}</td>
+                    <td className="px-4 py-3">
+                      {editingRoleId === user.id ? (
+                        <div className="flex items-center gap-2">
+                          <select
+                            value={editingRoleValue}
+                            onChange={(e) => setEditingRoleValue(e.target.value)}
+                            className="rounded-lg border border-gray-300 px-2 py-1 text-xs"
+                            autoFocus
+                          >
+                            {["buyer", "exporter", "finance_partner", "admin"].map((r) => (
+                              <option key={r} value={r}>{r}</option>
+                            ))}
+                          </select>
+                          <button
+                            onClick={() => saveUserRole(user.id)}
+                            className="rounded-lg bg-harvest-green px-2 py-1 text-xs font-bold text-white"
+                          >
+                            Save
+                          </button>
+                          <button
+                            onClick={() => setEditingRoleId(null)}
+                            className="rounded-lg bg-gray-200 px-2 py-1 text-xs font-bold text-gray-600"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="flex items-center gap-2">
+                          <span className="capitalize text-slate-700">{user.role}</span>
+                          <button
+                            onClick={() => {
+                              setEditingRoleId(user.id);
+                              setEditingRoleValue(user.role);
+                            }}
+                            className="rounded bg-gray-100 px-2 py-0.5 text-xs text-gray-500 hover:bg-gray-200"
+                          >
+                            Edit
+                          </button>
+                        </div>
+                      )}
+                    </td>
+                    <td className="px-4 py-3">
+                      <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${
+                        user.status === "active" ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
+                      }`}>
+                        {user.status}
+                      </span>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>

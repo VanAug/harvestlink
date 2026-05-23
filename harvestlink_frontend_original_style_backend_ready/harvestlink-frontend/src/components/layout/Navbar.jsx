@@ -44,6 +44,22 @@ function getLoggedInNavItems(role) {
   }
 }
 
+function financingPathFor(role) {
+  // Role-aware financing entrypoints. Use /financing for general access.
+  // Can be extended to route buyers/exporters/partners to different sub-pages later.
+  if (!role) return "/login";
+  switch (role) {
+    case "buyer":
+      return "/financing";
+    case "finance_partner":
+      return "/financing";
+    case "admin":
+      return "/financing";
+    default:
+      return "/financing";
+  }
+}
+
 export default function Navbar() {
   const navigate = useNavigate();
   const [session, setSession] = useState(() => ({
@@ -146,11 +162,14 @@ export default function Navbar() {
             </NavLink>
           ))}
           {/* Logged-in only — filtered by role */}
-          {isLoggedIn && getLoggedInNavItems(session.role).map(([label, path]) => (
-            <NavLink key={path} to={path} className={({isActive}) => isActive ? "text-harvest-leaf" : "text-gray-700 hover:text-harvest-leaf"}>
-              {label}
-            </NavLink>
-          ))}
+          {isLoggedIn && getLoggedInNavItems(session.role).map(([label, path]) => {
+            const to = label === "Financing" ? financingPathFor(session.role) : path;
+            return (
+              <NavLink key={to} to={to} className={({isActive}) => isActive ? "text-harvest-leaf" : "text-gray-700 hover:text-harvest-leaf"}>
+                {label}
+              </NavLink>
+            );
+          })}
         </nav>
 
         {/* Desktop Right Side */}
@@ -291,16 +310,19 @@ export default function Navbar() {
             {isLoggedIn && (
               <>
                 <div className="mt-2 px-2 py-1 text-xs font-bold uppercase tracking-wider text-gray-400">Trade Tools</div>
-                {getLoggedInNavItems(session.role).map(([label, path]) => (
-                  <NavLink
-                    key={path}
-                    to={path}
-                    onClick={() => setMobileOpen(false)}
-                    className={({isActive}) => `block rounded-xl px-4 py-3 text-sm ${isActive ? "bg-harvest-soft text-harvest-green font-bold" : "text-gray-600 hover:bg-gray-50"}`}
-                  >
-                    {label}
-                  </NavLink>
-                ))}
+                {getLoggedInNavItems(session.role).map(([label, path]) => {
+                  const to = label === "Financing" ? financingPathFor(session.role) : path;
+                  return (
+                    <NavLink
+                      key={to}
+                      to={to}
+                      onClick={() => setMobileOpen(false)}
+                      className={({isActive}) => `block rounded-xl px-4 py-3 text-sm ${isActive ? "bg-harvest-soft text-harvest-green font-bold" : "text-gray-600 hover:bg-gray-50"}`}
+                    >
+                      {label}
+                    </NavLink>
+                  );
+                })}
               </>
             )}
             {isLoggedIn && (

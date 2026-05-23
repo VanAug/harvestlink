@@ -254,6 +254,9 @@ class FinancingCreate(BaseModel):
     purpose: str
     linked_deal_id: Optional[int] = None
 
+class FinancingStatusUpdate(BaseModel):
+    status: str
+
 class FinancingOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     id: int
