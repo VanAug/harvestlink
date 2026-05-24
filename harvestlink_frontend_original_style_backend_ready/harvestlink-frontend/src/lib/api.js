@@ -111,12 +111,18 @@ export function getRole() {
 }
 
 export function imageForProduct(product) {
+  // Prefer a real uploaded image_url from the backend
+  if (product.image_url) return product.image_url;
+  // Fall back to keyword matching on image_key or product name
   const key = (product.image_key || product.name || '').toLowerCase();
   if (key.includes('avocado')) return 'https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?auto=format&fit=crop&w=900&q=80';
   if (key.includes('coffee')) return 'https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=900&q=80';
-  if (key.includes('flower')) return 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=900&q=80';
+  if (key.includes('flower') || key.includes('rose')) return 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=900&q=80';
   if (key.includes('herb') || key.includes('tea')) return 'https://images.unsplash.com/photo-1594648695040-bf3da6a8de69?auto=format&fit=crop&w=900&q=80';
-  if (key.includes('nut') || key.includes('cashew')) return 'https://images.unsplash.com/photo-1608797178974-15b35a64ede9?auto=format&fit=crop&w=900&q=80';
+  if (key.includes('nut') || key.includes('cashew') || key.includes('macadamia')) return 'https://images.unsplash.com/photo-1608797178974-15b35a64ede9?auto=format&fit=crop&w=900&q=80';
+  if (key.includes('grain') || key.includes('maize') || key.includes('wheat')) return 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=900&q=80';
+  if (key.includes('mango') || key.includes('fruit')) return 'https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=900&q=80';
+  if (key.includes('spice') || key.includes('pepper') || key.includes('chili')) return 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=900&q=80';
   return 'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=900&q=80';
 }
 

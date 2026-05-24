@@ -46,6 +46,7 @@ class CompanyOut(BaseModel):
     sourcing_markets: Optional[str] = None
     buying_interests: Optional[str] = None
     preferred_destinations: Optional[str] = None
+    rejection_reason: Optional[str] = None
 
 class CompanyCreate(BaseModel):
     owner_id: int
@@ -83,6 +84,7 @@ class RoleUpdate(BaseModel):
 
 class CompanyVerificationUpdate(BaseModel):
     verification_status: str
+    rejection_reason: Optional[str] = None
 
 class ProductOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
@@ -101,6 +103,7 @@ class ProductOut(BaseModel):
     minimum_order_quantity: Optional[float] = None
     description: Optional[str] = None
     image_key: Optional[str] = None
+    image_url: Optional[str] = None
     status: str
 
 class ProductCreate(BaseModel):
@@ -118,6 +121,7 @@ class ProductCreate(BaseModel):
     minimum_order_quantity: Optional[float] = None
     description: Optional[str] = None
     image_key: Optional[str] = None
+    image_url: Optional[str] = None
     status: str = "active"
 
 class ProductUpdate(BaseModel):
@@ -133,6 +137,7 @@ class ProductUpdate(BaseModel):
     minimum_order_quantity: Optional[float] = None
     description: Optional[str] = None
     image_key: Optional[str] = None
+    image_url: Optional[str] = None
     status: Optional[str] = None
 
 class RFQCreate(BaseModel):

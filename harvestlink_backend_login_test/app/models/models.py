@@ -31,6 +31,7 @@ class Company(Base):
     sourcing_markets: Mapped[str | None] = mapped_column(Text, nullable=True)
     buying_interests: Mapped[str | None] = mapped_column(Text, nullable=True)
     preferred_destinations: Mapped[str | None] = mapped_column(Text, nullable=True)
+    rejection_reason: Mapped[str | None] = mapped_column(Text, nullable=True)
 
 class Product(Base):
     __tablename__ = "products"
@@ -49,6 +50,7 @@ class Product(Base):
     minimum_order_quantity: Mapped[float | None] = mapped_column(Float, nullable=True)
     description: Mapped[str | None] = mapped_column(Text, nullable=True)
     image_key: Mapped[str | None] = mapped_column(String(100), nullable=True)
+    image_url: Mapped[str | None] = mapped_column(String(500), nullable=True)
     status: Mapped[str] = mapped_column(String(50), default="active")
 
 class RFQ(Base):

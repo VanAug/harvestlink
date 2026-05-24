@@ -66,6 +66,10 @@ async def admin_update_company_verification(
     if not company:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Company not found")
     company.verification_status = payload.verification_status
+    if payload.rejection_reason is not None:
+        company.rejection_reason = payload.rejection_reason
+    elif payload.verification_status == "verified":
+        company.rejection_reason = None
     await db.commit()
     await db.refresh(company)
     return company
