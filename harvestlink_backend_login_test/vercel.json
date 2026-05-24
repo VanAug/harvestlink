@@ -9,7 +9,24 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "app/main.py"
+      "methods": ["OPTIONS"],
+      "headers": {
+        "Access-Control-Allow-Origin": "https://harvestlink-nu.vercel.app",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "Authorization, Content-Type, Accept",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Max-Age": "86400"
+      },
+      "continue": false,
+      "status": 204
+    },
+    {
+      "src": "/(.*)",
+      "dest": "app/main.py",
+      "headers": {
+        "Access-Control-Allow-Origin": "https://harvestlink-nu.vercel.app",
+        "Access-Control-Allow-Credentials": "true"
+      }
     }
   ]
 }
