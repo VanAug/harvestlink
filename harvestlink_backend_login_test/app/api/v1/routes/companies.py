@@ -19,6 +19,15 @@ async def companies(type: str | None = None, db: AsyncSession = Depends(get_db))
     return list(await db.scalars(stmt))
 
 
+@router.get("/companies/{company_id}", response_model=CompanyOut)
+async def company_by_id(company_id: int, db: AsyncSession = Depends(get_db)):
+    """Public: view a single company by ID (for supplier profiles)."""
+    item = await db.get(Company, company_id)
+    if not item:
+        raise HTTPException(status_code=404, detail="Company not found")
+    return item
+
+
 @router.get("/companies/owner/{owner_id}", response_model=list[CompanyOut])
 async def companies_by_owner(
     owner_id: int,

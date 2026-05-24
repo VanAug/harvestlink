@@ -149,17 +149,32 @@ export function mapProduct(apiProduct, companies = []) {
 }
 
 export function mapSupplier(company) {
+  // Deterministic image based on supplier name hash
+  const supplierImages = [
+    'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=900&q=80',
+    'https://images.unsplash.com/photo-1523050854058-8df90110c9f8?auto=format&fit=crop&w=900&q=80',
+    'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=80',
+    'https://images.unsplash.com/photo-1583508915901-b5f84c1dcde1?auto=format&fit=crop&w=900&q=80',
+    'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?auto=format&fit=crop&w=900&q=80',
+    'https://images.unsplash.com/photo-1521714161819-155f54f2e5be?auto=format&fit=crop&w=900&q=80',
+    'https://images.unsplash.com/photo-1516912481808-3406840bd25c?auto=format&fit=crop&w=900&q=80',
+    'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=900&q=80',
+  ];
+  const imageIndex = Math.abs(company.name.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0)) % supplierImages.length;
   return {
     id: String(company.id),
     name: company.name,
     country: company.country,
+    address: company.address,
+    description: company.description,
+    website: company.website,
     type: company.type === 'exporter' ? 'Exporter' : company.type,
     verified: company.verification_status === 'verified',
     years: 'Verified profile',
     markets: company.export_markets || company.preferred_destinations || 'Global markets',
     capacity: company.export_capacity || 'Capacity available on request',
     products: (company.products_offered || company.buying_interests || '').split(',').map(x => x.trim()).filter(Boolean),
-    image: 'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=900&q=80',
+    image: supplierImages[imageIndex],
     raw: company,
   };
 }
