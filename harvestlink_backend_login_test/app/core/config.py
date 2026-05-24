@@ -2,7 +2,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     APP_NAME: str = "HarvestLink Backend"
-    DATABASE_URL: str = "sqlite+aiosqlite:///./harvestlink.db"
+    DATABASE_URL: str = "sqlite+aiosqlite:////tmp/harvestlink.db"
     SECRET_KEY: str = "change-this-secret-key"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 1440
 

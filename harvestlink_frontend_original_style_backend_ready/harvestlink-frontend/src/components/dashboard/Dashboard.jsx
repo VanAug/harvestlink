@@ -71,7 +71,7 @@ export default function Dashboard({ role = "buyer" }) {
   );
 }
 
-async function loadDashboard({ isBuyer, setState }) {
+async function loadDashboard({ isBuyer, isAdmin, setState }) {
   const userId = Number(localStorage.getItem("harvestlink_user_id"));
   const userName = localStorage.getItem("harvestlink_full_name") || "Trader";
 
@@ -81,7 +81,7 @@ async function loadDashboard({ isBuyer, setState }) {
       apiGet("/companies"),
       apiGet("/rfqs"),
       isAdmin ? apiGet("/admin/overview") : Promise.resolve(null),
-      apiGet("/financing/eligibility/1"),
+      userId ? apiGet("/financing/eligibility/" + userId).catch(() => null) : Promise.resolve(null),
       isAdmin ? apiGet("/documents?owner_type=company") : Promise.resolve([]),
       isAdmin ? apiGet("/admin/users") : Promise.resolve([]),
     ]);
