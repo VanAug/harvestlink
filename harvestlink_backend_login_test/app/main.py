@@ -29,6 +29,34 @@ app.add_middleware(
 app.include_router(api_router)
 
 
+async def run_migrations(conn):
+    """
+    Safe incremental migrations — adds columns that the models define
+    but that may not yet exist in the live database.
+    Uses IF NOT EXISTS / DO NOTHING patterns so it is safe to run on
+    every startup (no-op if columns already exist).
+    """
+    db_url = str(settings.DATABASE_URL)
+    is_postgres = "postgresql" in db_url or "asyncpg" in db_url
+
+    if is_postgres:
+        migrations = [
+            # Added: rejection_reason on companies (admin verification workflow)
+            "ALTER TABLE companies ADD COLUMN IF NOT EXISTS rejection_reason TEXT;",
+            # Added: image_url on products (real image upload support)
+            "ALTER TABLE products ADD COLUMN IF NOT EXISTS image_url VARCHAR(500);",
+        ]
+        for sql in migrations:
+            try:
+                await conn.execute(sql)
+                logger.info("Migration OK: %s", sql.split("(")[0].strip())
+            except Exception as exc:
+                logger.warning("Migration skipped (%s): %s", type(exc).__name__, sql)
+    else:
+        # SQLite: create_all handles schema, no ALTER TABLE needed
+        pass
+
+
 @app.on_event("startup")
 async def startup():
     # Only attempt local file serving when NOT on Vercel (which is read-only).
@@ -45,7 +73,11 @@ async def startup():
         logger.info("Vercel Blob storage configured — skipping local uploads mount.")
 
     async with engine.begin() as conn:
+        # Create any tables that don't exist yet (safe no-op for existing tables)
         await conn.run_sync(Base.metadata.create_all)
+        # Add any new columns to existing tables
+        await run_migrations(conn)
+
     async with AsyncSessionLocal() as db:
         await seed(db)
 
