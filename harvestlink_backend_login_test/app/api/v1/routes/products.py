@@ -113,7 +113,7 @@ async def upload_product_image(
 ):
     from pathlib import Path
     from uuid import uuid4
-    import httpx
+    from app.api.v1.routes.documents import upload_to_cloudinary, upload_to_local, _init_cloudinary
 
     item = await db.get(Product, product_id)
     if not item:
@@ -126,23 +126,22 @@ async def upload_product_image(
     contents = await file.read()
     file_url = None
 
-    if settings.VERCEL_BLOB_UPLOAD_URL and settings.VERCEL_BLOB_TOKEN:
-        try:
-            async with httpx.AsyncClient(timeout=30) as client:
-                resp = await client.post(
-                    settings.VERCEL_BLOB_UPLOAD_URL,
-                    headers={"Authorization": f"Bearer {settings.VERCEL_BLOB_TOKEN}"},
-                    files={"file": (unique_name, contents)},
-                )
-            if resp.is_success:
-                data = resp.json()
-                file_url = data.get("url") or (
-                    f"{settings.VERCEL_BLOB_BASE_URL.rstrip('/')}/{unique_name}"
-                    if settings.VERCEL_BLOB_BASE_URL else None
-                )
-        except Exception:
-            pass
+    # 1. Try Cloudinary (persistent, works in production)
+    try:
+        _init_cloudinary()
+        import cloudinary.uploader
+        result = cloudinary.uploader.upload(
+            contents,
+            public_id=unique_name.rsplit(".", 1)[0],
+            folder="harvestlink/products",
+        )
+        file_url = result["secure_url"]
+    except RuntimeError:
+        pass
+    except Exception:
+        pass
 
+    # 2. Fall back to local disk
     if file_url is None:
         upload_dir = Path("/tmp/uploads/products")
         try:
@@ -151,7 +150,7 @@ async def upload_product_image(
             base = f"{request.base_url.scheme}://{request.base_url.netloc}"
             file_url = f"{base}/uploads/products/{unique_name}"
         except OSError:
-            raise HTTPException(status_code=500, detail="Image storage unavailable. Configure VERCEL_BLOB_* env vars.")
+            raise HTTPException(status_code=500, detail="Image storage unavailable. Configure CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY and CLOUDINARY_API_SECRET.")
 
     item.image_url = file_url
     await db.commit()

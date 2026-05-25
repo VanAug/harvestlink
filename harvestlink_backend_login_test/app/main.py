@@ -59,9 +59,11 @@ async def run_migrations(conn):
 
 @app.on_event("startup")
 async def startup():
-    # Only attempt local file serving when NOT on Vercel (which is read-only).
-    # On Vercel, all uploads go through Vercel Blob storage instead.
-    if not settings.VERCEL_BLOB_TOKEN:
+    # Mount local /tmp/uploads for file serving in development.
+    # In production, files are stored on Cloudinary and served via its CDN,
+    # so the local mount is only needed for dev/fallback.
+    has_cloudinary = bool(settings.CLOUDINARY_CLOUD_NAME and settings.CLOUDINARY_API_KEY and settings.CLOUDINARY_API_SECRET)
+    if not has_cloudinary:
         local_uploads = Path("/tmp/uploads/documents")
         try:
             local_uploads.mkdir(parents=True, exist_ok=True)
@@ -70,7 +72,7 @@ async def startup():
         except OSError as exc:
             logger.warning("Could not mount local uploads directory: %s", exc)
     else:
-        logger.info("Vercel Blob storage configured — skipping local uploads mount.")
+        logger.info("Cloudinary storage configured — skipping local uploads mount.")
 
     async with engine.begin() as conn:
         # Create any tables that don't exist yet (safe no-op for existing tables)

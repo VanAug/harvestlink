@@ -16,10 +16,9 @@ class Settings(BaseSettings):
         "https://harvestlink-nu.vercel.app"
     )
 
-    VERCEL_BLOB_UPLOAD_URL: str | None = None
-    VERCEL_BLOB_TOKEN: str | None = None
-    VERCEL_BLOB_BASE_URL: str | None = None
-    VERCEL_BLOB_DELETE_URL: str | None = None
+    CLOUDINARY_CLOUD_NAME: str | None = None
+    CLOUDINARY_API_KEY: str | None = None
+    CLOUDINARY_API_SECRET: str | None = None
 
     RESEND_API_KEY: str | None = None
     EMAIL_FROM: str = "HarvestLink <noreply@harvestlink.trade>"

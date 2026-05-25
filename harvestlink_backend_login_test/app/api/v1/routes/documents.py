@@ -1,19 +1,66 @@
 from pathlib import Path
 from uuid import uuid4
+import re
 
 from fastapi import APIRouter, Depends, File, Form, HTTPException, Request, UploadFile
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+import cloudinary
+import cloudinary.uploader
 
 from app.core.security import get_current_user
 from app.db.session import get_db
 from app.models.models import Company, TradeDocument, User
 from app.schemas.schemas import TradeDocumentCreate, TradeDocumentOut
 from app.core.config import settings
-import httpx
 
 router = APIRouter(tags=["documents"])
 UPLOAD_DIR = Path("/tmp/uploads/documents")
+
+
+def _init_cloudinary() -> bool:
+    """Configure the Cloudinary module if credentials are present."""
+    if settings.CLOUDINARY_CLOUD_NAME and settings.CLOUDINARY_API_KEY and settings.CLOUDINARY_API_SECRET:
+        cloudinary.config(
+            cloud_name=settings.CLOUDINARY_CLOUD_NAME,
+            api_key=settings.CLOUDINARY_API_KEY,
+            api_secret=settings.CLOUDINARY_API_SECRET,
+            secure=True,
+        )
+        return True
+    return False
+
+
+def _cloudinary_public_id(file_path: str) -> str | None:
+    """Extract the Cloudinary public_id from a full Cloudinary URL."""
+    # Cloudinary URLs look like:
+    # https://res.cloudinary.com/<cloud_name>/<type>/<resource_type>/<transform>/<version>/<public_id>.<ext>
+    # The public_id is everything after the last / before the extension
+    m = re.search(r"/([^/]+)\.(?:pdf|jpg|jpeg|png|doc|docx|gif|webp)$", file_path)
+    if m:
+        return m.group(1)
+    return None
+
+
+async def upload_to_cloudinary(file_bytes: bytes, public_id: str, resource_type: str = "auto") -> str:
+    """Upload a file to Cloudinary and return the secure URL."""
+    if not _init_cloudinary():
+        raise RuntimeError("Cloudinary not configured. Set CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET.")
+    result = cloudinary.uploader.upload(
+        file_bytes,
+        public_id=public_id,
+        resource_type=resource_type,
+        folder="harvestlink/documents",
+    )
+    return result["secure_url"]
+
+
+async def upload_to_local(file_bytes: bytes, relative_path: str, base_url: str) -> str:
+    """Fallback: store file on local disk and return a local URL."""
+    full_path = UPLOAD_DIR / relative_path
+    full_path.parent.mkdir(parents=True, exist_ok=True)
+    full_path.write_bytes(file_bytes)
+    return f"{base_url}/uploads/documents/{relative_path}"
 
 
 async def _assert_document_owner(doc: TradeDocument, current_user: User, db: AsyncSession):
@@ -24,7 +71,6 @@ async def _assert_document_owner(doc: TradeDocument, current_user: User, db: Asy
         company = await db.get(Company, doc.owner_id)
         if company and company.owner_id != current_user.id:
             raise HTTPException(status_code=403, detail="You can only manage documents for your own company")
-    # For deal/offer documents we allow participants — deal-level checks cover this.
 
 
 @router.get("/documents", response_model=list[TradeDocumentOut])
@@ -79,41 +125,23 @@ async def upload_document(
 
     file_url: str | None = None
 
-    # 1. Try Vercel Blob storage first (persistent — works in serverless production)
-    if settings.VERCEL_BLOB_UPLOAD_URL and settings.VERCEL_BLOB_TOKEN:
-        try:
-            headers = {"Authorization": f"Bearer {settings.VERCEL_BLOB_TOKEN}"}
-            async with httpx.AsyncClient(timeout=30) as client:
-                resp = await client.post(
-                    settings.VERCEL_BLOB_UPLOAD_URL,
-                    headers=headers,
-                    files={"file": (unique_name, contents)},
-                )
-            if resp.is_success:
-                data = resp.json()
-                if data and isinstance(data, dict) and data.get("url"):
-                    file_url = data["url"]
-                elif settings.VERCEL_BLOB_BASE_URL:
-                    file_url = f"{settings.VERCEL_BLOB_BASE_URL.rstrip('/')}/{unique_name}"
-        except Exception:
-            pass  # Fall through to local storage
+    # 1. Try Cloudinary (persistent, works in production)
+    try:
+        file_url = await upload_to_cloudinary(contents, unique_name.rsplit(".", 1)[0])
+    except RuntimeError:
+        pass  # Cloudinary not configured, fall through
+    except Exception:
+        pass  # Upload failed, fall through to local
 
-    # 2. Fall back to local /tmp (dev / non-serverless environments only)
+    # 2. Fall back to local disk
     if file_url is None:
+        base = f"{request.base_url.scheme}://{request.base_url.netloc}"
         try:
-            UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
-            output_path = UPLOAD_DIR / unique_name
-            output_path.write_bytes(contents)
-            base = f"{request.base_url.scheme}://{request.base_url.netloc}"
-            file_url = f"{base}/uploads/documents/{unique_name}"
+            file_url = await upload_to_local(contents, unique_name, base)
         except OSError:
             raise HTTPException(
                 status_code=500,
-                detail=(
-                    "File storage unavailable. "
-                    "Configure VERCEL_BLOB_UPLOAD_URL and VERCEL_BLOB_TOKEN environment variables "
-                    "to enable persistent document uploads."
-                ),
+                detail="File storage unavailable. Configure CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY and CLOUDINARY_API_SECRET.",
             )
 
     item = TradeDocument(
@@ -142,8 +170,17 @@ async def delete_document(
         raise HTTPException(status_code=404, detail="Document not found")
     await _assert_document_owner(document, current_user, db)
 
-    # Delete physical file if stored locally
-    if document.file_url and "/uploads/documents/" in document.file_url:
+    # Try to delete from Cloudinary if URL points there
+    if document.file_url and "res.cloudinary.com" in document.file_url:
+        try:
+            _init_cloudinary()
+            public_id = _cloudinary_public_id(document.file_url)
+            if public_id:
+                cloudinary.uploader.destroy(f"harvestlink/documents/{public_id}")
+        except Exception:
+            pass
+    # Delete local file if stored locally
+    elif document.file_url and "/uploads/documents/" in document.file_url:
         uploaded_name = document.file_url.split("/uploads/documents/")[-1]
         file_path = UPLOAD_DIR / uploaded_name
         if file_path.exists():
@@ -151,20 +188,6 @@ async def delete_document(
                 file_path.unlink()
             except OSError:
                 pass
-    else:
-        # Attempt blob deletion
-        try:
-            if settings.VERCEL_BLOB_DELETE_URL and settings.VERCEL_BLOB_TOKEN:
-                headers = {"Authorization": f"Bearer {settings.VERCEL_BLOB_TOKEN}", "Content-Type": "application/json"}
-                async with httpx.AsyncClient(timeout=10) as client:
-                    await client.request("DELETE", settings.VERCEL_BLOB_DELETE_URL, headers=headers, json={"url": document.file_url})
-            elif settings.VERCEL_BLOB_UPLOAD_URL and settings.VERCEL_BLOB_TOKEN:
-                headers = {"Authorization": f"Bearer {settings.VERCEL_BLOB_TOKEN}", "Content-Type": "application/json"}
-                filename = document.file_url.rsplit("/", 1)[-1]
-                async with httpx.AsyncClient(timeout=10) as client:
-                    await client.request("DELETE", settings.VERCEL_BLOB_UPLOAD_URL, headers=headers, json={"file": filename, "url": document.file_url})
-        except Exception:
-            pass
 
     await db.delete(document)
     await db.commit()

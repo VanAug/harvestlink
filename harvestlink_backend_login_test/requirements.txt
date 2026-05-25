@@ -12,3 +12,4 @@ python-multipart==0.0.20
 asyncpg
 psycopg2-binary
 httpx
+cloudinary>=1.40.0
