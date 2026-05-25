@@ -17,6 +17,12 @@ from app.core.config import settings
 router = APIRouter(tags=["documents"])
 UPLOAD_DIR = Path("/tmp/uploads/documents")
 
+# Extensions that should use resource_type="raw" (documents, not images)
+_RAW_EXTENSIONS = {".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".txt", ".csv", ".zip", ".rar", ".7z"}
+
+# Image extensions that can use resource_type="image" (default)
+_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp", ".svg", ".bmp", ".tiff", ".tif"}
+
 
 def _init_cloudinary() -> bool:
     """Configure the Cloudinary module if credentials are present."""
@@ -31,26 +37,42 @@ def _init_cloudinary() -> bool:
     return False
 
 
+def _detect_resource_type(filename: str) -> str:
+    """Return 'raw' for documents, 'image' for images, 'auto' otherwise."""
+    ext = Path(filename).suffix.lower()
+    if ext in _RAW_EXTENSIONS:
+        return "raw"
+    if ext in _IMAGE_EXTENSIONS:
+        return "image"
+    return "auto"
+
+
 def _cloudinary_public_id(file_path: str) -> str | None:
     """Extract the Cloudinary public_id from a full Cloudinary URL."""
     # Cloudinary URLs look like:
     # https://res.cloudinary.com/<cloud_name>/<type>/<resource_type>/<transform>/<version>/<public_id>.<ext>
-    # The public_id is everything after the last / before the extension
-    m = re.search(r"/([^/]+)\.(?:pdf|jpg|jpeg|png|doc|docx|gif|webp)$", file_path)
+    # For raw files the URL pattern is different:
+    # https://res.cloudinary.com/<cloud_name>/raw/upload/v<version>/<public_id>.<ext>
+    # We extract the public_id by taking everything between the version and the extension.
+    m = re.search(r"/v\d+/(.+)\.\w+$", file_path)
     if m:
         return m.group(1)
     return None
 
 
-async def upload_to_cloudinary(file_bytes: bytes, public_id: str, resource_type: str = "auto") -> str:
-    """Upload a file to Cloudinary and return the secure URL."""
+async def upload_to_cloudinary(file_bytes: bytes, filename: str, folder: str = "harvestlink/documents") -> str:
+    """Upload a file to Cloudinary with the correct resource_type and return the secure URL."""
     if not _init_cloudinary():
         raise RuntimeError("Cloudinary not configured. Set CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET.")
+
+    resource_type = _detect_resource_type(filename)
+    public_id = Path(filename).stem  # filename without extension
+
     result = cloudinary.uploader.upload(
         file_bytes,
         public_id=public_id,
         resource_type=resource_type,
-        folder="harvestlink/documents",
+        folder=folder,
     )
     return result["secure_url"]
 
@@ -127,7 +149,7 @@ async def upload_document(
 
     # 1. Try Cloudinary (persistent, works in production)
     try:
-        file_url = await upload_to_cloudinary(contents, unique_name.rsplit(".", 1)[0])
+        file_url = await upload_to_cloudinary(contents, unique_name, folder="harvestlink/documents")
     except RuntimeError:
         pass  # Cloudinary not configured, fall through
     except Exception:
@@ -176,7 +198,9 @@ async def delete_document(
             _init_cloudinary()
             public_id = _cloudinary_public_id(document.file_url)
             if public_id:
-                cloudinary.uploader.destroy(f"harvestlink/documents/{public_id}")
+                # Determine resource_type from URL
+                resource_type = "raw" if "/raw/upload/" in document.file_url else "image"
+                cloudinary.uploader.destroy(public_id, resource_type=resource_type)
         except Exception:
             pass
     # Delete local file if stored locally
