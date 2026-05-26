@@ -14,6 +14,8 @@ class Settings(BaseSettings):
         "http://localhost:5173,"
         "http://localhost:3000,"
         "http://127.0.0.1:5173,"
+        "https://harvest-link.com,"
+        "https://www.harvest-link.com,"
         "https://harvestlink-nu.vercel.app,"
         "https://harvestlink-nu-git-main-vanaugs-projects.vercel.app"
     )
@@ -24,7 +26,7 @@ class Settings(BaseSettings):
 
     RESEND_API_KEY: str | None = None
     EMAIL_FROM: str = "HarvestLink <noreply@harvestlink.trade>"
-    FRONTEND_URL: str = "https://harvestlink-nu.vercel.app"
+    FRONTEND_URL: str = "https://harvest-link.com"
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
