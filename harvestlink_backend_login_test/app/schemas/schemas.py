@@ -266,6 +266,7 @@ class FinancingOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     id: int
     exporter_company_id: int
+    finance_partner_company_id: Optional[int] = None
     exporter_name: str
     requested_amount: float
     eligible_amount: float

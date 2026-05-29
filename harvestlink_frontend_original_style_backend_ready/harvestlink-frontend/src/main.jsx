@@ -69,7 +69,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/admin-dashboard" element={<Protected roles={["admin"]}><Dashboard role="admin" /></Protected>} />
         <Route path="/deals" element={<Protected roles={["buyer","exporter","finance_partner","admin"]}><Deals /></Protected>} />
         <Route path="/escrow" element={<Protected roles={["buyer","exporter","finance_partner","admin"]}><Escrow /></Protected>} />
-        <Route path="/financing" element={<Protected roles={["finance_partner"]}><Financing /></Protected>} />
+        <Route path="/financing" element={<Protected roles={["exporter","finance_partner"]}><Financing /></Protected>} />
 
         {/* 404 catch-all */}
         <Route path="*" element={<NotFound />} />

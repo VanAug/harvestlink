@@ -125,6 +125,7 @@ class FinancingRequest(Base):
     __tablename__ = "financing_requests"
     id: Mapped[int] = mapped_column(primary_key=True)
     exporter_company_id: Mapped[int] = mapped_column(ForeignKey("companies.id"))
+    finance_partner_company_id: Mapped[int | None] = mapped_column(ForeignKey("companies.id"), nullable=True)
     exporter_name: Mapped[str] = mapped_column(String(255))
     requested_amount: Mapped[float] = mapped_column(Float)
     eligible_amount: Mapped[float] = mapped_column(Float)

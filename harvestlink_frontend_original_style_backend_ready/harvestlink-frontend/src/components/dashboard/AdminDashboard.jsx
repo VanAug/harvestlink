@@ -10,7 +10,6 @@ import {
   Handshake,
   LockKeyhole,
   Package,
-  RefreshCw,
   Search,
   ShieldCheck,
   Users,
@@ -18,7 +17,7 @@ import {
 } from "lucide-react";
 import DashboardHero from "./DashboardHero";
 import MetricCard from "./MetricCard";
-import { apiGet, apiPatch } from "../../lib/api";
+import { apiPatch } from "../../lib/api";
 
 export default function AdminDashboard({
   overview,
@@ -26,15 +25,12 @@ export default function AdminDashboard({
   companies = [],
   documents = [],
   users = [],
-  onRefresh,
 }) {
   const [companyList, setCompanyList] = useState(companies);
   const [userList, setUserList] = useState(users);
   const [userSearch, setUserSearch] = useState("");
   const [editingRoleId, setEditingRoleId] = useState(null);
   const [editingRoleValue, setEditingRoleValue] = useState("");
-  const [financingRequests, setFinancingRequests] = useState([]);
-  const [refreshing, setRefreshing] = useState(false);
   const [rejectState, setRejectState] = useState({ companyId: null, reason: "" });
 
   useEffect(() => {
@@ -44,11 +40,6 @@ export default function AdminDashboard({
   useEffect(() => {
     setUserList(users);
   }, [users]);
-
-  // Load financing requests for review
-  useEffect(() => {
-    apiGet("/financing").then(setFinancingRequests).catch(() => {});
-  }, []);
 
   const filteredUsers = useMemo(() => {
     if (!userSearch.trim()) return userList;
@@ -71,11 +62,6 @@ export default function AdminDashboard({
       }, {}),
     [documents]
   );
-
-  const pendingFinancing = financingRequests.filter(
-    (f) => f.status === "submitted" || f.status === "under_review"
-  );
-  const pendingFinanceCount = pendingFinancing.length;
 
   const pendingCompanies = companyList.filter(
     (company) => company.verification_status !== "verified"
@@ -122,17 +108,6 @@ export default function AdminDashboard({
     }
   }
 
-  async function updateFinancingStatus(requestId, status) {
-    try {
-      await apiPatch(`/financing/${requestId}/status`, { status });
-      setFinancingRequests((current) =>
-        current.map((req) => (req.id === requestId ? { ...req, status } : req))
-      );
-    } catch (error) {
-      window.alert(`Unable to update financing status: ${error.message}`);
-    }
-  }
-
   function openRejectDialog(companyId) {
     setRejectState({ companyId, reason: "" });
   }
@@ -176,7 +151,6 @@ export default function AdminDashboard({
     { label: "All Deals", to: "/deals", icon: LockKeyhole },
     { label: "RFQ Market", to: "/rfqs", icon: Handshake },
     { label: "Escrow", to: "/escrow", icon: CreditCard },
-    { label: "Financing", to: "/financing", icon: BadgeDollarSign },
   ];
 
   return (
@@ -426,102 +400,6 @@ export default function AdminDashboard({
         </div>
       </section>
 
-      {/* Financing Review Queue */}
-      <section className="mt-8 rounded-3xl bg-white p-6 shadow-sm">
-        <div className="flex items-center justify-between gap-4">
-          <div>
-            <h2 className="text-xl font-black text-harvest-green">
-              Financing Review Queue
-            </h2>
-            <p className="text-sm text-gray-500">
-              Review and update financing requests from exporters.
-            </p>
-          </div>
-          <span className="text-sm text-slate-500">
-            {pendingFinanceCount} pending review
-          </span>
-        </div>
-
-        <div className="mt-6 space-y-4">
-          {pendingFinancing.length === 0 ? (
-            <div className="rounded-3xl border border-green-200 bg-green-50 p-6 text-green-700">
-              No pending financing requests at this time.
-            </div>
-          ) : (
-            pendingFinancing.map((request) => (
-              <div
-                key={request.id}
-                className="rounded-3xl border border-slate-200 bg-slate-50 p-5"
-              >
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                  <div>
-                    <p className="text-lg font-bold text-slate-900">
-                      {request.exporter_name}
-                    </p>
-                    <p className="text-sm text-slate-500">
-                      {request.currency}{" "}
-                      {request.requested_amount?.toLocaleString?.()} —{" "}
-                      {request.purpose}
-                    </p>
-                    <p className="text-sm text-slate-500">
-                      Score: {request.score} • Eligible: {request.currency}{" "}
-                      {request.eligible_amount?.toLocaleString?.()}
-                    </p>
-                  </div>
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span
-                      className={`rounded-full px-3 py-1 text-xs font-semibold ${
-                        request.status === "submitted"
-                          ? "bg-blue-100 text-blue-800"
-                          : request.status === "under_review"
-                          ? "bg-orange-100 text-orange-800"
-                          : "bg-green-100 text-green-800"
-                      }`}
-                    >
-                      {request.status}
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        updateFinancingStatus(request.id, "under_review")
-                      }
-                      className="rounded-full bg-blue-500 px-4 py-2 text-xs font-semibold text-white transition hover:bg-blue-600"
-                    >
-                      Review
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        updateFinancingStatus(request.id, "approved")
-                      }
-                      className="rounded-full bg-harvest-green px-4 py-2 text-xs font-semibold text-white transition hover:bg-green-700"
-                    >
-                      Approve
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        updateFinancingStatus(request.id, "rejected")
-                      }
-                      className="rounded-full bg-red-500 px-4 py-2 text-xs font-semibold text-white transition hover:bg-red-600"
-                    >
-                      Reject
-                    </button>
-                  </div>
-                </div>
-                {request.linked_deal_id && (
-                  <Link
-                    to={`/deals`}
-                    className="mt-3 inline-flex items-center gap-1 text-xs font-bold text-harvest-green hover:underline"
-                  >
-                    Linked to Deal #{request.linked_deal_id} →
-                  </Link>
-                )}
-              </div>
-            ))
-          )}
-        </div>
-      </section>
 
       {/* All Users with Search & Role Editing */}
       <section className="mt-8 rounded-3xl bg-white p-6 shadow-sm">

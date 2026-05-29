@@ -79,8 +79,8 @@ async def seed(db: AsyncSession):
     ])
 
     db.add_all([
-        FinancingRequest(exporter_company_id=companies[0].id, exporter_name=companies[0].name, requested_amount=20000, eligible_amount=8600, currency="USD", purpose="Purchase avocados from farmers for confirmed export orders.", linked_deal_id=deals[0].id, score=78, status="under_review"),
-        FinancingRequest(exporter_company_id=companies[2].id, exporter_name=companies[2].name, requested_amount=5000, eligible_amount=3700, currency="USD", purpose="Packaging and shipment preparation for flower exports.", linked_deal_id=deals[1].id, score=61, status="approved"),
+        FinancingRequest(exporter_company_id=companies[0].id, finance_partner_company_id=companies[5].id, exporter_name=companies[0].name, requested_amount=20000, eligible_amount=8600, currency="USD", purpose="Purchase avocados from farmers for confirmed export orders.", linked_deal_id=deals[0].id, score=78, status="under_review"),
+        FinancingRequest(exporter_company_id=companies[2].id, finance_partner_company_id=companies[5].id, exporter_name=companies[2].name, requested_amount=5000, eligible_amount=3700, currency="USD", purpose="Packaging and shipment preparation for flower exports.", linked_deal_id=deals[1].id, score=61, status="approved"),
     ])
 
     await db.commit()

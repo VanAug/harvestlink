@@ -3,6 +3,7 @@ from pathlib import Path
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from sqlalchemy import text
 from app.api.v1.router import api_router
 from app.core.config import settings
 from app.db.base import Base
@@ -45,16 +46,34 @@ async def run_migrations(conn):
             "ALTER TABLE companies ADD COLUMN IF NOT EXISTS rejection_reason TEXT;",
             # Added: image_url on products (real image upload support)
             "ALTER TABLE products ADD COLUMN IF NOT EXISTS image_url VARCHAR(500);",
+            # Added: finance partner assignment for financing request ownership
+            "ALTER TABLE financing_requests ADD COLUMN IF NOT EXISTS finance_partner_company_id INTEGER;",
         ]
         for sql in migrations:
             try:
-                await conn.execute(sql)
+                await conn.execute(text(sql))
                 logger.info("Migration OK: %s", sql.split("(")[0].strip())
             except Exception as exc:
                 logger.warning("Migration skipped (%s): %s", type(exc).__name__, sql)
     else:
-        # SQLite: create_all handles schema, no ALTER TABLE needed
-        pass
+        sqlite_migrations = {
+            "companies": [
+                ("rejection_reason", "ALTER TABLE companies ADD COLUMN rejection_reason TEXT;"),
+            ],
+            "products": [
+                ("image_url", "ALTER TABLE products ADD COLUMN image_url VARCHAR(500);"),
+            ],
+            "financing_requests": [
+                ("finance_partner_company_id", "ALTER TABLE financing_requests ADD COLUMN finance_partner_company_id INTEGER;"),
+            ],
+        }
+        for table, migrations in sqlite_migrations.items():
+            result = await conn.execute(text(f"PRAGMA table_info({table});"))
+            columns = {row[1] for row in result.fetchall()}
+            for column, sql in migrations:
+                if column not in columns:
+                    await conn.execute(text(sql))
+                    logger.info("Migration OK: added %s.%s", table, column)
 
 
 @app.on_event("startup")

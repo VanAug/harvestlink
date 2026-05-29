@@ -21,13 +21,13 @@ function getLoggedInNavItems(role) {
       return [
         ["Deals", "/deals"],
         ["Escrow", "/escrow"],
-        ["Financing", "/financing"],
       ];
     case "exporter":
     case "supplier":
       return [
         ["Deals", "/deals"],
         ["Escrow", "/escrow"],
+        ["Financing", "/financing"],
       ];
     case "finance_partner":
       return [
@@ -37,7 +37,6 @@ function getLoggedInNavItems(role) {
       return [
         ["Deals", "/deals"],
         ["Escrow", "/escrow"],
-        ["Financing", "/financing"],
       ];
     default:
       return [];
@@ -49,11 +48,10 @@ function financingPathFor(role) {
   // Can be extended to route buyers/exporters/partners to different sub-pages later.
   if (!role) return "/login";
   switch (role) {
-    case "buyer":
-      return "/financing";
     case "finance_partner":
       return "/financing";
-    case "admin":
+    case "exporter":
+    case "supplier":
       return "/financing";
     default:
       return "/financing";
