@@ -75,3 +75,7 @@ GET  /api/v1/admin/overview
 ## Notes
 
 This is demo-ready and uses SQLite by default for easy testing. For production, switch to PostgreSQL, add Alembic migrations, stronger RBAC enforcement, real escrow integration, and real payment provider integrations.
+
+## Releases
+
+Backend releases are created automatically from Conventional Commits on `main`.
