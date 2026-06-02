@@ -1,9 +1,25 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { BadgeDollarSign, FileText, Globe2, Handshake, LockKeyhole, PackageCheck } from "lucide-react";
+import { BadgeDollarSign, Building2, FileText, Globe2, Handshake, LockKeyhole, PackageCheck } from "lucide-react";
 import DashboardHero from "./DashboardHero";
 import MetricCard from "./MetricCard";
+import { apiGet, mapRFQ } from "../../lib/api";
 
 export default function ExporterDashboard({ metrics, rfqs, products, eligibility }) {
+  const [myOfferedRfqs, setMyOfferedRfqs] = useState([]);
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const data = await apiGet("/exporter/rfqs-with-offers");
+        setMyOfferedRfqs(data.map(mapRFQ));
+      } catch (e) {
+        // ignore — fallback to empty
+      }
+    }
+    load();
+  }, []);
+
   const actions = [
     { label: "Manage Products", to: "/exporter/products", primary: true },
     { label: "Company Profile", to: "/exporter/profile" },
@@ -48,6 +64,33 @@ export default function ExporterDashboard({ metrics, rfqs, products, eligibility
           </div>
         </section>
       </div>
+
+      {/* RFQs with offers section — shows RFQs this exporter has submitted offers for */}
+      <section className="mt-8 rounded-3xl bg-white p-6 shadow-sm">
+        <h2 className="flex items-center gap-2 text-xl font-black text-harvest-green"><Building2 size={20} /> My Submitted Offers</h2>
+        {myOfferedRfqs.length > 0 ? (
+          <div className="mt-5 space-y-4">
+            {myOfferedRfqs.map((rfq) => (
+              <Link key={rfq.id} to={`/rfqs/${rfq.id}`} className="block rounded-2xl bg-harvest-soft p-4 transition hover:shadow-sm">
+                <b className="text-harvest-green">{rfq.product}</b>
+                <div className="flex flex-wrap gap-2 text-sm text-gray-600">
+                  <span>Buyer: {rfq.buyer_company_name}</span>
+                  <span>·</span>
+                  <span>{rfq.quantity}</span>
+                  <span>·</span>
+                  <span>{rfq.location}</span>
+                  <span>·</span>
+                  <span className="font-semibold">{rfq.status}</span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        ) : (
+          <div className="mt-5 rounded-2xl bg-harvest-soft p-5 text-sm text-gray-600">
+            You haven't submitted any offers yet. Browse <Link to="/rfqs" className="font-bold text-harvest-green underline">RFQs</Link> to get started.
+          </div>
+        )}
+      </section>
 
       <section className="mt-8 rounded-3xl bg-white p-6 shadow-sm">
         <h2 className="flex items-center gap-2 text-xl font-black text-harvest-green"><Globe2 size={20} /> Featured Listings</h2>

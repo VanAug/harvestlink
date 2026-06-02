@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { CalendarDays, MapPin, Package, Tag } from "lucide-react";
+import { Building2, CalendarDays, MapPin, Package, Tag } from "lucide-react";
 
 export default function RFQCard({ rfq }) {
   return (
@@ -10,6 +10,10 @@ export default function RFQCard({ rfq }) {
           <p className="text-xs uppercase tracking-wide text-gray-400">{rfq.id}</p>
         </div>
         <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-bold text-green-700">{rfq.status}</span>
+      </div>
+      <div className="mb-3 flex items-center gap-2 text-sm text-gray-500">
+        <Building2 size={14} />
+        <span className="font-semibold">{rfq.buyer_company_name}</span>
       </div>
       <div className="grid gap-3 text-sm text-gray-700 md:grid-cols-2">
         <div className="flex gap-2"><MapPin size={16}/> {rfq.location}</div>

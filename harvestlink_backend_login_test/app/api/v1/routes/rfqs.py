@@ -35,7 +35,10 @@ async def create_rfq(
         raise HTTPException(status_code=400, detail="RFQs can only be created by buyer companies")
     if buyer.owner_id != current_user.id and current_user.role != "admin":
         raise HTTPException(status_code=403, detail="You can only create RFQs for your own company")
-    rfq = RFQ(**payload.model_dump(), status="open")
+    data = payload.model_dump()
+    # Automatically populate buyer_company_name from the company record
+    data["buyer_company_name"] = data.get("buyer_company_name") or buyer.name
+    rfq = RFQ(**data, status="open")
     db.add(rfq)
     await db.commit()
     await db.refresh(rfq)
@@ -129,6 +132,31 @@ async def accept_offer(
     await db.commit()
     await db.refresh(deal)
     return {"message": "Offer accepted", "deal_id": deal.id}
+
+
+@router.get("/exporter/rfqs-with-offers", response_model=list[RFQOut])
+async def exporter_rfqs_with_offers(
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """Authenticated exporters: list RFQs for which they have submitted offers."""
+    if current_user.role not in ("exporter", "supplier", "admin"):
+        raise HTTPException(status_code=403, detail="Only exporters can view their RFQs")
+    companies = await db.scalars(select(Company).where(Company.owner_id == current_user.id, Company.type == "exporter"))
+    company_ids = [c.id for c in companies]
+    if not company_ids:
+        return []
+    # Get distinct RFQ ids from offers submitted by this exporter's companies
+    offer_rfq_ids = await db.scalars(
+        select(Offer.rfq_id)
+        .where(Offer.exporter_company_id.in_(company_ids))
+        .distinct()
+    )
+    rfq_ids = list(offer_rfq_ids)
+    if not rfq_ids:
+        return []
+    rfqs_result = await db.scalars(select(RFQ).where(RFQ.id.in_(rfq_ids)).order_by(RFQ.id))
+    return list(rfqs_result)
 
 
 @router.post("/rfqs/{rfq_id}/offers/{offer_id}/reject")

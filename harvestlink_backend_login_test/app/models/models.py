@@ -58,6 +58,7 @@ class RFQ(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     buyer_company_id: Mapped[int] = mapped_column(ForeignKey("companies.id"))
     buyer_name: Mapped[str] = mapped_column(String(255))
+    buyer_company_name: Mapped[str | None] = mapped_column(String(255), nullable=True)
     product_category: Mapped[str] = mapped_column(String(100))
     product_name: Mapped[str] = mapped_column(String(255), index=True)
     quantity: Mapped[float] = mapped_column(Float)

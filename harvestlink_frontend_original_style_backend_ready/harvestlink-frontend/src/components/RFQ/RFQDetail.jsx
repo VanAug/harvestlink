@@ -42,6 +42,8 @@ export default function RFQDetail() {
       const companies = await apiGet(`/companies/owner/${userId}`);
       if (userRole === "exporter" || userRole === "supplier") {
         setCompany(companies.find((item) => item.type === "exporter") || null);
+      } else if (userRole === "buyer") {
+        setCompany(companies.find((item) => item.type === "buyer") || null);
       } else {
         setCompany(null);
       }
@@ -143,6 +145,8 @@ export default function RFQDetail() {
   const isExporter = userRole === "exporter" || userRole === "supplier";
   const isBuyer = userRole === "buyer";
   const offersTitle = isExporter ? "Submitted Offers" : isBuyer ? "Received Offers" : "Offers";
+  // Only the buyer who created the RFQ can accept/reject offers
+  const isRfqCreator = isBuyer && company && rfq?.buyer_company_id === company.id;
 
   return (
     <PageShell>
@@ -157,12 +161,23 @@ export default function RFQDetail() {
           <section className="space-y-8 lg:col-span-2">
             {/* RFQ details card */}
             <div className="rounded-[2rem] bg-white p-8 shadow-soft">
-              <span className="rounded-full bg-green-100 px-4 py-2 text-xs font-bold text-green-700">
-                {rfq?.status || "loading"}
-              </span>
+              <div className="flex items-center justify-between">
+                <span className="rounded-full bg-green-100 px-4 py-2 text-xs font-bold text-green-700">
+                  {rfq?.status || "loading"}
+                </span>
+                {rfq?.buyer_company_name && (
+                  <span className="rounded-full bg-blue-100 px-4 py-2 text-xs font-bold text-blue-700">
+                    {rfq.buyer_company_name}
+                  </span>
+                )}
+              </div>
               <h1 className="mt-5 text-5xl font-black text-harvest-green">{rfq?.product || "RFQ"}</h1>
               <p className="mt-3 text-gray-600">{rfq?.location}</p>
-              <div className="mt-8 grid gap-4 md:grid-cols-2">
+              <div className="mt-5 rounded-2xl bg-harvest-soft p-4 text-sm">
+                <span className="font-bold">Buyer: </span>
+                <span className="text-gray-700">{rfq?.buyer_company_name || "Loading..."}</span>
+              </div>
+              <div className="mt-5 grid gap-4 md:grid-cols-2">
                 {Object.entries({
                   Quantity: rfq?.quantity,
                   "Target Price": rfq?.target,
@@ -220,7 +235,7 @@ export default function RFQDetail() {
                         <td className="px-4 py-3 font-bold">Action</td>
                         {selectedOffersData.map((o) => (
                           <td key={o.id} className="px-4 py-3">
-                            {isBuyer && o.status === "submitted" && (
+                            {isRfqCreator && o.status === "submitted" && (
                               <div className="flex gap-2">
                                 <button onClick={() => acceptOffer(o.id)} className="rounded-lg bg-green-500 px-3 py-2 text-xs font-bold text-white hover:bg-green-600"><Check size={14} /></button>
                                 <button onClick={() => rejectOffer(o.id)} className="rounded-lg bg-red-500 px-3 py-2 text-xs font-bold text-white hover:bg-red-600"><X size={14} /></button>
@@ -238,7 +253,7 @@ export default function RFQDetail() {
                     <div key={offer.id} className="rounded-2xl bg-harvest-soft p-4">
                       <div className="flex items-center justify-between gap-3">
                         <div className="flex items-center gap-3">
-                          {isBuyer && (
+                          {isRfqCreator && (
                             <input
                               type="checkbox"
                               checked={selectedOffers.includes(offer.id)}
@@ -255,9 +270,9 @@ export default function RFQDetail() {
                         </div>
                         <div className="flex items-center gap-2">
                           <span className="rounded-full bg-white px-3 py-1 text-xs font-bold text-harvest-green">
-                            {isBuyer && offer.status === "submitted" ? "Pending" : offer.status}
+                            {isRfqCreator && offer.status === "submitted" ? "Pending" : offer.status}
                           </span>
-                          {isBuyer && offer.status === "submitted" && (
+                          {isRfqCreator && offer.status === "submitted" && (
                             <div className="flex gap-1">
                               <button onClick={() => acceptOffer(offer.id)} className="rounded-lg bg-green-500 px-3 py-2 text-xs font-bold text-white hover:bg-green-600" title="Accept offer"><Check size={14} /></button>
                               <button onClick={() => rejectOffer(offer.id)} className="rounded-lg bg-red-500 px-3 py-2 text-xs font-bold text-white hover:bg-red-600" title="Reject offer"><X size={14} /></button>

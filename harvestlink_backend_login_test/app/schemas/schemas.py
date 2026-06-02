@@ -143,6 +143,7 @@ class ProductUpdate(BaseModel):
 class RFQCreate(BaseModel):
     buyer_company_id: int
     buyer_name: str
+    buyer_company_name: Optional[str] = None
     product_category: str
     product_name: str
     quantity: float
@@ -157,6 +158,7 @@ class RFQOut(BaseModel):
     id: int
     buyer_company_id: int
     buyer_name: str
+    buyer_company_name: Optional[str] = None
     product_category: str
     product_name: str
     quantity: float

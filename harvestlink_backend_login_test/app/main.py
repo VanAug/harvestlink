@@ -66,6 +66,9 @@ async def run_migrations(conn):
             "financing_requests": [
                 ("finance_partner_company_id", "ALTER TABLE financing_requests ADD COLUMN finance_partner_company_id INTEGER;"),
             ],
+            "rfqs": [
+                ("buyer_company_name", "ALTER TABLE rfqs ADD COLUMN buyer_company_name VARCHAR(255);"),
+            ],
         }
         for table, migrations in sqlite_migrations.items():
             result = await conn.execute(text(f"PRAGMA table_info({table});"))

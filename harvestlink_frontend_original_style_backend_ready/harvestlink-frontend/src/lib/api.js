@@ -190,6 +190,8 @@ export function mapRFQ(rfq) {
     validUntil: rfq.delivery_timeline,
     certification: 'As specified by buyer',
     incoterm: 'FOB / CIF',
+    buyer_company_name: rfq.buyer_company_name || rfq.buyer_name || 'Unknown Buyer',
+    buyer_company_id: rfq.buyer_company_id,
     raw: rfq,
   };
 }

@@ -50,7 +50,7 @@ export default function RFQs() {
     if (query.trim()) {
       const q = query.toLowerCase();
       results = results.filter((r) =>
-        [r.product, r.product_name, r.location, r.destination_country, r.buyer_name]
+        [r.product, r.product_name, r.location, r.destination_country, r.buyer_name, r.buyer_company_name]
           .join(" ")
           .toLowerCase()
           .includes(q)
