@@ -1,0 +1,17 @@
+{
+  "name": "harvestlink-backend-login-test",
+  "private": true,
+  "scripts": {
+    "test": "python -m compileall app",
+    "release": "semantic-release"
+  },
+  "devDependencies": {
+    "@semantic-release/commit-analyzer": "^12.0.0",
+    "@semantic-release/github": "^11.0.6",
+    "@semantic-release/release-notes-generator": "^13.0.0",
+    "semantic-release": "^24.2.9"
+  },
+  "engines": {
+    "node": ">=20.8.1"
+  }
+}
