@@ -14,10 +14,12 @@ import {
   ShieldCheck,
   Users,
   X,
+  Check,
+  Image,
 } from "lucide-react";
 import DashboardHero from "./DashboardHero";
 import MetricCard from "./MetricCard";
-import { apiPatch } from "../../lib/api";
+import { apiGet, apiPatch } from "../../lib/api";
 
 export default function AdminDashboard({
   overview,
@@ -69,6 +71,41 @@ export default function AdminDashboard({
   const verifiedCompanies = companyList.filter(
     (company) => company.verification_status === "verified"
   );
+
+  const [pendingProducts, setPendingProducts] = useState([]);
+  const [moderatingProductId, setModeratingProductId] = useState(null);
+
+  useEffect(() => {
+    async function loadPendingProducts() {
+      try {
+        const data = await apiGet('/admin/products/pending');
+        setPendingProducts(data);
+      } catch (e) {
+        // ignore
+      }
+    }
+    loadPendingProducts();
+  }, []);
+
+  async function approveProduct(productId) {
+    try {
+      const updated = await apiPatch(`/admin/products/${productId}/approve`, {});
+      setPendingProducts((current) => current.filter((p) => p.id !== updated.id));
+      window.alert(`Product "${updated.name}" approved.`);
+    } catch (error) {
+      window.alert(`Unable to approve product: ${error.message}`);
+    }
+  }
+
+  async function rejectProduct(productId) {
+    try {
+      const updated = await apiPatch(`/admin/products/${productId}/reject`, {});
+      setPendingProducts((current) => current.filter((p) => p.id !== updated.id));
+      window.alert(`Product "${updated.name}" rejected.`);
+    } catch (error) {
+      window.alert(`Unable to reject product: ${error.message}`);
+    }
+  }
 
   async function updateCompanyVerification(companyId, status, rejectionReason) {
     try {
@@ -400,6 +437,93 @@ export default function AdminDashboard({
         </div>
       </section>
 
+
+      {/* Product Moderation Queue */}
+      <section className="mt-8 rounded-3xl bg-white p-6 shadow-sm">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h2 className="text-xl font-black text-harvest-green">
+              Product Moderation Queue
+            </h2>
+            <p className="text-sm text-gray-500">
+              Review new product listings, then approve or reject them.
+            </p>
+          </div>
+          <div className="text-sm text-slate-500">
+            {pendingProducts.length} products awaiting review
+          </div>
+        </div>
+
+        <div className="mt-6 space-y-4">
+          {pendingProducts.length === 0 ? (
+            <div className="rounded-3xl border border-green-200 bg-green-50 p-6 text-green-700">
+              No products require moderation at this time.
+            </div>
+          ) : (
+            pendingProducts.map((product) => (
+              <div
+                key={product.id}
+                className="rounded-3xl border border-slate-200 bg-slate-50 p-5"
+              >
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                  <div className="flex items-center gap-4">
+                    {product.image_url ? (
+                      <img
+                        src={product.image_url}
+                        alt={product.name}
+                        className="h-16 w-16 rounded-2xl object-cover"
+                      />
+                    ) : (
+                      <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gray-200">
+                        <Image size={24} className="text-gray-400" />
+                      </div>
+                    )}
+                    <div>
+                      <p className="text-lg font-bold text-slate-900">
+                        {product.name}
+                      </p>
+                      <p className="text-sm text-slate-500">
+                        {product.category} • {product.country_of_origin} • {product.supplier_name}
+                      </p>
+                      <div className="mt-1 flex flex-wrap gap-2 text-xs text-slate-500">
+                        <span>Qty: {product.available_quantity} {product.unit}</span>
+                        {product.price_min && (
+                          <span>Price: ${product.price_min}{product.price_max ? ` - $${product.price_max}` : ''}</span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className={`rounded-full px-3 py-1 text-xs font-semibold ${
+                      product.status === 'pending'
+                        ? 'bg-orange-100 text-orange-800'
+                        : 'bg-red-100 text-red-800'
+                    }`}>
+                      {product.status}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => approveProduct(product.id)}
+                      className="inline-flex items-center gap-1 rounded-full bg-harvest-green px-4 py-2 text-sm font-semibold text-white transition hover:bg-green-700"
+                    >
+                      <Check size={14} />
+                      Approve
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => rejectProduct(product.id)}
+                      className="inline-flex items-center gap-1 rounded-full bg-red-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-600"
+                    >
+                      <X size={14} />
+                      Reject
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      </section>
 
       {/* All Users with Search & Role Editing */}
       <section className="mt-8 rounded-3xl bg-white p-6 shadow-sm">

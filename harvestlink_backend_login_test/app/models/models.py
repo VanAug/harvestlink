@@ -10,7 +10,7 @@ class User(Base):
     full_name: Mapped[str] = mapped_column(String(255))
     password_hash: Mapped[str] = mapped_column(String(255))
     role: Mapped[str] = mapped_column(String(50), index=True)
-    status: Mapped[str] = mapped_column(String(50), default="active")
+    status: Mapped[str] = mapped_column(String(50), default="pending")
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 
 class Company(Base):
@@ -51,7 +51,7 @@ class Product(Base):
     description: Mapped[str | None] = mapped_column(Text, nullable=True)
     image_key: Mapped[str | None] = mapped_column(String(100), nullable=True)
     image_url: Mapped[str | None] = mapped_column(String(500), nullable=True)
-    status: Mapped[str] = mapped_column(String(50), default="active")
+    status: Mapped[str] = mapped_column(String(50), default="pending")
 
 class RFQ(Base):
     __tablename__ = "rfqs"

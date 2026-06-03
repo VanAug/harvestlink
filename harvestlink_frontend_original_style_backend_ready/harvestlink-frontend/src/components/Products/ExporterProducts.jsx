@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Archive, Edit3, PackagePlus } from "lucide-react";
+import { Archive, Edit3, PackagePlus, RotateCcw } from "lucide-react";
 import PageShell from "../layout/PageShell";
 import { apiGet, apiPatch, mapProduct } from "../../lib/api";
 
@@ -16,7 +16,12 @@ export default function ExporterProducts() {
     setCompany(exporter);
     if (exporter) {
       const data = await apiGet(`/products?company_id=${exporter.id}`);
-      setProducts(data.map((product) => mapProduct(product, [exporter])));
+      const mapped = data.map((product) => {
+        const mappedProduct = mapProduct(product, [exporter]);
+        mappedProduct.moderationStatus = product.status;
+        return mappedProduct;
+      });
+      setProducts(mapped);
     }
   }
 
@@ -26,6 +31,11 @@ export default function ExporterProducts() {
 
   async function archiveProduct(productId) {
     await apiPatch(`/products/${productId}/archive`, {});
+    await load();
+  }
+
+  async function unarchiveProduct(productId) {
+    await apiPatch(`/products/${productId}/unarchive`, {});
     await load();
   }
 
@@ -51,11 +61,22 @@ export default function ExporterProducts() {
             <article key={product.id} className="rounded-3xl bg-white p-5 shadow-sm">
               <img src={product.image} alt={product.name} className="h-40 w-full rounded-2xl object-cover" />
               <div className="mt-4 flex items-start justify-between gap-3">
-                <div>
+                <div className="min-w-0 flex-1">
                   <h2 className="text-xl font-black text-harvest-green">{product.name}</h2>
                   <p className="text-sm text-gray-500">{product.category} - {product.country}</p>
                 </div>
-                <span className="rounded-full bg-harvest-soft px-3 py-1 text-xs font-bold text-harvest-green">{product.availability}</span>
+                <div>
+                  <span className={`rounded-full px-3 py-1 text-xs font-bold ${
+                    product.moderationStatus === 'approved' ? 'bg-green-100 text-green-700' :
+                    product.moderationStatus === 'rejected' ? 'bg-red-100 text-red-700' :
+                    product.moderationStatus === 'active' ? 'bg-green-100 text-green-700' :
+                    'bg-yellow-100 text-yellow-700'
+                  }`}>
+                    {product.moderationStatus === 'approved' ? 'approved' :
+                     product.moderationStatus === 'active' ? 'active' :
+                     product.moderationStatus || 'pending'}
+                  </span>
+                </div>
               </div>
               <div className="mt-4 rounded-2xl bg-harvest-soft p-4 text-sm text-gray-700">
                 <div><b>Price:</b> {product.price}</div>
@@ -66,10 +87,17 @@ export default function ExporterProducts() {
                   <Edit3 size={16} />
                   Edit
                 </Link>
-                <button onClick={() => archiveProduct(product.id)} className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gray-100 px-4 py-2 text-sm font-bold text-gray-700">
-                  <Archive size={16} />
-                  Archive
-                </button>
+                {product.moderationStatus === 'archived' ? (
+                  <button onClick={() => unarchiveProduct(product.raw.id)} className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gray-100 px-4 py-2 text-sm font-bold text-gray-700">
+                    <RotateCcw size={16} />
+                    Unarchive
+                  </button>
+                ) : (
+                  <button onClick={() => archiveProduct(product.raw.id)} className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gray-100 px-4 py-2 text-sm font-bold text-gray-700">
+                    <Archive size={16} />
+                    Archive
+                  </button>
+                )}
               </div>
             </article>
           ))}

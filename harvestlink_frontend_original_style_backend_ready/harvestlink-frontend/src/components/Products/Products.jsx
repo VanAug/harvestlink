@@ -26,7 +26,8 @@ export default function Products() {
     async function load() {
       try {
         const [apiProducts, companies] = await Promise.all([apiGet('/products'), apiGet('/companies')]);
-        setProducts(apiProducts.map((p) => mapProduct(p, companies)));
+        const approved = apiProducts.filter(p => p.status === 'approved' || p.status === 'active');
+        setProducts(approved.map((p) => mapProduct(p, companies)));
       } catch (error) {
         console.warn('Using fallback products because API is unavailable:', error.message);
       } finally {
