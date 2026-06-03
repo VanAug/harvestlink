@@ -78,6 +78,8 @@ async def create_deal(
     db: AsyncSession = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
+    if current_user.role not in ("buyer", "exporter", "supplier", "admin"):
+        raise HTTPException(status_code=403, detail="Only buyers, exporters, and admins can create deals")
     deal = Deal(**payload.model_dump())
     db.add(deal)
     await db.commit()

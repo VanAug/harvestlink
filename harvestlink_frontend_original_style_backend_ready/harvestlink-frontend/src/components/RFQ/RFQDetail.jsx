@@ -11,8 +11,6 @@ export default function RFQDetail() {
   const [offers, setOffers] = useState([]);
   const [company, setCompany] = useState(null);
   const [message, setMessage] = useState("");
-  const [viewMode, setViewMode] = useState("list");
-  const [selectedOffers, setSelectedOffers] = useState([]);
   const [submitting, setSubmitting] = useState(false);
 
   const [form, setForm] = useState({
@@ -134,13 +132,6 @@ export default function RFQDetail() {
     }
   }
 
-  function toggleOfferSelection(offerId) {
-    setSelectedOffers((current) =>
-      current.includes(offerId) ? current.filter((oid) => oid !== offerId) : [...current, offerId]
-    );
-  }
-
-  const selectedOffersData = offers.filter((o) => selectedOffers.includes(o.id));
   const userRole = localStorage.getItem("harvestlink_role");
   const isExporter = userRole === "exporter" || userRole === "supplier";
   const isBuyer = userRole === "buyer";
@@ -194,104 +185,40 @@ export default function RFQDetail() {
 
             {/* Offers list */}
             <div className="rounded-3xl bg-white p-7 shadow-sm">
-              <div className="mb-5 flex items-center justify-between">
-                <h2 className="text-2xl font-black text-harvest-green">{offersTitle}</h2>
-                {isBuyer && selectedOffers.length > 1 && (
-                  <button
-                    onClick={() => setViewMode(viewMode === "list" ? "compare" : "list")}
-                    className="rounded-xl bg-harvest-green px-4 py-2 text-sm font-bold text-white"
-                  >
-                    {viewMode === "list" ? "Compare Selected" : "Back to List"}
-                  </button>
-                )}
-              </div>
-
-              {viewMode === "compare" && selectedOffersData.length > 0 ? (
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="border-b border-gray-200">
-                        <th className="px-4 py-3 text-left font-bold">Exporter</th>
-                        {selectedOffersData.map((o) => (
-                          <th key={o.id} className="px-4 py-3 text-left font-bold">{o.exporter_name}</th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {[
-                        ["Unit Price (USD)", (o) => `$${o.price}`],
-                        ["Quantity", (o) => o.quantity],
-                        ["Delivery Terms", (o) => o.delivery_terms],
-                        ["Est. Delivery", (o) => o.estimated_delivery_date],
-                      ].map(([label, fn]) => (
-                        <tr key={label} className="border-b border-gray-200">
-                          <td className="px-4 py-3 font-bold">{label}</td>
-                          {selectedOffersData.map((o) => (
-                            <td key={o.id} className="px-4 py-3">{fn(o)}</td>
-                          ))}
-                        </tr>
-                      ))}
-                      <tr>
-                        <td className="px-4 py-3 font-bold">Action</td>
-                        {selectedOffersData.map((o) => (
-                          <td key={o.id} className="px-4 py-3">
-                            {isRfqCreator && o.status === "submitted" && (
-                              <div className="flex gap-2">
-                                <button onClick={() => acceptOffer(o.id)} className="rounded-lg bg-green-500 px-3 py-2 text-xs font-bold text-white hover:bg-green-600"><Check size={14} /></button>
-                                <button onClick={() => rejectOffer(o.id)} className="rounded-lg bg-red-500 px-3 py-2 text-xs font-bold text-white hover:bg-red-600"><X size={14} /></button>
-                              </div>
-                            )}
-                          </td>
-                        ))}
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              ) : (
-                <div className="space-y-3">
-                  {offers.map((offer) => (
-                    <div key={offer.id} className="rounded-2xl bg-harvest-soft p-4">
-                      <div className="flex items-center justify-between gap-3">
-                        <div className="flex items-center gap-3">
-                          {isRfqCreator && (
-                            <input
-                              type="checkbox"
-                              checked={selectedOffers.includes(offer.id)}
-                              onChange={() => toggleOfferSelection(offer.id)}
-                              className="h-5 w-5 cursor-pointer"
-                            />
-                          )}
-                          <div>
-                            <b>{offer.exporter_name}</b>
-                            <div className="text-sm text-gray-600">
-                              USD {offer.price} · {offer.quantity} units · {offer.delivery_terms}
-                            </div>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <span className="rounded-full bg-white px-3 py-1 text-xs font-bold text-harvest-green">
-                            {isRfqCreator && offer.status === "submitted" ? "Pending" : offer.status}
-                          </span>
-                          {isRfqCreator && offer.status === "submitted" && (
-                            <div className="flex gap-1">
-                              <button onClick={() => acceptOffer(offer.id)} className="rounded-lg bg-green-500 px-3 py-2 text-xs font-bold text-white hover:bg-green-600" title="Accept offer"><Check size={14} /></button>
-                              <button onClick={() => rejectOffer(offer.id)} className="rounded-lg bg-red-500 px-3 py-2 text-xs font-bold text-white hover:bg-red-600" title="Reject offer"><X size={14} /></button>
-                            </div>
-                          )}
+              <h2 className="mb-5 text-2xl font-black text-harvest-green">{offersTitle}</h2>
+              <div className="space-y-3">
+                {offers.map((offer) => (
+                  <div key={offer.id} className="rounded-2xl bg-harvest-soft p-4">
+                    <div className="flex items-center justify-between gap-3">
+                      <div>
+                        <b>{offer.exporter_name}</b>
+                        <div className="text-sm text-gray-600">
+                          USD {offer.price} · {offer.quantity} units · {offer.delivery_terms}
                         </div>
                       </div>
-                      {offer.notes && (
-                        <div className="mt-2 text-sm italic text-gray-600">"{offer.notes}"</div>
-                      )}
+                      <div className="flex items-center gap-2">
+                        <span className="rounded-full bg-white px-3 py-1 text-xs font-bold text-harvest-green">
+                          {isRfqCreator && offer.status === "submitted" ? "Pending" : offer.status}
+                        </span>
+                        {isRfqCreator && offer.status === "submitted" && (
+                          <div className="flex gap-1">
+                            <button onClick={() => acceptOffer(offer.id)} className="rounded-lg bg-green-500 px-3 py-2 text-xs font-bold text-white hover:bg-green-600" title="Accept offer"><Check size={14} /></button>
+                            <button onClick={() => rejectOffer(offer.id)} className="rounded-lg bg-red-500 px-3 py-2 text-xs font-bold text-white hover:bg-red-600" title="Reject offer"><X size={14} /></button>
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  ))}
-                  {!offers.length && (
-                    <div className="rounded-2xl bg-harvest-soft p-4 text-sm text-gray-600">
-                      No offers submitted yet.
-                    </div>
-                  )}
-                </div>
-              )}
+                    {offer.notes && (
+                      <div className="mt-2 text-sm italic text-gray-600">"{offer.notes}"</div>
+                    )}
+                  </div>
+                ))}
+                {!offers.length && (
+                  <div className="rounded-2xl bg-harvest-soft p-4 text-sm text-gray-600">
+                    No offers submitted yet.
+                  </div>
+                )}
+              </div>
             </div>
           </section>
 
