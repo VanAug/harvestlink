@@ -8,6 +8,7 @@ on:
       - staging
     paths:
       - "harvestlink_backend_login_test/**"
+      - "harvestlink_frontend_original_style_backend_ready/**"
       - ".github/workflows/backend-release.yml"
 
 permissions:
