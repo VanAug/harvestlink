@@ -1,9 +1,10 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   BadgeDollarSign,
   Building2,
   CheckCircle,
+  ChevronDown,
   CreditCard,
   FileText,
   Globe2,
@@ -64,6 +65,46 @@ export default function AdminDashboard({
       }, {}),
     [documents]
   );
+
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [selectedQueue, setSelectedQueue] = useState("verification-review");
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    }
+
+    window.addEventListener("mousedown", handleClickOutside);
+    return () => window.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const actionMenuItems = [
+    {
+      label: "Verification Review",
+      key: "verification-review",
+      icon: ShieldCheck,
+      type: "section",
+    },
+    {
+      label: "Product Moderation",
+      key: "product-moderation",
+      icon: Package,
+      type: "section",
+    },
+    {
+      label: "User Management",
+      key: "platform-users",
+      icon: Users,
+      type: "section",
+    },
+    { label: "RFQ Market", to: "/rfqs", icon: Handshake, type: "nav" },
+    { label: "Deal Rooms", to: "/deals", icon: LockKeyhole, type: "nav" },
+    { label: "Escrow", to: "/escrow", icon: CreditCard, type: "nav" },
+    { label: "Financing Queue", to: "/financing", icon: BadgeDollarSign, type: "nav" },
+  ];
 
   const pendingCompanies = companyList.filter(
     (company) => company.verification_status !== "verified"
@@ -261,8 +302,58 @@ export default function AdminDashboard({
         </section>
       </div>
 
+      <div className="mt-6 rounded-3xl bg-white p-5 shadow-sm">
+        <div className="flex justify-center">
+          <div className="relative" ref={dropdownRef}>
+            <button
+              type="button"
+              onClick={() => setDropdownOpen((open) => !open)}
+              className="inline-flex items-center gap-2 rounded-2xl bg-harvest-green px-4 py-3 text-sm font-semibold text-white transition hover:bg-green-700"
+            >
+              Admin actions
+              <ChevronDown size={16} />
+            </button>
+            {dropdownOpen && (
+              <div className="absolute right-0 z-20 mt-2 w-72 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl">
+                {actionMenuItems.map(({ label, type, key, to, icon: ItemIcon }) =>
+                  type === "section" ? (
+                    <button
+                      key={label}
+                      type="button"
+                      onClick={() => {
+                        setSelectedQueue(key);
+                        setDropdownOpen(false);
+                      }}
+                      className={`flex w-full items-center gap-3 px-4 py-3 text-left text-sm transition ${
+                        selectedQueue === key
+                          ? "bg-slate-100 text-slate-900"
+                          : "text-slate-700 hover:bg-slate-50"
+                      }`}
+                    >
+                      <ItemIcon size={16} className="text-harvest-orange" />
+                      {label}
+                    </button>
+                  ) : (
+                    <Link
+                      key={label}
+                      to={to}
+                      className="flex items-center gap-3 px-4 py-3 text-sm text-slate-700 transition hover:bg-slate-50"
+                      onClick={() => setDropdownOpen(false)}
+                    >
+                      <ItemIcon size={16} className="text-harvest-orange" />
+                      {label}
+                    </Link>
+                  )
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
       {/* Verification Review Queue */}
-      <section className="mt-8 rounded-3xl bg-white p-6 shadow-sm">
+      {selectedQueue === "verification-review" && (
+        <section id="verification-review" className="mt-8 rounded-3xl bg-white p-6 shadow-sm">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h2 className="text-xl font-black text-harvest-green">
@@ -436,10 +527,11 @@ export default function AdminDashboard({
           )}
         </div>
       </section>
-
+      )}
 
       {/* Product Moderation Queue */}
-      <section className="mt-8 rounded-3xl bg-white p-6 shadow-sm">
+      {selectedQueue === "product-moderation" && (
+        <section id="product-moderation" className="mt-8 rounded-3xl bg-white p-6 shadow-sm">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h2 className="text-xl font-black text-harvest-green">
@@ -524,9 +616,11 @@ export default function AdminDashboard({
           )}
         </div>
       </section>
+      )}
 
       {/* All Users with Search & Role Editing */}
-      <section className="mt-8 rounded-3xl bg-white p-6 shadow-sm">
+      {selectedQueue === "platform-users" && (
+        <section id="platform-users" className="mt-8 rounded-3xl bg-white p-6 shadow-sm">
         <div className="flex items-center justify-between gap-4">
           <div>
             <h2 className="text-xl font-black text-harvest-green">
@@ -652,6 +746,7 @@ export default function AdminDashboard({
           </table>
         </div>
       </section>
+      )}
 
       {/* Reject reason modal */}
       {rejectState.companyId && (
