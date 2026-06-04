@@ -3,6 +3,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.security import get_current_user
+from app.core.notifications import create_notification
 from app.db.session import get_db
 from app.models.models import Company, Deal, Review, ShippingTracking, User
 from app.schemas.schemas import ReviewCreate, ReviewOut, ShippingTrackingCreate, ShippingTrackingOut, ShippingTrackingUpdate
@@ -61,6 +62,28 @@ async def create_tracking(
     db.add(tracking)
     await db.commit()
     await db.refresh(tracking)
+    
+    # Notify: tracking created
+    buyer_company = await db.get(Company, deal.buyer_company_id)
+    exporter_company = await db.get(Company, deal.exporter_company_id)
+    
+    if buyer_company:
+        await create_notification(
+            db,
+            user_id=buyer_company.owner_id,
+            title="Shipment Tracking Started",
+            message=f"Tracking has been created for deal #{deal_id} ({deal.product_name}). Shipment reference: {payload.shipment_reference or 'Pending'}",
+            notification_type="tracking_created",
+        )
+    if exporter_company:
+        await create_notification(
+            db,
+            user_id=exporter_company.owner_id,
+            title="Shipment Tracking Started",
+            message=f"Tracking has been created for deal #{deal_id} ({deal.product_name}). Shipment reference: {payload.shipment_reference or 'Pending'}",
+            notification_type="tracking_created",
+        )
+    
     return tracking
 
 
@@ -77,10 +100,37 @@ async def update_tracking(
     deal = await db.get(Deal, item.deal_id)
     if deal:
         await _assert_deal_participant(deal, current_user, db)
-    for key, value in payload.model_dump(exclude_unset=True).items():
+    changes = payload.model_dump(exclude_unset=True)
+    for key, value in changes.items():
         setattr(item, key, value)
     await db.commit()
     await db.refresh(item)
+    
+    # Notify: tracking updated
+    if deal and changes:
+        buyer_company = await db.get(Company, deal.buyer_company_id)
+        exporter_company = await db.get(Company, deal.exporter_company_id)
+        
+        # Build change summary
+        change_summary = ", ".join([f"{k.replace('_', ' ')}" for k in changes.keys()])
+        
+        if buyer_company:
+            await create_notification(
+                db,
+                user_id=buyer_company.owner_id,
+                title="Shipment Update",
+                message=f"Tracking for deal #{item.deal_id} has been updated: {change_summary}. Status: {item.status.replace('_', ' ').title()}",
+                notification_type="tracking_updated",
+            )
+        if exporter_company:
+            await create_notification(
+                db,
+                user_id=exporter_company.owner_id,
+                title="Shipment Update",
+                message=f"Tracking for deal #{item.deal_id} has been updated: {change_summary}. Status: {item.status.replace('_', ' ').title()}",
+                notification_type="tracking_updated",
+            )
+    
     return item
 
 

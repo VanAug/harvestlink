@@ -195,3 +195,34 @@ export function mapRFQ(rfq) {
     raw: rfq,
   };
 }
+
+export function getNotificationRoute(notification) {
+  const type = notification.type;
+  const role = getRole();
+  
+  if (['new_product', 'user_registered', 'new_company', 'financing_submitted', 'new_rfq'].includes(type)) {
+    return role === 'admin' ? '/admin' : '/dashboard';
+  }
+  if (['product_approved', 'product_rejected', 'product_returned_for_review'].includes(type)) {
+    return '/products';
+  }
+  if (['offer_submitted_confirmation', 'rfq_posted_confirmation', 'offer_accepted', 'offer_rejected', 'offer_accepted_by_admin', 'offer_rejected_by_admin'].includes(type)) {
+    return '/rfqs';
+  }
+  if (['deal_created', 'new_message', 'deal_status_agreed', 'deal_status_in_fulfillment', 'deal_status_completed'].includes(type) || type.startsWith('deal_status_')) {
+    return '/deals';
+  }
+  if (['financing_submitted', 'financing_approved', 'financing_rejected', 'financing_under_review'].includes(type) || type.startsWith('financing_')) {
+    return role === 'admin' ? '/admin' : '/financing';
+  }
+  if (type.startsWith('tracking_')) {
+    return '/deals';
+  }
+  if (type.startsWith('escrow_')) {
+    return '/deals';
+  }
+  if (['verification_approved', 'verification_rejected', 'role_updated'].includes(type)) {
+    return '/dashboard';
+  }
+  return '/notifications';
+}

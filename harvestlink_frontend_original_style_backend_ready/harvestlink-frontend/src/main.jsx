@@ -23,6 +23,7 @@ import Registration from "./components/Auth/Registration";
 import Deals from "./pages/Deals";
 import Escrow from "./pages/Escrow";
 import Financing from "./pages/Financing";
+import NotificationsPage from "./pages/Notifications";
 import ShippingTracking from "./pages/ShippingTracking";
 import DeliveryReview from "./pages/DeliveryReview";
 import PasswordReset from "./pages/PasswordReset";
@@ -70,6 +71,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/deals" element={<Protected roles={["buyer","exporter","finance_partner","admin"]}><Deals /></Protected>} />
         <Route path="/escrow" element={<Protected roles={["buyer","exporter","finance_partner","admin"]}><Escrow /></Protected>} />
         <Route path="/financing" element={<Protected roles={["exporter","finance_partner"]}><Financing /></Protected>} />
+        <Route path="/notifications" element={<Protected roles={["buyer","exporter","supplier","finance_partner","admin"]}><NotificationsPage /></Protected>} />
 
         {/* 404 catch-all */}
         <Route path="*" element={<NotFound />} />

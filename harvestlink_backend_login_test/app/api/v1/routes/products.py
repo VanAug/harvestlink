@@ -5,6 +5,7 @@ from typing import Optional
 
 from app.core.config import settings
 from app.core.security import get_current_user, get_optional_user
+from app.core.notifications import notify_admin, create_notification
 from app.db.session import get_db
 from app.models.models import Company, Product, User
 from app.schemas.schemas import ProductCreate, ProductOut, ProductUpdate
@@ -120,6 +121,15 @@ async def create_product(
     db.add(item)
     await db.commit()
     await db.refresh(item)
+
+    # Notify: new product listed — alert admin for moderation review
+    await notify_admin(
+        db,
+        title="New Product Listed",
+        message=f"New product '{item.name}' ({item.category}, {item.available_quantity} {item.unit}) has been listed by {item.supplier_name} and is awaiting review.",
+        notification_type="new_product",
+    )
+
     return item
 
 
@@ -137,10 +147,21 @@ async def update_product(
     company = await db.get(Company, item.company_id)
     if company and company.owner_id != current_user.id and current_user.role != "admin":
         raise HTTPException(status_code=403, detail="You can only edit your own products")
+
+    old_status = item.status
     for key, value in payload.model_dump(exclude_unset=True).items():
         setattr(item, key, value)
     await db.commit()
     await db.refresh(item)
+
+    if item.status == "pending" and old_status != "pending":
+        await notify_admin(
+            db,
+            title="Product Returned for Review",
+            message=f"Product '{item.name}' has been updated and is awaiting admin review.",
+            notification_type="product_returned_for_review",
+        )
+
     return item
 
 
@@ -181,6 +202,14 @@ async def unarchive_product(
     item.status = "pending"
     await db.commit()
     await db.refresh(item)
+
+    await notify_admin(
+        db,
+        title="Product Returned for Review",
+        message=f"Product '{item.name}' has been restored and is awaiting admin review.",
+        notification_type="product_returned_for_review",
+    )
+
     return item
 
 
@@ -268,6 +297,17 @@ async def admin_approve_product(
     item.status = "approved"
     await db.commit()
     await db.refresh(item)
+
+    company = await db.get(Company, item.company_id)
+    if company:
+        await create_notification(
+            db,
+            user_id=company.owner_id,
+            title="Product Approved",
+            message=f"Your product '{item.name}' has been approved and is now live.",
+            notification_type="product_approved",
+        )
+
     return item
 
 
@@ -286,4 +326,15 @@ async def admin_reject_product(
     item.status = "rejected"
     await db.commit()
     await db.refresh(item)
+
+    company = await db.get(Company, item.company_id)
+    if company:
+        await create_notification(
+            db,
+            user_id=company.owner_id,
+            title="Product Rejected",
+            message=f"Your product '{item.name}' has been rejected by admin. Please review and resubmit if needed.",
+            notification_type="product_rejected",
+        )
+
     return item

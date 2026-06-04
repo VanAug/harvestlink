@@ -3,6 +3,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.security import get_current_user
+from app.core.notifications import notify_admin
 from app.db.session import get_db
 from app.models.models import Company, User
 from app.schemas.schemas import CompanyCreate, CompanyOut, CompanyUpdate
@@ -53,6 +54,15 @@ async def create_company(
     db.add(company)
     await db.commit()
     await db.refresh(company)
+
+    # Notify: new company registered — alert admin for verification review
+    await notify_admin(
+        db,
+        title="New Company Registered",
+        message=f"New {company.type} company '{company.name}' ({company.country}) has registered and is awaiting verification.",
+        notification_type="new_company",
+    )
+
     return company
 
 

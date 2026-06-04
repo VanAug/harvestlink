@@ -3,6 +3,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.security import get_current_user
+from app.core.notifications import create_notification, notify_admin, notify_company_owner, notify_rfq_responders
 from app.db.session import get_db
 from app.models.models import Company, Deal, Offer, RFQ, User
 from app.schemas.schemas import OfferCreate, OfferOut, RFQCreate, RFQOut
@@ -42,6 +43,26 @@ async def create_rfq(
     db.add(rfq)
     await db.commit()
     await db.refresh(rfq)
+
+    # Notify: new RFQ posted to buyer (confirmation)
+    buyer = await db.get(Company, payload.buyer_company_id)
+    if buyer:
+        await create_notification(
+            db,
+            user_id=buyer.owner_id,
+            title="RFQ Posted",
+            message=f"Your RFQ for {rfq.product_name} ({rfq.quantity} {rfq.unit}) has been posted. Exporters can now submit offers.",
+            notification_type="rfq_posted_confirmation",
+        )
+    
+    # Notify: new RFQ to admins for review
+    await notify_admin(
+        db,
+        title="New RFQ Posted",
+        message=f"New RFQ for {rfq.product_name} ({rfq.quantity} {rfq.unit}) posted by {rfq.buyer_company_name}.",
+        notification_type="new_rfq",
+    )
+
     return rfq
 
 
@@ -89,6 +110,25 @@ async def create_offer(
     db.add(offer)
     await db.commit()
     await db.refresh(offer)
+
+    # Notify: offer submitted to buyer
+    await notify_company_owner(
+        db,
+        company_id=rfq.buyer_company_id,
+        title="Offer Received",
+        message=f"{offer.exporter_name} submitted an offer on your RFQ for {rfq.product_name} — USD {offer.price} / {offer.quantity} {rfq.unit}.",
+        notification_type="rfq_response",
+    )
+    
+    # Notify: offer submitted to exporter (confirmation)
+    await create_notification(
+        db,
+        user_id=exporter.owner_id,
+        title="Offer Submitted",
+        message=f"Your offer for {rfq.product_name} ({offer.quantity} {rfq.unit} @ USD {offer.price}) has been submitted to {rfq.buyer_company_name}.",
+        notification_type="offer_submitted_confirmation",
+    )
+
     return offer
 
 
@@ -131,6 +171,28 @@ async def accept_offer(
     db.add(deal)
     await db.commit()
     await db.refresh(deal)
+
+    # Notify: offer accepted — let the exporter know
+    exporter = await db.get(Company, offer.exporter_company_id)
+    if exporter:
+        await create_notification(
+            db,
+            user_id=exporter.owner_id,
+            title="Offer Accepted",
+            message=f"Your offer on RFQ for {rfq.product_name} has been accepted by {buyer.name}. A deal room has been created.",
+            notification_type="offer_accepted",
+        )
+
+    # Notify buyer if an admin accepted the offer on their behalf
+    if current_user.role == "admin" and buyer_company:
+        await create_notification(
+            db,
+            user_id=buyer_company.owner_id,
+            title="RFQ Offer Accepted",
+            message=f"An offer for your RFQ on {rfq.product_name} has been accepted by an administrator.",
+            notification_type="offer_accepted_by_admin",
+        )
+
     return {"message": "Offer accepted", "deal_id": deal.id}
 
 
@@ -177,4 +239,26 @@ async def reject_offer(
     offer.status = "rejected"
     await db.commit()
     await db.refresh(offer)
+
+    # Notify: offer rejected
+    exporter = await db.get(Company, offer.exporter_company_id)
+    if exporter:
+        await create_notification(
+            db,
+            user_id=exporter.owner_id,
+            title="Offer Rejected",
+            message=f"Your offer on RFQ for {rfq.product_name} has been rejected.",
+            notification_type="offer_rejected",
+        )
+
+    # Notify buyer if an admin rejected the offer on their behalf
+    if current_user.role == "admin" and buyer_company:
+        await create_notification(
+            db,
+            user_id=buyer_company.owner_id,
+            title="RFQ Offer Rejected",
+            message=f"An offer for your RFQ on {rfq.product_name} has been rejected by an administrator.",
+            notification_type="offer_rejected_by_admin",
+        )
+
     return {"message": "Offer rejected"}

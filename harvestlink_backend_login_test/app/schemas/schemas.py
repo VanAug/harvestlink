@@ -367,6 +367,21 @@ class DashboardOut(BaseModel):
     financing_eligible_amount: float
     trade_score: float
 
+class NotificationOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    id: int
+    user_id: int
+    title: str
+    message: str
+    type: str
+    is_read: bool
+    created_at: datetime
+
+
+class UnreadCountOut(BaseModel):
+    count: int
+
+
 class StatsOut(BaseModel):
     users: int
     companies: int

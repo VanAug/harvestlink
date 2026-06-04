@@ -3,6 +3,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.security import get_current_user
+from app.core.notifications import create_notification
 from app.db.session import get_db
 from app.models.models import Company, Deal, EscrowTransaction, Message, User
 from app.schemas.schemas import DealCreate, DealOut, DealStatusUpdate, EscrowOut, MessageCreate, MessageOut
@@ -84,6 +85,27 @@ async def create_deal(
     db.add(deal)
     await db.commit()
     await db.refresh(deal)
+
+    # Notify: deal created
+    buyer_company = await db.get(Company, deal.buyer_company_id)
+    exporter_company = await db.get(Company, deal.exporter_company_id)
+    if buyer_company:
+        await create_notification(
+            db,
+            user_id=buyer_company.owner_id,
+            title="Deal Created",
+            message=f"A deal for {deal.product_name} ({deal.quantity} {deal.unit}, ${deal.total_amount:,.2f}) has been created with {deal.exporter_name}.",
+            notification_type="deal_created",
+        )
+    if exporter_company:
+        await create_notification(
+            db,
+            user_id=exporter_company.owner_id,
+            title="Deal Created",
+            message=f"A deal for {deal.product_name} ({deal.quantity} {deal.unit}, ${deal.total_amount:,.2f}) has been created with {deal.buyer_name}.",
+            notification_type="deal_created",
+        )
+
     return deal
 
 
@@ -98,9 +120,35 @@ async def update_deal_status(
     if not item:
         raise HTTPException(status_code=404, detail="Deal not found")
     await _assert_deal_participant(item, current_user, db)
+    old_status = item.status
     item.status = payload.status
     await db.commit()
     await db.refresh(item)
+    
+    # Notify: deal status changed
+    if old_status != payload.status:
+        buyer_company = await db.get(Company, item.buyer_company_id)
+        exporter_company = await db.get(Company, item.exporter_company_id)
+        status_label = payload.status.replace("_", " ").title()
+        message = f"Deal for {item.product_name} has been updated to {status_label}."
+        
+        if buyer_company:
+            await create_notification(
+                db,
+                user_id=buyer_company.owner_id,
+                title=f"Deal Updated",
+                message=message,
+                notification_type=f"deal_status_{payload.status}",
+            )
+        if exporter_company:
+            await create_notification(
+                db,
+                user_id=exporter_company.owner_id,
+                title=f"Deal Updated",
+                message=message,
+                notification_type=f"deal_status_{payload.status}",
+            )
+    
     return item
 
 
@@ -132,6 +180,30 @@ async def create_message(
     db.add(msg)
     await db.commit()
     await db.refresh(msg)
+
+    # Notify: new message — find the other party and notify them
+    deal = await db.get(Deal, deal_id)
+    if deal:
+        sender_company = await db.get(Company, payload.sender_company_id)
+        # Determine the other party's company to notify their owner
+        if sender_company and sender_company.id == deal.buyer_company_id:
+            recipient_company_id = deal.exporter_company_id
+        elif sender_company and sender_company.id == deal.exporter_company_id:
+            recipient_company_id = deal.buyer_company_id
+        else:
+            recipient_company_id = None
+
+        if recipient_company_id:
+            recipient_company = await db.get(Company, recipient_company_id)
+            if recipient_company:
+                await create_notification(
+                    db,
+                    user_id=recipient_company.owner_id,
+                    title="New Message",
+                    message=f"{payload.sender_name} sent a message in deal #{deal_id} for {deal.product_name}.",
+                    notification_type="new_message",
+                )
+
     return msg
 
 
@@ -201,6 +273,7 @@ async def update_escrow(
     deal = await db.get(Deal, item.deal_id)
     if deal:
         await _assert_deal_participant(deal, current_user, db)
+    old_status = item.status
     item.status = status
     if deal:
         deal.escrow_status = status
@@ -212,4 +285,29 @@ async def update_escrow(
             deal.status = "completed"
     await db.commit()
     await db.refresh(item)
+    
+    # Notify: escrow status changed
+    if deal and old_status != status:
+        payer_company = await db.get(Company, item.payer_company_id)
+        recipient_company = await db.get(Company, item.recipient_company_id)
+        status_label = status.replace("_", " ").title()
+        escrow_ref = item.payment_reference
+        
+        if payer_company:
+            await create_notification(
+                db,
+                user_id=payer_company.owner_id,
+                title=f"Escrow Updated",
+                message=f"Escrow {escrow_ref} for deal #{deal.id} is now {status_label}.",
+                notification_type=f"escrow_{status}",
+            )
+        if recipient_company:
+            await create_notification(
+                db,
+                user_id=recipient_company.owner_id,
+                title=f"Escrow Updated",
+                message=f"Escrow {escrow_ref} for deal #{deal.id} is now {status_label}.",
+                notification_type=f"escrow_{status}",
+            )
+    
     return item

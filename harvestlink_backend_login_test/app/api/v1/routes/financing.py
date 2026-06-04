@@ -4,6 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.v1.routes.common import eligibility
 from app.core.security import get_current_user
+from app.core.notifications import create_notification, notify_admin, notify_company_owner
 from app.db.session import get_db
 from app.models.models import Company, FinancingRequest, User
 from app.schemas.schemas import DashboardOut, FinancingCreate, FinancingOut, FinancingStatusUpdate
@@ -131,6 +132,26 @@ async def create_financing(
     db.add(item)
     await db.commit()
     await db.refresh(item)
+    
+    # Notify: financing request submitted
+    await notify_admin(
+        db,
+        title="Financing Request Submitted",
+        message=f"{payload.exporter_name} submitted a financing request for {payload.currency} {payload.requested_amount:,.2f} ({payload.purpose}).",
+        notification_type="financing_submitted",
+    )
+    
+    # Notify exporter that their request was received
+    exporter_company = await db.get(Company, payload.exporter_company_id)
+    if exporter_company:
+        await create_notification(
+            db,
+            user_id=exporter_company.owner_id,
+            title="Financing Request Submitted",
+            message=f"Your financing request for {payload.currency} {payload.requested_amount:,.2f} has been submitted for review.",
+            notification_type="financing_submitted",
+        )
+    
     return item
 
 
@@ -162,7 +183,21 @@ async def update_financing_status(
         if not item.finance_partner_company_id:
             item.finance_partner_company_id = finance_company_ids[0]
 
+    old_status = item.status
     item.status = payload.status
     await db.commit()
     await db.refresh(item)
+    
+    # Notify: financing status changed
+    exporter_company = await db.get(Company, item.exporter_company_id)
+    if exporter_company and old_status != payload.status:
+        status_label = "Approved" if payload.status == "approved" else "Rejected" if payload.status == "rejected" else payload.status.replace("_", " ").title()
+        await create_notification(
+            db,
+            user_id=exporter_company.owner_id,
+            title=f"Financing Request {status_label}",
+            message=f"Your financing request for {item.currency} {item.requested_amount:,.2f} has been {status_label.lower()}.",
+            notification_type=f"financing_{payload.status}",
+        )
+    
     return item

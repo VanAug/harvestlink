@@ -3,6 +3,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.security import get_current_admin_user
+from app.core.notifications import create_notification
 from app.db.session import get_db
 from app.models.models import Company, Deal, EscrowTransaction, FinancingRequest, Product, RFQ, User
 from app.schemas.schemas import CompanyOut, CompanyVerificationUpdate, RoleUpdate, StatsOut, UserOut
@@ -52,6 +53,15 @@ async def admin_update_user_role(
     user.role = payload.role
     await db.commit()
     await db.refresh(user)
+
+    await create_notification(
+        db,
+        user_id=user.id,
+        title="Account Role Updated",
+        message=f"Your account role has been updated to '{payload.role}' by an administrator.",
+        notification_type="role_updated",
+    )
+
     return user
 
 
@@ -72,4 +82,21 @@ async def admin_update_company_verification(
         company.rejection_reason = None
     await db.commit()
     await db.refresh(company)
+
+    # Notify: verification approved or rejected
+    notification_type = "verification_approved" if payload.verification_status == "verified" else "verification_rejected"
+    title = "Verification Approved" if payload.verification_status == "verified" else "Verification Rejected"
+    message = (
+        f"Your company '{company.name}' has been verified and approved."
+        if payload.verification_status == "verified"
+        else f"Your company '{company.name}' has been rejected. Reason: {payload.rejection_reason or 'Not specified'}."
+    )
+    await create_notification(
+        db,
+        user_id=company.owner_id,
+        title=title,
+        message=message,
+        notification_type=notification_type,
+    )
+
     return company

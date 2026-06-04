@@ -2,10 +2,11 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import { 
   Leaf, LogOut, Menu, PackagePlus, FileText, 
-  ChevronDown, User, LayoutDashboard, UserCircle,
-  ShoppingBag, Package, Building2
+  ChevronDown, LayoutDashboard, UserCircle,
+  ShoppingBag, Package, Building2, Zap
 } from "lucide-react";
 import { logout } from "../../lib/api";
+import NotificationBell from "../notifications/NotificationBell";
 
 const publicNavItems = [
   ["Products", "/products"],
@@ -99,6 +100,7 @@ export default function Navbar() {
   const isLoggedIn = Boolean(session.role);
   const isBuyer = session.role === "buyer";
   const isExporter = session.role === "exporter" || session.role === "supplier";
+  const isAdmin = session.role === "admin";
 
   const dashboardPath = session.role === "buyer"
     ? "/buyer-dashboard"
@@ -117,7 +119,6 @@ export default function Navbar() {
   const buyerMenuItems = [
     { label: "Dashboard", path: "/buyer-dashboard", icon: LayoutDashboard },
     { label: "My Profile", path: "/buyer/profile", icon: UserCircle },
-    { label: "Create RFQ", path: "/create-rfq", icon: FileText },
     { label: "My Orders", path: "/deals", icon: ShoppingBag },
   ];
 
@@ -127,6 +128,12 @@ export default function Navbar() {
     { label: "My Products", path: "/exporter/products", icon: Package },
     { label: "Deal Rooms", path: "/deals", icon: Building2 },
   ];
+
+  const quickActionItems = isBuyer
+    ? [{ label: "Post RFQ", path: "/create-rfq", icon: FileText }]
+    : isExporter
+    ? [{ label: "Add Product", path: "/exporter/products", icon: PackagePlus }]
+    : [];
 
   const menuItems = isBuyer ? buyerMenuItems : isExporter ? exporterMenuItems : [];
 
@@ -171,78 +178,120 @@ export default function Navbar() {
         </nav>
 
         {/* Desktop Right Side */}
-        <div className="hidden items-center gap-3 lg:flex">
+        <div className="hidden items-center gap-2 lg:flex">
           {isLoggedIn ? (
-            <div className="relative flex items-center gap-3" ref={dropdownRef}>
+            <div className="flex items-center gap-2">
               {/* Exporter quick-add */}
               {isExporter && (
-                <Link to="/exporter/products" className="inline-flex items-center gap-2 rounded-xl bg-harvest-orange px-4 py-2 text-sm font-semibold text-white shadow-soft hover:bg-orange-600">
-                  <PackagePlus size={16} />
-                  Products
+                <Link to="/exporter/products" className="inline-flex items-center gap-1.5 rounded-lg bg-harvest-orange px-3 py-2 text-xs font-semibold text-white shadow-soft hover:bg-orange-600 transition">
+                  <PackagePlus size={14} />
+                  Product
                 </Link>
               )}
               {/* Buyer quick-add */}
               {isBuyer && (
-                <Link to="/create-rfq" className="inline-flex items-center gap-2 rounded-xl bg-harvest-orange px-4 py-2 text-sm font-semibold text-white shadow-soft hover:bg-orange-600">
-                  <FileText size={16} />
-                  Post RFQ
+                <Link to="/create-rfq" className="inline-flex items-center gap-1.5 rounded-lg bg-harvest-orange px-3 py-2 text-xs font-semibold text-white shadow-soft hover:bg-orange-600 transition">
+                  <Zap size={14} />
+                  RFQ
                 </Link>
               )}
-              {/* Role menu dropdown */}
+              <NotificationBell />
+              {/* Quick logout button */}
               <button
-                onClick={() => setDropdownOpen(!dropdownOpen)}
-                className="flex items-center gap-2 rounded-xl border border-harvest-green px-4 py-2 text-sm font-semibold text-harvest-green hover:bg-harvest-soft"
+                onClick={handleLogout}
+                className="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition"
+                title="Logout"
               >
-                <User size={16} />
-                <span className="max-w-[120px] truncate">{session.name || session.email}</span>
-                <ChevronDown size={14} className={`transition-transform ${dropdownOpen ? "rotate-180" : ""}`} />
-              </button>
-              <button onClick={handleLogout} className="rounded-xl border border-gray-200 p-2 text-gray-600 hover:bg-harvest-soft" aria-label="Logout">
                 <LogOut size={18} />
               </button>
+              {/* Compact user menu */}
+              <div className="relative" ref={dropdownRef}>
+                <button
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-harvest-green text-white hover:bg-green-900 transition"
+                  title={session.name || session.email}
+                >
+                  <span className="text-sm font-bold">
+                    {(session.name || session.email || "U")
+                      .split(" ")
+                      .map(w => w[0])
+                      .join("")
+                      .toUpperCase()
+                      .slice(0, 2)}
+                  </span>
+                </button>
 
-              {/* Dropdown */}
-              {dropdownOpen && (
-                <div className="absolute right-0 top-full z-50 mt-2 w-56 rounded-2xl border border-gray-100 bg-white py-2 shadow-lg">
-                  <div className="border-b border-gray-100 px-4 py-3">
-                    <div className="text-sm font-bold text-harvest-green">{session.name || "User"}</div>
-                    <div className="text-xs text-gray-500">{roleLabel}</div>
-                  </div>
-                  <div className="py-2">
-                    {menuItems.map((item) => {
-                      const Icon = item.icon;
-                      return (
+                {/* Dropdown Menu */}
+                {dropdownOpen && (
+                  <div className="absolute right-0 top-full z-50 mt-2 w-56 rounded-2xl border border-gray-100 bg-white py-2 shadow-lg">
+                    <div className="border-b border-gray-100 px-4 py-3">
+                      <div className="text-sm font-bold text-harvest-green">{session.name || "User"}</div>
+                      <div className="text-xs text-gray-500">{roleLabel}</div>
+                    </div>
+                    
+                    {/* Quick actions */}
+                    {quickActionItems.length > 0 && (
+                      <>
+                        <div className="py-2">
+                          {quickActionItems.map((item) => {
+                            const Icon = item.icon;
+                            return (
+                              <Link
+                                key={item.path}
+                                to={item.path}
+                                onClick={() => setDropdownOpen(false)}
+                                className="flex items-center gap-3 px-4 py-2.5 text-sm font-semibold text-harvest-orange hover:bg-harvest-soft"
+                              >
+                                <Icon size={16} />
+                                {item.label}
+                              </Link>
+                            );
+                          })}
+                        </div>
+                        <hr className="my-1" />
+                      </>
+                    )}
+
+                    {/* Main menu items */}
+                    <div className="py-2">
+                      {isAdmin && (
                         <Link
-                          key={item.path}
-                          to={item.path}
+                          to="/admin-dashboard"
                           onClick={() => setDropdownOpen(false)}
-                          className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-harvest-soft hover:text-harvest-green"
+                          className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-harvest-soft hover:text-harvest-green font-semibold"
                         >
-                          <Icon size={16} className="text-gray-400" />
-                          {item.label}
+                          <LayoutDashboard size={16} className="text-gray-400" />
+                          Dashboard
                         </Link>
-                      );
-                    })}
+                      )}
+                      {menuItems.map((item) => {
+                        const Icon = item.icon;
+                        return (
+                          <Link
+                            key={item.path}
+                            to={item.path}
+                            onClick={() => setDropdownOpen(false)}
+                            className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-harvest-soft hover:text-harvest-green"
+                          >
+                            <Icon size={16} className="text-gray-400" />
+                            {item.label}
+                          </Link>
+                        );
+                      })}
+                    </div>
+                    
+                    <div className="border-t border-gray-100 pt-2">
+                      <button
+                        onClick={handleLogout}
+                        className="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50"
+                      >
+                        <LogOut size={16} />
+                        Logout
+                      </button>
+                    </div>
                   </div>
-                  <div className="border-t border-gray-100 pt-2">
-                    <Link
-                      to={dashboardPath}
-                      onClick={() => setDropdownOpen(false)}
-                      className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-harvest-soft hover:text-harvest-green"
-                    >
-                      <LayoutDashboard size={16} className="text-gray-400" />
-                      Go to Dashboard
-                    </Link>
-                    <button
-                      onClick={handleLogout}
-                      className="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50"
-                    >
-                      <LogOut size={16} />
-                      Logout
-                    </button>
-                  </div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           ) : (
             <>
@@ -254,11 +303,7 @@ export default function Navbar() {
 
         {/* Mobile */}
         <div className="flex items-center gap-2 lg:hidden">
-          {isLoggedIn && (
-            <Link to={dashboardPath} className="rounded-xl border border-harvest-green px-3 py-2 text-xs font-bold text-harvest-green">
-              {roleLabel}
-            </Link>
-          )}
+          {isLoggedIn && <NotificationBell />}
           <button onClick={() => setMobileOpen(!mobileOpen)} className="rounded-xl border p-2">
             <Menu />
           </button>
@@ -271,10 +316,31 @@ export default function Navbar() {
           <div className="space-y-1 px-4 py-4">
             {isLoggedIn && (
               <>
-                <div className="mb-2 px-4 py-2">
+                <div className="mb-3 px-4 py-2">
                   <div className="text-sm font-bold text-harvest-green">{session.name || "User"}</div>
                   <div className="text-xs text-gray-500">{roleLabel}</div>
                 </div>
+                {quickActionItems.length > 0 && (
+                  <>
+                    <div className="mb-2 space-y-1">
+                      {quickActionItems.map((item) => {
+                        const Icon = item.icon;
+                        return (
+                          <Link
+                            key={item.path}
+                            to={item.path}
+                            onClick={() => setMobileOpen(false)}
+                            className="flex items-center gap-3 rounded-xl bg-harvest-orange/10 px-4 py-3 text-sm font-bold text-harvest-orange hover:bg-harvest-orange hover:text-white"
+                          >
+                            <Icon size={16} />
+                            {item.label}
+                          </Link>
+                        );
+                      })}
+                    </div>
+                    <hr className="my-2" />
+                  </>
+                )}
                 {menuItems.map((item) => {
                   const Icon = item.icon;
                   return (

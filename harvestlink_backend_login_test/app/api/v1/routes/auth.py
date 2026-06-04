@@ -10,6 +10,7 @@ from app.core.security import (
     security_scheme,
     get_current_admin_user,
 )
+from app.core.notifications import notify_admin, create_notification
 from app.db.session import get_db
 from app.models.models import User
 from app.schemas.schemas import LoginRequest, RegisterRequest, Token, UserOut
@@ -37,6 +38,15 @@ async def register(payload: RegisterRequest, db: AsyncSession = Depends(get_db))
     db.add(user)
     await db.commit()
     await db.refresh(user)
+    
+    # Notify: user registered
+    await notify_admin(
+        db,
+        title="New User Registered",
+        message=f"New {payload.role} registered: {payload.full_name} ({email})",
+        notification_type="user_registered",
+    )
+    
     token = create_access_token(user.id, user.role, user.email)
     return Token(access_token=token, role=user.role, user_id=user.id, email=user.email, full_name=user.full_name)
 
