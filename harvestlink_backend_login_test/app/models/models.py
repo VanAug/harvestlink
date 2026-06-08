@@ -12,6 +12,14 @@ class User(Base):
     role: Mapped[str] = mapped_column(String(50), index=True)
     status: Mapped[str] = mapped_column(String(50), default="pending")
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    # Exporter verification workflow
+    # Default is "approved" so existing users are NOT blocked.
+    # New status "pending" is set only when the exporter explicitly submits for verification.
+    # Admins then approve or reject.
+    exporter_verification_status: Mapped[str] = mapped_column(String(50), default="approved")
+    exporter_verification_submitted_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+    exporter_verification_reviewed_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+    exporter_verification_reviewed_by_admin_id: Mapped[int | None] = mapped_column(ForeignKey("users.id"), nullable=True)
 
 class Company(Base):
     __tablename__ = "companies"

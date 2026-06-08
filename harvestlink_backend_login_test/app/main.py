@@ -19,6 +19,24 @@ app = FastAPI(
     description="Backend for HarvestLink — Global Agricultural Marketplace.",
 )
 
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request, exc):
+    """Ensure CORS headers are sent even on 500 errors."""
+    from fastapi.responses import JSONResponse
+    detail = str(exc) if isinstance(exc, Exception) else "Internal server error"
+    logger.error("Unhandled exception: %s", detail, exc_info=True)
+    return JSONResponse(
+        status_code=500,
+        content={"detail": detail},
+        headers={
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "*",
+            "Access-Control-Allow-Headers": "*",
+        },
+    )
+
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors_origins,
@@ -68,6 +86,13 @@ async def run_migrations(conn):
             ],
             "rfqs": [
                 ("buyer_company_name", "ALTER TABLE rfqs ADD COLUMN buyer_company_name VARCHAR(255);"),
+            ],
+            "users": [
+                ("exporter_verification_status", "ALTER TABLE users ADD COLUMN exporter_verification_status VARCHAR(50) DEFAULT 'approved';"),
+                ("exporter_verification_submitted_at", "ALTER TABLE users ADD COLUMN exporter_verification_submitted_at TIMESTAMP;"),
+                ("exporter_verification_reviewed_at", "ALTER TABLE users ADD COLUMN exporter_verification_reviewed_at TIMESTAMP;"),
+                ("exporter_verification_reviewed_by_admin_id", "ALTER TABLE users ADD COLUMN exporter_verification_reviewed_by_admin_id INTEGER;"),
+                ("_fix_exporter_status", "UPDATE users SET exporter_verification_status = 'approved' WHERE exporter_verification_status IS NULL OR exporter_verification_status = 'pending';"),
             ],
         }
         for table, migrations in sqlite_migrations.items():

@@ -4,6 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.security import get_current_user
 from app.core.notifications import create_notification, notify_admin, notify_company_owner, notify_rfq_responders
+from app.core.verification import require_verified_exporter
 from app.db.session import get_db
 from app.models.models import Company, Deal, Offer, RFQ, User
 from app.schemas.schemas import OfferCreate, OfferOut, RFQCreate, RFQOut
@@ -106,6 +107,7 @@ async def create_offer(
         raise HTTPException(status_code=400, detail="Exporter company not found")
     if exporter.owner_id != current_user.id and current_user.role != "admin":
         raise HTTPException(status_code=403, detail="You can only submit offers for your own company")
+    await require_verified_exporter(current_user, db, payload.exporter_company_id)
     offer = Offer(rfq_id=rfq_id, status="submitted", **payload.model_dump())
     db.add(offer)
     await db.commit()

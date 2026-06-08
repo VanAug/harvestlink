@@ -18,7 +18,7 @@ const initialForm = {
   price_max: "",
   minimum_order_quantity: "",
   description: "",
-  status: "active",
+  status: "pending",
 };
 
 export default function AddProduct() {

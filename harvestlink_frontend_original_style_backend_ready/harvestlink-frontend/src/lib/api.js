@@ -8,10 +8,14 @@ function authHeaders() {
 async function apiErrorMessage(res, path) {
   try {
     const data = await res.json();
+    // Handle structured error objects (e.g. verification errors with title/message/resolution)
+    if (data.detail && typeof data.detail === 'object' && !Array.isArray(data.detail)) {
+      return data.detail.message || data.detail.title || JSON.stringify(data.detail);
+    }
     const detail = Array.isArray(data.detail)
       ? data.detail.map((item) => item.msg || item.message || JSON.stringify(item)).join(', ')
       : data.detail || data.message;
-    return detail ? `${detail} (${res.status} on ${path})` : `API error ${res.status} on ${path}`;
+    return detail || `API error ${res.status} on ${path}`;
   } catch {
     return `API error ${res.status} on ${path}`;
   }

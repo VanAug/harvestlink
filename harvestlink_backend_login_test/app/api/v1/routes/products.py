@@ -6,6 +6,7 @@ from typing import Optional
 from app.core.config import settings
 from app.core.security import get_current_user, get_optional_user
 from app.core.notifications import notify_admin, create_notification
+from app.core.verification import require_verified_exporter
 from app.db.session import get_db
 from app.models.models import Company, Product, User
 from app.schemas.schemas import ProductCreate, ProductOut, ProductUpdate
@@ -117,6 +118,7 @@ async def create_product(
         raise HTTPException(status_code=400, detail="Products can only be created for exporter companies")
     if company.owner_id != current_user.id and current_user.role != "admin":
         raise HTTPException(status_code=403, detail="You can only add products for your own company")
+    await require_verified_exporter(current_user, db, payload.company_id)
     item = Product(**payload.model_dump())
     db.add(item)
     await db.commit()
@@ -147,6 +149,8 @@ async def update_product(
     company = await db.get(Company, item.company_id)
     if company and company.owner_id != current_user.id and current_user.role != "admin":
         raise HTTPException(status_code=403, detail="You can only edit your own products")
+    if current_user.role not in ("admin"):
+        await require_verified_exporter(current_user, db)
 
     old_status = item.status
     for key, value in payload.model_dump(exclude_unset=True).items():

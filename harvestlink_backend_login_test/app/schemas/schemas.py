@@ -27,6 +27,18 @@ class UserOut(BaseModel):
     full_name: str
     role: str
     status: str
+    exporter_verification_status: str = "pending"
+
+
+class VerificationStatusOut(BaseModel):
+    status: str
+    submitted_at: Optional[datetime] = None
+    reviewed_at: Optional[datetime] = None
+    reviewed_by: Optional[str] = None
+
+
+class VerificationSubmitIn(BaseModel):
+    notes: Optional[str] = None
 
 class CompanyOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
@@ -122,7 +134,7 @@ class ProductCreate(BaseModel):
     description: Optional[str] = None
     image_key: Optional[str] = None
     image_url: Optional[str] = None
-    status: str = "active"
+    status: str = "pending"
 
 class ProductUpdate(BaseModel):
     name: Optional[str] = None
