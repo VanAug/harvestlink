@@ -66,6 +66,14 @@ async def run_migrations(conn):
             "ALTER TABLE products ADD COLUMN IF NOT EXISTS image_url VARCHAR(500);",
             # Added: finance partner assignment for financing request ownership
             "ALTER TABLE financing_requests ADD COLUMN IF NOT EXISTS finance_partner_company_id INTEGER;",
+            # Added: buyer_company_name on rfqs (display buyer name in RFQ list)
+            "ALTER TABLE rfqs ADD COLUMN IF NOT EXISTS buyer_company_name VARCHAR(255);",
+            # Added: exporter verification workflow columns on users
+            "ALTER TABLE users ADD COLUMN IF NOT EXISTS exporter_verification_status VARCHAR(50) DEFAULT 'approved';",
+            "ALTER TABLE users ADD COLUMN IF NOT EXISTS exporter_verification_submitted_at TIMESTAMP;",
+            "ALTER TABLE users ADD COLUMN IF NOT EXISTS exporter_verification_reviewed_at TIMESTAMP;",
+            "ALTER TABLE users ADD COLUMN IF NOT EXISTS exporter_verification_reviewed_by_admin_id INTEGER;",
+            "UPDATE users SET exporter_verification_status = 'approved' WHERE exporter_verification_status IS NULL OR exporter_verification_status = 'pending';",
         ]
         for sql in migrations:
             try:
