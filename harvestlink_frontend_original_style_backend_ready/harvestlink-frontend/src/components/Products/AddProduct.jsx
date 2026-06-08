@@ -160,7 +160,7 @@ export default function AddProduct() {
 
       navigate("/exporter/products");
     } catch (error) {
-      setMessage(`Product could not be saved. ${error.message}`);
+      setMessage(`Product cannot be published. ${error.message}`);
     } finally {
       setSubmitting(false);
     }

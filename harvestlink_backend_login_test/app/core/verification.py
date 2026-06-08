@@ -47,8 +47,8 @@ async def require_verified_exporter(
                 status_code=status.HTTP_403_FORBIDDEN,
                 detail={
                     "title": "Company Not Verified",
-                    "message": f"Your company '{company.name}' is {company.verification_status}. "
-                               "You need a verified exporter company to list products or submit offers.",
+                    "message": f"Your company '{company.name}'  verification status is {company.verification_status}. "
+                               "Verify Company to list products or submit offers.",
                     "resolution": "Upload your verification documents via your company profile. "
                                   "An admin will review and verify your company.",
                     "current_status": company.verification_status,
